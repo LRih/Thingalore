@@ -11,5 +11,5 @@ function onCoolClick()
 
 function onNoClick()
 {
-    $("#main-card").fadeOut(); 
+    $("#main-card").animate({ "opacity": 0, "margin-top": 0 }, 300); 
 }
