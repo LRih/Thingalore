@@ -2,6 +2,9 @@
 
 <html>
     <head>
+        <!-- reCAPTCHA -->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+
         <!-- JQuery -->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 
@@ -39,6 +42,10 @@
                 
                 <div class="col s4">
                 </div>
+            </div>
+
+            <div id="captcha">
+                <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
             </div>
         </div>
 
