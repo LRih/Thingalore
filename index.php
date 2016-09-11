@@ -2,21 +2,7 @@
 
 <html>
     <head>
-        <!-- reCAPTCHA -->
-        <script src='https://www.google.com/recaptcha/api.js'></script>
-
-        <!-- JQuery -->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-
-        <!-- Materialize -->
-        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        
-        <link type="text/css" rel="stylesheet" href="css/style.css" />
-        <script type="text/javascript" src="script/script.js"></script>
-        
+        <?php include_once("templates/head.php") ?>
         <title>Unnamed Web Store</title>
     </head>
 
@@ -44,7 +30,7 @@
                 </div>
             </div>
 
-            <div id="captcha">
+            <div class="center-align">
                 <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
             </div>
         </div>
