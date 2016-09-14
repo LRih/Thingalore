@@ -1,3 +1,5 @@
+<?php include_once("data/sql.php") ?>
+
 <!DOCTYPE html>
 
 <html>
@@ -16,42 +18,24 @@
                 </div>
 
                 <div id="product-container" class="col s12 m9">
-                    <a class="product" href="product-detail.php">
-                        <div class="product-image-container">
-                            <img class="product-image" src="images/products/test1.jpg">
-                        </div>
-                        <div class="product-text">
-                            <div class="product-name">Mountain Lake</div>
-                            <div class="product-price red-text right-align">$3.50</div>
-                        </div>
-                    </a>
-                    <a class="product" href="#">
-                        <div class="product-image-container">
-                            <img class="product-image" src="images/products/test2.jpg">
-                        </div>
-                        <div class="product-text">
-                            <div class="product-name">Pine Tree</div>
-                            <div class="product-price red-text right-align">$4.50</div>
-                        </div>
-                    </a>
-                    <a class="product" href="#">
-                        <div class="product-image-container">
-                            <img class="product-image" src="images/products/test3.jpg">
-                        </div>
-                        <div class="product-text">
-                            <div class="product-name">Pier</div>
-                            <div class="product-price red-text right-align">$9.95</div>
-                        </div>
-                    </a>
-                    <a class="product" href="#">
-                        <div class="product-image-container">
-                            <img class="product-image" src="images/products/test4.jpg">
-                        </div>
-                        <div class="product-text">
-                            <div class="product-name">Pencil</div>
-                            <div class="product-price red-text right-align">$14.00</div>
-                        </div>
-                    </a>
+                    <?php
+                        $products = SQL::getProducts();
+
+                        for ($i = 0; $i < count($products); $i++)
+                        {
+                            $p = $products[$i];
+                            
+                            echo "<a class='product' href='product-detail.php?id=".$i."'>";
+                            echo "    <div class='product-image-container'>";
+                            echo "        <img class='product-image' src='images/products/".$i.".jpg'>";
+                            echo "    </div>";
+                            echo "    <div class='product-text'>";
+                            echo "        <div class='product-name'>".$p["name"]."</div>";
+                            echo "        <div class='product-price red-text right-align'>$".number_format($p["price"] / 100, 2, '.', ',')."</div>";
+                            echo "    </div>";
+                            echo "</a>";
+                        }
+                    ?>
 
                     <div class="center-align">
                         <ul class="pagination">

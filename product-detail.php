@@ -1,3 +1,29 @@
+
+<?php
+
+include_once("data/sql.php");
+
+// when no valid id set, redirect to products page
+if (!isset($_GET["id"]))
+{
+    header('Location: products.php');
+    die;
+}
+
+$id = intval($_GET["id"]);
+$products = SQL::getProducts();
+
+// out of bounds
+if ($id < 0 || $id > count($products))
+{
+    header('Location: products.php');
+    die;
+}
+
+$p = $products[$id];
+
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -16,21 +42,21 @@
                 </div>
 
                 <div class="col s12 m6">
-                    <h4>Mountain Lake</h4>
+                    <h4><?php echo $p["name"] ?></h4>
 
                     <div class="section">
-                        <img id="detail-image" class="materialboxed" src="images/products/test1.jpg">
+                        <img id="detail-image" class="materialboxed" src="images/products/<?php echo $id ?>.jpg">
                     </div>
 
                     <div class="section">
                         <h5>Description</h5>
                         <div class="divider"></div>
-                        <p>Standard size lake filled with water. Mountain not included.</p>
+                        <p><?php echo $p["desc"] ?></p>
                     </div>
                 </div>
 
                 <div id="detail-options" class="col s12 m3 center-align">
-                    <div id="detail-price" class="red-text">$3.50</div>
+                    <div id="detail-price" class="red-text">$<?php echo number_format($p["price"] / 100, 2, '.', ',') ?></div>
                     <a class="waves-effect waves-light btn-flat orange white-text"><i class="material-icons left">add</i>Add to cart</a>
                 </div>
             </div>

@@ -11,11 +11,6 @@
 }
 
 /* ============================================== MISC === */
-body
-{
-    overflow-y: scroll;
-}
-
 #main
 {
     margin-top: 24px;
