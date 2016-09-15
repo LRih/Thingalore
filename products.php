@@ -12,7 +12,7 @@
         <?php include_once("templates/nav.php") ?>
 
         <main id="main">
-            <div class="container row">
+            <div class="row">
                 <div class="col s12 m3">
                     <?php include_once("templates/side-nav.php") ?>
                 </div>

@@ -36,7 +36,7 @@ $p = $products[$id];
         <?php include_once("templates/nav.php") ?>
 
         <main id="main">
-            <div class="container row">
+            <div class="row">
                 <div class="col s12 m3">
                     <?php include_once("templates/side-nav.php") ?>
                 </div>
@@ -45,7 +45,7 @@ $p = $products[$id];
                     <h4><?php echo $p["name"] ?></h4>
 
                     <div class="section">
-                        <img id="detail-image" class="materialboxed" src="images/products/<?php echo $id ?>.jpg">
+                        <img id="detail-image" class="materialboxed center-align" src="images/products/<?php echo $id ?>.jpg">
                     </div>
 
                     <div class="section">

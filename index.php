@@ -10,15 +10,15 @@
         <?php include_once("templates/nav.php") ?>
 
         <main id="main">
-            <div class="container row">
+            <div class="row">
                 <div class="col s12 m3">
                     <?php include_once("templates/side-nav.php") ?>
                 </div>
                 
                 <div class="col s12 m9">
                     <div class="row">
-                        <div class="col s3"></div>
-                        <div class="col s6">
+                        <div class="col s0 m3"></div>
+                        <div class="col s12 m6">
                             <div id="main-card" class="card blue-grey darken-1 center-align">
                                 <div class="card-content white-text">
                                   <span class="card-title">Unnamed Web Store</span>
@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col s3"></div>
+                        <div class="col s0 m3"></div>
                     </div>
 
                     <div class="center-align">
