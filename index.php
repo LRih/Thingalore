@@ -1,3 +1,9 @@
+<?php
+
+require_once("data/global.php");
+
+?>
+
 <!DOCTYPE html>
 
 <html>

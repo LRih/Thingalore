@@ -1,4 +1,9 @@
-<?php include_once("data/sql.php") ?>
+<?php
+
+require_once("data/global.php");
+require_once("data/sql.php");
+
+?>
 
 <!DOCTYPE html>
 

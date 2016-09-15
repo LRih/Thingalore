@@ -1,7 +1,7 @@
-
 <?php
 
-include_once("data/sql.php");
+require_once("data/global.php");
+require_once("data/sql.php");
 
 // when no valid id set, redirect to products page
 if (!isset($_GET["id"]))
