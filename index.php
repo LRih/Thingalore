@@ -8,17 +8,17 @@ require_once("data/global.php");
 
 <html>
     <head>
-        <?php include_once("templates/head.php") ?>
+        <?php require_once("templates/head.php") ?>
         <title>Title</title>
     </head>
 
     <body>
-        <?php include_once("templates/nav.php") ?>
+        <?php require_once("templates/nav.php") ?>
 
         <main id="main">
             <div class="row">
                 <div class="col s12 m3">
-                    <?php include_once("templates/side-nav.php") ?>
+                    <?php require_once("templates/side-nav.php") ?>
                 </div>
                 
                 <div class="col s12 m9">
@@ -45,6 +45,6 @@ require_once("data/global.php");
             </div>
         </main>
 
-        <?php include_once("templates/footer.php") ?>
+        <?php require_once("templates/footer.php") ?>
     </body>
 </html>
