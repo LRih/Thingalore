@@ -10,7 +10,7 @@ require_once("data/sql.php");
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>Title</title>
+        <title>Products - {category}</title>
     </head>
 
     <body>
@@ -19,7 +19,7 @@ require_once("data/sql.php");
         <main id="main">
             <div class="row">
                 <div class="col s12 m3">
-                    <?php require_once("templates/side-nav.php") ?>
+                    <?php require_once("templates/side-nav.php"); createSideNav("Products") ?>
                 </div>
 
                 <div id="product-container" class="col s12 m9">

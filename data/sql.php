@@ -5,6 +5,7 @@
  */
 class SQL
 {
+    // replace with data from MySQL
     public static function getProducts()
     {
         return [
@@ -13,6 +14,15 @@ class SQL
             array("name" => "Pier", "desc" => "Made of wood.", "price" => 995),
             array("name" => "Pencil", "desc" => "One pencil.", "price" => 1400)
         ];
+    }
+
+    // replace with data from MySQL
+    public static function getCategories()
+    {
+        $categories = ["Lakes", "Wood", "Trees"];
+        sort($categories);
+
+        return $categories;
     }
 }
 
