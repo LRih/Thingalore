@@ -37,10 +37,6 @@ require_once("data/global.php");
                         </div>
                         <div class="col s0 m3"></div>
                     </div>
-
-                    <div class="center-align">
-                        <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
-                    </div>
                 </div>
             </div>
         </main>

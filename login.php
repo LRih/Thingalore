@@ -18,21 +18,21 @@ require_once("data/global.php");
         <main id="main">
             <div class="row">
                 <div class="col s12 m6">
-                    <div class="row">
+                    <div class="row section">
                         <div class="col s12">
                             <h5>New Customer</h5>
-                            <b>Register Account</b>
+                            <strong>Register Account</strong>
                             <p>By creating an account you will be able to shop faster, be up to date on an order's status, and keep track of the orders you have previously made.</p>
-                            <a class="waves-effect waves-light btn-flat blue white-text">Continue</a>
+                            <a href="register.php" class="waves-effect waves-light btn-flat blue white-text">Continue</a>
                         </div>
                     </div>
                 </div>
 
                 <div class="col s12 m6">
-                    <div class="row">
+                    <div class="row section">
                         <div class="col s12">
                             <h5>Returning Customer</h5>
-                            <b>I am a returning customer</b>
+                            <strong>I am a returning customer</strong>
                         </div>
                         <form>
                             <div class="input-field col s12">

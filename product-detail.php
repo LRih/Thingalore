@@ -29,7 +29,7 @@ $p = $products[$id];
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>{product_name}</title>
+        <title><?php echo $p["name"] ?></title>
     </head>
 
     <body>
