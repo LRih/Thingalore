@@ -28,6 +28,12 @@ body
 }
 
 /* ============================================== NAV === */
+#banner-container
+{
+    background-image: url("../images/banner.jpg");
+    background-size: cover;
+}
+
 #banner
 {
     height: 100px;
