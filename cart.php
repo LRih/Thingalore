@@ -1,6 +1,6 @@
 <?php
 
-require_once("data/global.php");
+require_once("php/global.php");
 
 ?>
 

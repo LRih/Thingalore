@@ -1,6 +1,6 @@
 <?php
 
-require_once("data/sql.php");
+require_once("php/sql.php");
 
 function createSideNav($selected)
 {
