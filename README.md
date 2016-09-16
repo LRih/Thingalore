@@ -42,7 +42,8 @@ CREATE TABLE Products
   id INT NOT NULL AUTO_INCREMENT,
   category_id INT NOT NULL,
   name VARCHAR(255) NOT NULL,
-  desc TEXT NOT NULL,
+  description TEXT NOT NULL,
+  price INT NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (category_id) REFERENCES ProductCategories(id) ON DELETE CASCADE
 );
