@@ -54,7 +54,7 @@ CREATE TABLE Orders
   id INT NOT NULL AUTO_INCREMENT,
   customer_id INT NOT NULL,
   PRIMARY KEY (id),
-  FOREIGN KEY (customer_id) REFERENCES Customer(id) ON DELETE CASCADE
+  FOREIGN KEY (customer_id) REFERENCES Customers(id) ON DELETE CASCADE
 );
 
 CREATE TABLE OrderLines
