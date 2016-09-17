@@ -1,6 +1,14 @@
 <?php
 
 require_once("php/global.php");
+require_once("php/sql.php");
+
+// check if category is valid
+if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
+{
+    header('Location: index.php');
+    die;
+}
 
 ?>
 
@@ -9,7 +17,14 @@ require_once("php/global.php");
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title><?php echo $TITLE ?></title>
+        <title>
+            <?php
+                if (isset($_GET["category"]))
+                    echo $_GET["category"] + " | ";
+
+                echo $TITLE;
+            ?>
+        </title>
     </head>
 
     <body>
@@ -18,24 +33,40 @@ require_once("php/global.php");
         <main id="main">
             <div class="row">
                 <div class="col s12 m3">
-                    <?php require_once("templates/side-nav.php"); createSideNav("Home") ?>
+                    <?php require_once("templates/side-nav.php"); createSideNav("Products") ?>
                 </div>
-                
-                <div class="col s12 m9">
-                    <div class="row">
-                        <div class="col s0 m3"></div>
-                        <div class="col s12 m6">
-                            <div id="main-card" class="card blue-grey darken-1 center-align">
-                                <div class="card-content white-text">
-                                  <span class="card-title">Unnamed Web Store</span>
-                                  <p>Home of future e-commerce website.</p>
-                                </div>
-                                <div class="card-action">
-                                  <a href="#" onclick="onOkClick()">Ok</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col s0 m3"></div>
+
+                <div id="product-container" class="col s12 m9">
+                    <div class='header'>
+                        <?php
+                            // only show new products header when category is not selected
+                            echo isset($_GET["category"]) ? strtoupper($_GET["category"]) : "NEW PRODUCTS";
+                        ?>
+                    </div>
+
+                    <?php
+                        $products = isset($_GET["category"]) ? SQL::getProductsByCategory($_GET["category"]) : SQL::getProducts();
+
+                        foreach ($products as $p)
+                        {
+                            echo "<a class='product' href='product-detail.php?id=".$p->id."'>";
+                            echo "    <div class='product-image-container'>";
+                            echo "        <img class='product-image' src='images/products/".$p->image."'>";
+                            echo "    </div>";
+                            echo "    <div class='product-text'>";
+                            echo "        <div class='product-name'>".$p->name."</div>";
+                            echo "        <div class='product-price red-text right-align'>$".$p->formattedPrice()."</div>";
+                            echo "    </div>";
+                            echo "</a>";
+                        }
+                    ?>
+
+                    <div class="center-align">
+                        <ul class="pagination">
+                            <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
+                            <li class="active red lighten-1"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
+                            <li class="disabled"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -44,3 +75,4 @@ require_once("php/global.php");
         <?php require_once("templates/footer.php") ?>
     </body>
 </html>
+ 

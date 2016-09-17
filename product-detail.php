@@ -6,7 +6,7 @@ require_once("php/sql.php");
 // when no id set, redirect to products page
 if (!isset($_GET["id"]))
 {
-    header('Location: products.php');
+    header('Location: index.php');
     die;
 }
 
@@ -15,7 +15,7 @@ $p = SQL::getProduct($_GET["id"]);
 // error or invalid id
 if (is_null($p))
 {
-    header('Location: products.php');
+    header('Location: index.php');
     die;
 }
 

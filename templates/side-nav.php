@@ -6,8 +6,7 @@ function createSideNav($selected)
 {
     // navigation links
     $links = array(
-        "Home" => "index.php",
-        "Products" => "products.php",
+        "Products" => "index.php",
         "FAQs" => "faqs.php",
         "Contact" => "contact.php"
     );
@@ -21,8 +20,8 @@ function createSideNav($selected)
         $cls = $selected === $name ? "red lighten-1 white-text" : "red-text text-lighten-1";
         echo "<a href='{$url}' class='collection-item {$cls}'>{$name}</a>";
 
-        // if product page selected, show categories under products
-        if ($selected === "Products" && $name === "Products")
+        // show categories under products
+        if ($name === "Products")
             createCategories();
     }
 
@@ -41,7 +40,7 @@ function createCategories()
         $name = $categories[$i];
         $lname = strtolower($name);
         
-        echo "<a href='products.php?category={$lname}' class='category {$cls}'>{$name}</a>";
+        echo "<a href='index.php?category={$lname}' class='category {$cls}'>{$name}</a>";
     }
 }
 
