@@ -4,5 +4,5 @@
     
     session_start();
 
-    $TITLE = "&ltShop name here&gt";
+    $TITLE = "Thingalore";
 ?>
