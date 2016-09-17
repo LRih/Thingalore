@@ -27,6 +27,12 @@ class SQL
         return $products;
     }
 
+    public static function getProductsByCategory($category)
+    {
+        // TODO right now ignores category and returns all products...
+        return SQL::getProducts();
+    }
+
     public static function getProduct($id)
     {
         $con = sql::connection();
@@ -36,7 +42,7 @@ class SQL
 
         $product = NULL;
 
-        // prepared statements prevent SQL injection
+        // prepared statements prevent SQL injection (I'm sure)
         if ($statement = $con->prepare("SELECT * FROM Products WHERE id = ?"))
         {
             if ($statement->bind_param("s", $id) && $statement->execute())
@@ -72,6 +78,33 @@ class SQL
 
         sort($categories);
         return $categories;
+    }
+
+    public static function isCategoryValid($category)
+    {
+        $con = sql::connection();
+
+        if ($con->connect_error)
+            return false;
+
+        $valid = false;
+
+        // prepared statements prevent SQL injection (I'm sure)
+        if ($statement = $con->prepare("SELECT * FROM ProductCategories WHERE LOWER(name) = ?"))
+        {
+            if ($statement->bind_param("s", $category) && $statement->execute())
+            {
+                $result = $statement->get_result();
+
+                // category found thus is valid
+                if ($row = $result->fetch_assoc())
+                    $valid = true;
+            }
+        }
+
+        $con->close();
+
+        return $valid;
     }
 
     public static function connection()

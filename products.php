@@ -3,6 +3,13 @@
 require_once("php/global.php");
 require_once("php/sql.php");
 
+// check if category is valid
+if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
+{
+    header('Location: products.php');
+    die;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +17,16 @@ require_once("php/sql.php");
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>Products - {category} | <?php echo $TITLE ?></title>
+        <title>
+            <?php
+                echo "Products";
+
+                if (isset($_GET["category"]))
+                    echo " - ".$_GET["category"];
+
+                echo " | ".$TITLE;
+            ?>
+        </title>
     </head>
 
     <body>
@@ -23,16 +39,15 @@ require_once("php/sql.php");
                 </div>
 
                 <div id="product-container" class="col s12 m9">
-                    <div class="header">NEW PRODUCTS</div>
-
-                    <div class="card blue-grey">
-                        <div class="card-content white-text">
-                            <p>NEW PRODUCTS</p>
-                        </div>
-                    </div>
 
                     <?php
-                        $products = SQL::getProducts();
+                        // only show new products header when category is not selected
+                        if (!isset($_GET["category"]))
+                            echo "<div class='header'>NEW PRODUCTS</div>"
+                    ?>
+
+                    <?php
+                        $products = isset($_GET["category"]) ? SQL::getProductsByCategory($_GET["category"]) : SQL::getProducts();
 
                         foreach ($products as $p)
                         {
