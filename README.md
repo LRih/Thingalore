@@ -17,6 +17,7 @@ Register<br>
 Login
 
 ## Schema
+Schema available [here](https://github.com/LRih/Thingalore/blob/master/docs/schema.sql).
 ```sql
 CREATE TABLE Customers
 (
