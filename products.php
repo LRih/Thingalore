@@ -57,7 +57,7 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
                             echo "    </div>";
                             echo "    <div class='product-text'>";
                             echo "        <div class='product-name'>".$p->name."</div>";
-                            echo "        <div class='product-price red-text right-align'>$".$p->priceStr()."</div>";
+                            echo "        <div class='product-price red-text right-align'>$".$p->formattedPrice()."</div>";
                             echo "    </div>";
                             echo "</a>";
                         }

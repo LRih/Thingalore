@@ -160,7 +160,10 @@ main
 
 .product-image
 {
-    width: 100%;
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    object-position: center;
 }
 
 .product-text
@@ -193,7 +196,10 @@ main
 }
 #detail-image
 {
-    width: 30%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: center;
 }
 
 #detail-options

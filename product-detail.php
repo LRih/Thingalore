@@ -39,7 +39,7 @@ if (is_null($p))
                 </div>
 
                 <div class="col s12 m6">
-                    <h4><?php echo $p->name ?></h4>
+                    <h5><?php echo $p->name ?></h5>
 
                     <div class="section">
                         <img id="detail-image" class="materialboxed center-align" src="images/products/<?php echo $p->image ?>">
@@ -48,13 +48,15 @@ if (is_null($p))
                     <div class="section">
                         <h5>Description</h5>
                         <div class="divider"></div>
-                        <p><?php echo $p->desc ?></p>
+                        <p><?php echo $p->formattedDesc() ?></p>
                     </div>
                 </div>
 
-                <div id="detail-options" class="col s12 m3 center-align">
-                    <div id="detail-price" class="red-text">$<?php echo $p->priceStr() ?></div>
-                    <a class="waves-effect waves-light btn-flat orange white-text"><i class="material-icons left">add</i>Add to cart</a>
+                <div class="col s12 m3">
+                    <div id="detail-options" class="center-align">
+                        <div id="detail-price" class="red-text">$<?php echo $p->formattedPrice() ?></div>
+                        <a class="waves-effect waves-light btn-flat orange white-text"><i class="material-icons left">add</i>Add to cart</a>
+                    </div>
                 </div>
             </div>
         </main>

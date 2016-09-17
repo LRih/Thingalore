@@ -17,7 +17,21 @@ class Product
         $this->image = $image;
     }
 
-    function priceStr()
+    /**
+     * Surround all lines with <p> tag.
+     */
+    function formattedDesc()
+    {
+        $lines = explode("\n", $this->desc);
+
+        $result = "";
+        foreach ($lines as $line)
+            $result .= "<p>".$line."</p>";
+
+        return $result;
+    }
+
+    function formattedPrice()
     {
         return number_format($this->price / 100, 2, '.', ',');
     }
