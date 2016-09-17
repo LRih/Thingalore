@@ -39,12 +39,12 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
                 </div>
 
                 <div id="product-container" class="col s12 m9">
-
-                    <?php
-                        // only show new products header when category is not selected
-                        if (!isset($_GET["category"]))
-                            echo "<div class='header'>NEW PRODUCTS</div>"
-                    ?>
+                    <div class='header'>
+                        <?php
+                            // only show new products header when category is not selected
+                            echo isset($_GET["category"]) ? strtoupper($_GET["category"]) : "NEW PRODUCTS";
+                        ?>
+                    </div>
 
                     <?php
                         $products = isset($_GET["category"]) ? SQL::getProductsByCategory($_GET["category"]) : SQL::getProducts();
