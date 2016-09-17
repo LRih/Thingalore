@@ -9,7 +9,7 @@ class SQL
     public static function getProducts()
     {
         return [
-            array("name" => "Mountain Lake", "desc" => "Standard size lake filled with water. Mountain not included.", "price" => 350),
+            array("name" => "DXF One-Punch Man Saitama", "desc" => "Depicted giving one of his famous punches, Saitama from the hit series One-Punch Man is beautifully captured in this exciting painted ABS and PVC figure! With a height of 7.5”, it captures both his realistic form with carefully detailed muscles and his overwhelmingly powerful presence through the pose and dramatic cape, the combination of which can’t help but inspire you. Doesn’t seeing this make you want to cheer him on?!", "price" => 5000),
             array("name" => "Pine Tree", "desc" => "A tree.", "price" => 450),
             array("name" => "Pier", "desc" => "Made of wood.", "price" => 995),
             array("name" => "Pencil", "desc" => "One pencil.", "price" => 1400)
