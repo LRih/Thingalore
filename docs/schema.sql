@@ -36,6 +36,7 @@ CREATE TABLE Products
   name VARCHAR(255) NOT NULL,
   description TEXT NOT NULL,
   price INT NOT NULL,
+  image VARCHAR(255) NOT NULL,
   PRIMARY KEY (id),
   FOREIGN KEY (category_id) REFERENCES ProductCategories(id) ON DELETE CASCADE
 );
@@ -56,3 +57,12 @@ CREATE TABLE OrderLines
   PRIMARY KEY (id),
   FOREIGN KEY (order_id) REFERENCES Orders(id) ON DELETE CASCADE
 );
+
+INSERT INTO ProductCategories (name) VALUES ("Figurines");
+INSERT INTO ProductCategories (name) VALUES ("Recreation");
+
+INSERT INTO Products (category_id, name, price, image, description) VALUES (1, "DXF One-Punch Man Saitama", 5000, "saitama.jpg", "Depicted giving one of his famous punches, Saitama from the hit series One-Punch Man is beautifully captured in this exciting painted ABS and PVC figure! With a height of 7.5”, it captures both his realistic form with carefully detailed muscles and his overwhelmingly powerful presence through the pose and dramatic cape, the combination of which can’t help but inspire you. Doesn’t seeing this make you want to cheer him on?!");
+
+INSERT INTO Products (category_id, name, price, image, description) VALUES (2, "Pine Tree", 450, "pine_tree.jpg", "A tree.");
+INSERT INTO Products (category_id, name, price, image, description) VALUES (2, "Pier", 995, "pier.jpg", "Made of wood.");
+INSERT INTO Products (category_id, name, price, image, description) VALUES (2, "Pencil", 1400, "pencil.jpg", "One pencil.");

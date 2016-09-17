@@ -34,17 +34,15 @@ require_once("php/sql.php");
                     <?php
                         $products = SQL::getProducts();
 
-                        for ($i = 0; $i < count($products); $i++)
+                        foreach ($products as $p)
                         {
-                            $p = $products[$i];
-                            
-                            echo "<a class='product' href='product-detail.php?id=".$i."'>";
+                            echo "<a class='product' href='product-detail.php?id=".$p->id."'>";
                             echo "    <div class='product-image-container'>";
-                            echo "        <img class='product-image' src='images/products/".$i.".jpg'>";
+                            echo "        <img class='product-image' src='images/products/".$p->image."'>";
                             echo "    </div>";
                             echo "    <div class='product-text'>";
-                            echo "        <div class='product-name'>".$p["name"]."</div>";
-                            echo "        <div class='product-price red-text right-align'>$".number_format($p["price"] / 100, 2, '.', ',')."</div>";
+                            echo "        <div class='product-name'>".$p->name."</div>";
+                            echo "        <div class='product-price red-text right-align'>$".number_format($p->price / 100, 2, '.', ',')."</div>";
                             echo "    </div>";
                             echo "</a>";
                         }
