@@ -27,7 +27,11 @@ class SQL
 
     public static function connection()
     {
+        // test db
         return new mysqli('localhost', 'root', '', 'sec_ecommernce');
+
+        // production db
+        // return new mysqli('localhost', 'sec_ecommernce', 'sec_ecommernce', 'sec_ecommernce');
     }
 }
 
