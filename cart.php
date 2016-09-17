@@ -9,7 +9,7 @@ require_once("php/global.php");
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>Cart | <?php echo $title ?></title>
+        <title>Cart | <?php echo $TITLE ?></title>
     </head>
 
     <body>

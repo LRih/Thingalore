@@ -10,7 +10,7 @@ require_once("php/sql.php");
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>Products - {category} | <?php echo $title ?></title>
+        <title>Products - {category} | <?php echo $TITLE ?></title>
     </head>
 
     <body>
@@ -24,6 +24,12 @@ require_once("php/sql.php");
 
                 <div id="product-container" class="col s12 m9">
                     <div class="header">NEW PRODUCTS</div>
+
+                    <div class="card blue-grey">
+                        <div class="card-content white-text">
+                            <p>NEW PRODUCTS</p>
+                        </div>
+                    </div>
 
                     <?php
                         $products = SQL::getProducts();
