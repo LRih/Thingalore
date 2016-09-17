@@ -22,9 +22,8 @@ require_once("php/global.php");
                 </div>
                 
                 <div class="col s12 m9">
-                    <div class="section">
-                        Contact TODO
-                    </div>
+                    <h5>Contact</h5>
+                    <p>Please direct all enquiries to <a href="mailto:support@thingalore.com">support@thingalore.com</a>.</p>
                 </div>
             </div>
         </main>

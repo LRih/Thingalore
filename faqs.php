@@ -22,10 +22,9 @@ require_once("php/global.php");
                 </div>
                 
                 <div class="col s12 m9">
-                    <div class="section">
-                        <h5>Where does Thingalore ship to?</h5>
-                        <p>Currently we only ship to Australian addresses.</p>
-                    </div>
+                    <h5>Where does Thingalore ship to?</h5>
+                    <p>Currently we only ship to Australian addresses.</p>
+                    
                     <div class="section">
                         <h5>What payment options are available?</h5>
                         <p>We accept payments via PayPal.</p>
