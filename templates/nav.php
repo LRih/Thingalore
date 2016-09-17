@@ -1,4 +1,4 @@
-<div id="banner-container">
+<div id="banner-container" class="red darken-1">
     <div id="banner" class=" lighten-1 valign-wrapper">
         <div class="white-text valign"><a class="white-text" href="index.php"><?php echo $TITLE ?></a></div>
     </div>

@@ -24,6 +24,11 @@ class SQL
 
         return $categories;
     }
+
+    public static function connection()
+    {
+        return new mysqli('localhost', 'root', '', 'sec_ecommernce');
+    }
 }
 
 ?>
