@@ -20,7 +20,7 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
         <title>
             <?php
                 if (isset($_GET["category"]))
-                    echo $_GET["category"] + " | ";
+                    echo $_GET["category"]." | ";
 
                 echo $TITLE;
             ?>
