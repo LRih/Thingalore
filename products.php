@@ -10,7 +10,7 @@ require_once("php/sql.php");
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>Products - {category}</title>
+        <title>Products - {category} | <?php echo $title ?></title>
     </head>
 
     <body>
@@ -23,6 +23,8 @@ require_once("php/sql.php");
                 </div>
 
                 <div id="product-container" class="col s12 m9">
+                    <div class="header">NEW PRODUCTS</div>
+
                     <?php
                         $products = SQL::getProducts();
 
@@ -45,9 +47,8 @@ require_once("php/sql.php");
                     <div class="center-align">
                         <ul class="pagination">
                             <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
-                            <li class="active red lighten-1"><a href="#">1</a></li>
-                            <li class="waves-effect"><a href="#">2</a></li>
-                            <li class="waves-effect"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+                            <li class="active red lighten-1"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
+                            <li class="disabled"><a href="#"><i class="material-icons">chevron_right</i></a></li>
                         </ul>
                     </div>
                 </div>
