@@ -16,6 +16,11 @@ class Product
         $this->price = $price;
         $this->image = $image;
     }
+
+    function priceStr()
+    {
+        return number_format($this->price / 100, 2, '.', ',');
+    }
 }
 
 ?>

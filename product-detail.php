@@ -10,17 +10,14 @@ if (!isset($_GET["id"]))
     die;
 }
 
-$id = intval($_GET["id"]);
-$products = SQL::getProducts();
+$p = SQL::getProduct($_GET["id"]);
 
-// out of bounds
-if ($id < 0 || $id > count($products))
+// error or invalid id
+if (is_null($p))
 {
     header('Location: products.php');
     die;
 }
-
-$p = $products[$id];
 
 ?>
 
@@ -29,7 +26,7 @@ $p = $products[$id];
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title><?php echo $p["name"] ?> | <?php echo $TITLE ?></title>
+        <title><?php echo $p->name ?> | <?php echo $TITLE ?></title>
     </head>
 
     <body>
@@ -42,21 +39,21 @@ $p = $products[$id];
                 </div>
 
                 <div class="col s12 m6">
-                    <h4><?php echo $p["name"] ?></h4>
+                    <h4><?php echo $p->name ?></h4>
 
                     <div class="section">
-                        <img id="detail-image" class="materialboxed center-align" src="images/products/<?php echo $id ?>.jpg">
+                        <img id="detail-image" class="materialboxed center-align" src="images/products/<?php echo $p->image ?>">
                     </div>
 
                     <div class="section">
                         <h5>Description</h5>
                         <div class="divider"></div>
-                        <p><?php echo $p["desc"] ?></p>
+                        <p><?php echo $p->desc ?></p>
                     </div>
                 </div>
 
                 <div id="detail-options" class="col s12 m3 center-align">
-                    <div id="detail-price" class="red-text">$<?php echo number_format($p["price"] / 100, 2, '.', ',') ?></div>
+                    <div id="detail-price" class="red-text">$<?php echo $p->priceStr() ?></div>
                     <a class="waves-effect waves-light btn-flat orange white-text"><i class="material-icons left">add</i>Add to cart</a>
                 </div>
             </div>

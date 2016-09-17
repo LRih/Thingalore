@@ -42,7 +42,7 @@ require_once("php/sql.php");
                             echo "    </div>";
                             echo "    <div class='product-text'>";
                             echo "        <div class='product-name'>".$p->name."</div>";
-                            echo "        <div class='product-price red-text right-align'>$".number_format($p->price / 100, 2, '.', ',')."</div>";
+                            echo "        <div class='product-price red-text right-align'>$".$p->priceStr()."</div>";
                             echo "    </div>";
                             echo "</a>";
                         }

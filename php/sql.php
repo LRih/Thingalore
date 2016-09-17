@@ -9,12 +9,12 @@ class SQL
 {
     public static function getProducts()
     {
-        $products = [];
-
         $con = SQL::connection();
 
         if ($con->connect_error)
             return [];
+
+        $products = [];
 
         if ($result = $con->query("SELECT * FROM Products"))
         {
@@ -27,14 +27,40 @@ class SQL
         return $products;
     }
 
+    public static function getProduct($id)
+    {
+        $con = sql::connection();
+
+        if ($con->connect_error)
+            return NULL;
+
+        $product = NULL;
+
+        // prepared statements prevent SQL injection
+        if ($statement = $con->prepare("SELECT * FROM Products WHERE id = ?"))
+        {
+            if ($statement->bind_param("s", $id) && $statement->execute())
+            {
+                $result = $statement->get_result();
+
+                if ($row = $result->fetch_assoc())
+                    $product = new Product($row["id"], $row["name"], $row["description"], $row["price"], $row["image"]);
+            }
+        }
+
+        $con->close();
+
+        return $product;
+    }
+
     public static function getCategories()
     {
-        $categories = [];
-
         $con = SQL::connection();
 
         if ($con->connect_error)
             return [];
+
+        $categories = [];
 
         if ($result = $con->query("SELECT * FROM ProductCategories"))
         {
