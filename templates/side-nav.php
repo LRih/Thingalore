@@ -17,7 +17,7 @@ function createSideNav($selectedTab, $selectedCategory)
     foreach ($links as $name => $url)
     {
         // highlight current page
-        $cls = $selectedTab === $name ? "red lighten-1 white-text" : "red-text text-lighten-1";
+        $cls = $selectedTab === $name ? "orange darken-2 white-text" : "orange-text text-darken-2";
         echo "<a href='{$url}' class='collection-item {$cls}'>{$name}</a>";
 
         // show categories under products
@@ -37,7 +37,7 @@ function createCategories($selectedCategory)
         $name = $categories[$i];
         $lname = strtolower($name);
 
-        $active = $selectedCategory === $lname ? "red-text text-lighten-1" : ""; // show selected category in red
+        $active = $selectedCategory === $lname ? "orange-text text-darken-2" : ""; // show selected category in red
         $last = $i == count($categories) - 1 ? "last" : ""; // if last item, use special class to show a bottom border
         
         echo "<a href='index.php?category={$lname}' class='category {$active} {$last}'>{$name}</a>";

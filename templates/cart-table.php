@@ -17,16 +17,16 @@
                 foreach ($_SESSION["cart"]->items as $item)
                 {
                     echo "<tr>";
-                    echo "    <td><img class='cart-image cart-icon' src='images/products/".$item->product->image."'></td>";
+                    echo "    <td><img class='cart-image vert-align' src='images/products/".$item->product->image."'></td>";
                     echo "    <td>".$item->product->name."</td>";
                     echo "    <td class='center-align'>";
-                    echo "         <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>chevron_left</i></a>";
-                    echo "             <span class='cart-icon'>".$item->qty."</span>";
-                    echo "         <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>chevron_right</i></a>";
+                    echo "         <a href='#'><i class='vert-align material-icons grey-text text-lighten-1'>chevron_left</i></a>";
+                    echo "             <span class='vert-align'>".$item->qty."</span>";
+                    echo "         <a href='#'><i class='vert-align material-icons grey-text text-lighten-1'>chevron_right</i></a>";
                     echo "    </td>";
                     echo "    <td class='right-align'>".$item->formattedPrice()."</td>";
                     echo "    <td class='right-align'>";
-                    echo "        <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>clear</i></a>";
+                    echo "        <a href='#'><i class='vert-align material-icons grey-text text-lighten-1'>clear</i></a>";
                     echo "    </td>";
                     echo "</tr>";
                 }

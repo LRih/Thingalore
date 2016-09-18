@@ -65,9 +65,9 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
 
                     <div class="center-align">
                         <ul class="pagination">
-                            <li class="disabled"><a href="#"><i class="material-icons">chevron_left</i></a></li>
-                            <li class="active red lighten-1"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
-                            <li class="disabled"><a href="#"><i class="material-icons">chevron_right</i></a></li>
+                            <li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
+                            <li class="active orange darken-2"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
+                            <li class="disabled"><a><i class="material-icons">chevron_right</i></a></li>
                         </ul>
                     </div>
                 </div>

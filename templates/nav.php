@@ -1,9 +1,16 @@
-<div id="banner-container" class="red darken-1">
-    <div id="banner" class=" lighten-1 valign-wrapper">
-        <div class="white-text valign"><a class="white-text" href="index.php"> <img class="valign" src="images/title.png"></a></div>
+<div id="banner-container" class="orange darken-1">
+    <div id="banner" class="lighten-1 valign-wrapper">
+        <div class="white-text valign">
+            <a class="white-text left" href="index.php"><img class="valign" src="images/title.png"></a>
+            <form class="right" method="get" action="index.php">
+                <input id="search-box" class="black-text vert-align" name="search" type="text" placeholder="search"><button id="search-btn" class="btn waves-effect waves-light btn-flat orange darken-1 white-text vert-align" type="submit"><i class="material-icons">search</i></button>
+            </form>
+        </div>
     </div>
+
     <div id="nav" class=" darken-1 right-align">
         <a href="index.php" class="waves-effect waves-light white-text nav-btn left"><i class="material-icons left">home</i>Home</a>
+
         <a href="cart.php" class="waves-effect waves-light white-text nav-btn">
             <i class="material-icons left">shopping_cart</i>
             <?php
