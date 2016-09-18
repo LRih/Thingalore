@@ -1,4 +1,8 @@
 <?php
+    require_once(dirname(__FILE__)."/sql.php");
+    require_once(dirname(__FILE__)."/product.php");
+    require_once(dirname(__FILE__)."/cart.php");
+
     // pre-defined constants
     $TITLE = "Thingalore";
 

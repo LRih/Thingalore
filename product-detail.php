@@ -1,7 +1,6 @@
 <?php
 
 require_once("php/global.php");
-require_once("php/sql.php");
 
 // when no id set, redirect to products page
 if (!isset($_GET["id"]))
@@ -55,7 +54,10 @@ if (is_null($p))
                 <div class="col s12 m3">
                     <div id="detail-options" class="center-align">
                         <div id="detail-price" class="red-text">$<?php echo $p->formattedPrice() ?></div>
-                        <a class="waves-effect waves-light btn-flat orange white-text"><i class="material-icons left">add</i>Add to cart</a>
+                        <form method="post" action="actions/add-to-cart.php">
+                            <input type="hidden" name="id" value="<?php echo $p->id ?>" />
+                            <button class="btn waves-effect waves-light btn-flat orange white-text" type="submit"><i class="material-icons left">add</i>Add to cart</button>
+                        </form>
                     </div>
                 </div>
             </div>

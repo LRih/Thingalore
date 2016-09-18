@@ -1,7 +1,6 @@
 <?php
 
 require_once("php/global.php");
-require_once("php/sql.php");
 
 // check if category is valid
 if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))

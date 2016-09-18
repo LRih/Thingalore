@@ -1,7 +1,5 @@
 <?php
 
-require_once("product.php");
-
 /**
  * Handling access of data via MySQL.
  */
