@@ -215,6 +215,15 @@ main
 }
 
 /* ============================================== CART === */
+.cart-image
+{
+    margin-right: 24px;
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    object-position: center;
+}
+
 .cart-icon
 {
     vertical-align: middle;

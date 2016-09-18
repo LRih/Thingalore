@@ -10,8 +10,8 @@
                 echo "Cart";
 
                 // show cart count
-                if (isset($_SESSION["cart"]) && $_SESSION["cart"]->count() > 0)
-                    echo " <span id='cart-count' class='blue darken-2'>".$_SESSION["cart"]->count()."</span>";
+                if (isset($_SESSION["cart"]) && $_SESSION["cart"]->qty() > 0)
+                    echo " <span id='cart-count' class='blue darken-2'>".$_SESSION["cart"]->qty()."</span>";
             ?>
         </a>
         <a href="login.php" class="waves-effect waves-light white-text nav-btn"><i class="material-icons left">account_circle</i>Account</a>

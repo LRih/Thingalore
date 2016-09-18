@@ -1,10 +1,10 @@
-<div class="container section">
+<div class="row container section">
     <h5>Shopping Cart</h5>
 
     <table class="bordered">
         <thead>
             <tr>
-                <th data-field="id">Product ID</th>
+                <th data-field="id">Product</th>
                 <th class="center-align" data-field="name">Quantity</th>
                 <th class="right-align" data-field="price">Price</th>
                 <th data-field="price"></th>
@@ -13,16 +13,16 @@
 
         <tbody>
             <?php
-                foreach ($_SESSION["cart"]->productIds() as $id => $qty)
+                foreach ($_SESSION["cart"]->items as $item)
                 {
                     echo "<tr>";
-                    echo "    <td>".$id."</td>";
+                    echo "    <td><img class='cart-image cart-icon' src='images/products/".$item->product->image."'>".$item->product->name."</td>";
                     echo "    <td class='center-align'>";
                     echo "         <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>chevron_left</i></a>";
-                    echo "             <span class='cart-icon'>$qty</span>";
+                    echo "             <span class='cart-icon'>".$item->qty."</span>";
                     echo "         <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>chevron_right</i></a>";
                     echo "    </td>";
-                    echo "    <td class='right-align'>Unknown</td>";
+                    echo "    <td class='right-align'>$".$item->formattedPrice()."</td>";
                     echo "    <td class='right-align'>";
                     echo "        <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>clear</i></a>";
                     echo "    </td>";
@@ -33,10 +33,10 @@
     </table>
 
     <div class="section right-align">
-        <h5>Total: $XX.YY</h5>
+        <h5>Total: $<?php echo $_SESSION["cart"]->formattedPrice() ?></h5>
     </div>
 
     <div class="section">
-        <a href="#" class="waves-effect waves-light btn-flat blue white-text right">Checkout</a>
+        <a href="mock-paypal.php" class="waves-effect waves-light btn-flat blue white-text right">Checkout</a>
     </div>
 </div>

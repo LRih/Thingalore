@@ -17,7 +17,7 @@ require_once("php/global.php");
 
         <main id="main">
             <?php
-                if (isset($_SESSION["cart"]) && $_SESSION["cart"]->count() > 0)
+                if (isset($_SESSION["cart"]) && $_SESSION["cart"]->qty() > 0)
                     require_once("templates/cart-table.php");
                 else
                     require_once("templates/cart-empty.php");

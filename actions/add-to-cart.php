@@ -23,7 +23,7 @@ if (!isset($_SESSION["cart"]))
     $_SESSION["cart"] = new Cart();
 
 // add product to cart
-$_SESSION["cart"]->add($p->id);
+$_SESSION["cart"]->add($p);
 
 // redirect to cart
 header('Location: ../cart.php');
