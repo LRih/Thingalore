@@ -42,7 +42,7 @@ if (is_null($p))
                     <h5><?php echo $p->name ?></h5>
 
                     <div class="section">
-                        <img id="detail-image" class="materialboxed center-align" src="images/products/<?php echo $p->image ?>">
+                        <img id="detail-image" class="materialboxed" src="images/products/<?php echo $p->image ?>">
                     </div>
 
                     <div class="section">

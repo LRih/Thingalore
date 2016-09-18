@@ -37,16 +37,20 @@ class SQL
 
         $products = [];
 
+        $query = "SELECT Products.id, Products.name, Products.description, Products.price, Products.image ".
+                 "FROM Products, ProductCategories ".
+                 "WHERE Products.category_id = ProductCategories.id AND LOWER(ProductCategories.name) = ? ".
+                 "ORDER BY id DESC";
+
         // prepared statements prevent SQL injection (I'm sure)
-        if ($statement = $con->prepare("SELECT Products.* FROM Products, ProductCategories ".
-            "WHERE Products.category_id = ProductCategories.id AND LOWER(ProductCategories.name) = ? ORDER BY id DESC"))
+        if ($statement = $con->prepare($query))
         {
             if ($statement->bind_param("s", $category) && $statement->execute())
             {
-                $result = $statement->get_result();
+                $statement->bind_result($id, $name, $desc, $price, $image);
 
-                while ($row = $result->fetch_assoc())
-                    array_push($products, new Product($row["id"], $row["name"], $row["description"], $row["price"], $row["image"]));
+                while ($statement->fetch())
+                    array_push($products, new Product($id, $name, $desc, $price, $image));
             }
         }
 
@@ -64,15 +68,17 @@ class SQL
 
         $product = NULL;
 
+        $query = "SELECT Products.id, Products.name, Products.description, Products.price, Products.image FROM Products WHERE id = ?";
+
         // prepared statements prevent SQL injection (I'm sure)
-        if ($statement = $con->prepare("SELECT * FROM Products WHERE id = ?"))
+        if ($statement = $con->prepare($query))
         {
             if ($statement->bind_param("s", $id) && $statement->execute())
             {
-                $result = $statement->get_result();
+                $statement->bind_result($id, $name, $desc, $price, $image);
 
-                if ($row = $result->fetch_assoc())
-                    $product = new Product($row["id"], $row["name"], $row["description"], $row["price"], $row["image"]);
+                if ($statement->fetch())
+                    $product = new Product($id, $name, $desc, $price, $image);
             }
         }
 
@@ -112,14 +118,14 @@ class SQL
         $valid = false;
 
         // prepared statements prevent SQL injection (I'm sure)
-        if ($statement = $con->prepare("SELECT * FROM ProductCategories WHERE LOWER(name) = ?"))
+        if ($statement = $con->prepare("SELECT ProductCategories.name FROM ProductCategories WHERE LOWER(name) = ?"))
         {
             if ($statement->bind_param("s", $category) && $statement->execute())
             {
-                $result = $statement->get_result();
+                $statement->bind_result($name);
 
                 // category found thus is valid
-                if ($row = $result->fetch_assoc())
+                if ($statement->fetch())
                     $valid = true;
             }
         }
@@ -131,11 +137,10 @@ class SQL
 
     public static function connection()
     {
-        // test db
-        return new mysqli('localhost', 'root', '', 'sec_ecommerce');
-
-        // production db
-        // return new mysqli('localhost', 'sec_ecommerce', 'sec_ecommerce', 'sec_ecommerce');
+        if ($GLOBALS["test_mode"])
+            return new mysqli('localhost', 'root', '', 'sec_ecommerce'); // test db
+        else
+            return new mysqli('localhost', 'sec_ecommerce', 'sec_ecommerce', 'sec_ecommerce'); // production db
     }
 }
 

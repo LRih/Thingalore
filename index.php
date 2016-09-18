@@ -49,7 +49,7 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
 
                         foreach ($products as $p)
                         {
-                            echo "<a class='product' href='product-detail.php?id=".$p->id."'>";
+                            echo "<a class='product z-depth-1' href='product-detail.php?id=".$p->id."'>";
                             echo "    <div class='product-image-container'>";
                             echo "        <img class='product-image' src='images/products/".$p->image."'>";
                             echo "    </div>";
