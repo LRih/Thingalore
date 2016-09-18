@@ -47,7 +47,7 @@ if (is_null($p))
                     <div class="section">
                         <h5>Description</h5>
                         <div class="divider"></div>
-                        <p><?php echo $p->formattedDesc() ?></p>
+                        <?php echo $p->formattedDesc() ?>
                     </div>
                 </div>
 
