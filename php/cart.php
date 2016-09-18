@@ -18,8 +18,6 @@ class Cart
         // increment quantity
         $this->productsIds[$productId]++;
         $this->count++;
-
-        var_dump($this->productsIds);
     }
 
     function count()
