@@ -1,5 +1,5 @@
-<div id="banner-container" class="orange darken-1">
-    <div id="banner" class="lighten-1 valign-wrapper">
+<div id="banner-container" class="orange darken-4">
+    <div id="banner" class="valign-wrapper">
         <div class="white-text valign">
             <a class="white-text left" href="index.php"><img class="valign" src="images/title.png"></a>
             <form class="right" method="get" action="index.php">
