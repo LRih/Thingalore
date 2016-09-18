@@ -4,10 +4,11 @@
     <table class="bordered">
         <thead>
             <tr>
-                <th data-field="id">Product</th>
-                <th class="center-align" data-field="name">Quantity</th>
-                <th class="right-align" data-field="price">Price</th>
-                <th data-field="price"></th>
+                <th></th>
+                <th></th>
+                <th class="center-align">Quantity</th>
+                <th class="right-align">Price</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -16,7 +17,8 @@
                 foreach ($_SESSION["cart"]->items as $item)
                 {
                     echo "<tr>";
-                    echo "    <td><img class='cart-image cart-icon' src='images/products/".$item->product->image."'>".$item->product->name."</td>";
+                    echo "    <td><img class='cart-image cart-icon' src='images/products/".$item->product->image."'></td>";
+                    echo "    <td>".$item->product->name."</td>";
                     echo "    <td class='center-align'>";
                     echo "         <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>chevron_left</i></a>";
                     echo "             <span class='cart-icon'>".$item->qty."</span>";
