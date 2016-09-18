@@ -34,7 +34,7 @@ if (is_null($p))
         <main id="main">
             <div class="row">
                 <div class="col s12 m3">
-                    <?php require_once("templates/side-nav.php"); createSideNav("Products") ?>
+                    <?php require_once("templates/side-nav.php"); createSideNav("Products", "") ?>
                 </div>
 
                 <div class="col s12 m6">

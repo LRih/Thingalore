@@ -10,11 +10,12 @@ class Product
 
     function __construct($id, $name, $desc, $price, $image)
     {
+        // htmlspecialchars removes XSS threat
         $this->id = $id;
-        $this->name = $name;
-        $this->desc = $desc;
+        $this->name = htmlspecialchars($name);
+        $this->desc = htmlspecialchars($desc);
         $this->price = $price;
-        $this->image = $image;
+        $this->image = htmlspecialchars($image);
     }
 
     /**
