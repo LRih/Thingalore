@@ -32,7 +32,10 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
         <main id="main">
             <div class="row">
                 <div class="col s12 m3">
-                    <?php require_once("templates/side-nav.php"); createSideNav("Products") ?>
+                    <?php
+                        require_once("templates/side-nav.php");
+                        createSideNav("Products", isset($_GET["category"]) ? $_GET["category"] : "");
+                    ?>
                 </div>
 
                 <div id="product-container" class="col s12 m9">
