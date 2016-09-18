@@ -24,7 +24,7 @@
                     echo "             <span class='cart-icon'>".$item->qty."</span>";
                     echo "         <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>chevron_right</i></a>";
                     echo "    </td>";
-                    echo "    <td class='right-align'>$".$item->formattedPrice()."</td>";
+                    echo "    <td class='right-align'>".$item->formattedPrice()."</td>";
                     echo "    <td class='right-align'>";
                     echo "        <a href='#'><i class='cart-icon material-icons grey-text text-lighten-1'>clear</i></a>";
                     echo "    </td>";
@@ -35,7 +35,7 @@
     </table>
 
     <div class="section right-align">
-        <h5>Total: $<?php echo $_SESSION["cart"]->formattedPrice() ?></h5>
+        <h5>Total: <?php echo $_SESSION["cart"]->formattedPrice() ?></h5>
     </div>
 
     <div class="section">

@@ -53,7 +53,7 @@ if (is_null($p))
 
                 <div class="col s12 m3">
                     <div id="detail-options" class="center-align">
-                        <div id="detail-price" class="red-text">$<?php echo $p->formattedPrice() ?></div>
+                        <div id="detail-price" class="red-text"><?php echo $p->formattedPrice() ?></div>
                         <form method="post" action="actions/add-to-cart.php">
                             <input type="hidden" name="id" value="<?php echo $p->id ?>" />
                             <button class="btn waves-effect waves-light btn-flat orange white-text" type="submit"><i class="material-icons left">add</i>Add to cart</button>
