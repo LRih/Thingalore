@@ -135,7 +135,7 @@ class SQL
         return $valid;
     }
 
-    public static function connection()
+    private static function connection()
     {
         if ($GLOBALS["test_mode"])
             return new mysqli('localhost', 'root', '', 'sec_ecommerce'); // test db
