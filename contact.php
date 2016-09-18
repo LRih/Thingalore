@@ -18,7 +18,7 @@ require_once("php/global.php");
         <main id="main">
             <div class="row">
                 <div class="col s12 m3">
-                    <?php require_once("templates/side-nav.php"); createSideNav("Contact") ?>
+                    <?php require_once("templates/side-nav.php"); createSideNav("Contact", "") ?>
                 </div>
                 
                 <div class="col s12 m9">
