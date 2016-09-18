@@ -20,6 +20,11 @@ class Cart
         $this->count++;
     }
 
+    function productIds()
+    {
+        return $this->productsIds;
+    }
+
     function count()
     {
         return $this->count;

@@ -16,11 +16,12 @@ require_once("php/global.php");
         <?php require_once("templates/nav.php") ?>
 
         <main id="main">
-            <div class="container section">
-                <h5>Shopping Cart</h5>
-                <p>Your shopping cart is empty!</p>
-                <a href="index.php" class="waves-effect waves-light btn-flat blue white-text right">Continue</a>
-            </div>
+            <?php
+                if (isset($_SESSION["cart"]) && $_SESSION["cart"]->count() > 0)
+                    require_once("templates/cart-table.php");
+                else
+                    require_once("templates/cart-empty.php");
+            ?>
         </main>
 
         <?php require_once("templates/footer.php") ?>
