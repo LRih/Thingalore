@@ -1,7 +1,7 @@
 <div class="container section">
     <h5>Shopping Cart</h5>
 
-    <table class="bordered highlight">
+    <table class="bordered">
         <thead>
             <tr>
                 <th data-field="id">Product ID</th>
@@ -20,7 +20,7 @@
                     echo "    <td>".$count."</td>";
                     echo "    <td>Unknown</td>";
                     echo "    <td class='center-align'>";
-                    echo "        <a href='#'><i class='material-icons red-text text-lighten-1'>cancel</i></a>";
+                    echo "        <a href='#'><i class='material-icons grey-text text-lighten-1'>cancel</i></a>";
                     echo "    </td>";
                     echo "</tr>";
                 }
