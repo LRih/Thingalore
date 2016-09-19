@@ -18,4 +18,14 @@
     
     // so we can make use of session state
     session_start();
+
+
+    /**
+     * Convenience function for setting redirect.
+     */
+    function redirect($location)
+    {
+        header("Location: ".$location);
+        die;
+    }
 ?>

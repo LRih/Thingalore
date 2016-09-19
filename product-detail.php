@@ -4,19 +4,13 @@ require_once("php/global.php");
 
 // when no id set, redirect to products page
 if (!isset($_GET["id"]))
-{
-    header('Location: index.php');
-    die;
-}
+    redirect("index.php");
 
 $p = SQL::getProduct($_GET["id"]);
 
 // error or invalid id
 if (is_null($p))
-{
-    header('Location: index.php');
-    die;
-}
+    redirect("index.php");
 
 ?>
 

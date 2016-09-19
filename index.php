@@ -4,10 +4,7 @@ require_once("php/global.php");
 
 // check if category is valid
 if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
-{
-    header('Location: index.php');
-    die;
-}
+    redirect("index.php");
 
 ?>
 
