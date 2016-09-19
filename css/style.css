@@ -160,11 +160,6 @@ main
     overflow: hidden;
     transition: 0.25s;
 }
-.product:hover
-{
-    background-color: #fafafa;
-    transition: 0.25s;
-}
 
 .product-image-container
 {
