@@ -21,7 +21,7 @@ body
 {
     margin-top: 32px;
 }
-td{ cursor: pointer;}
+
 .vert-align
 {
     vertical-align: middle;
@@ -234,6 +234,12 @@ main
     height: 64px;
     object-fit: cover;
     object-position: center;
+}
+
+/* ============================================== ORDERS === */
+.clickable
+{
+    cursor: pointer;
 }
 
 /* ============================================== FORM === */

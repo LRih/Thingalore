@@ -34,12 +34,12 @@ require_once("php/global.php");
                             </thead>
 
                             <tbody>
-                                <tr onclick="navigate('user-order-detail.php')">
+                                <tr class="clickable" onclick="navigate('user-order-detail.php')">
                                     <td class="center-align">123</td>
                                     <td class="center-align">23/04/2016</td>
                                     <td class="center-align">Processing</td>
                                 </tr>
-                                <tr onclick="navigate('user-order-detail.php')">
+                                <tr class="clickable" onclick="navigate('user-order-detail.php')">
                                     <td class="center-align">124</td>
                                     <td class="center-align">01/03/2016</td>
                                     <td class="center-align">Shipped</td>
