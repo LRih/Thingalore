@@ -24,12 +24,16 @@ require_once("php/global.php");
                 $address = test_input($_POST["address"]);
                 $phone = test_input($_POST["phone"]);
                 $email = test_input($_POST["email"]);
-                $pwd = test_input($_POST["password"]);
+                $pwd = encrypt($_POST["password"]);
             }
 
             function test_input($data) {
                 # Testing/editing data here
                 return $data;
+            }
+
+            function encrypt($pass) {
+                return sha1($pass);
             }
 
         ?>
