@@ -1,3 +1,16 @@
+<!--
+    TO DO:
+    - Phone number valid
+    - Address drop down boxes
+    - Captcha is true
+    - Password mix of capital, lowercase, numbers and symbols
+    - Message, "REGISTRATION SUCCESSFULL" or email validation
+
+    DONE:
+    - Client side validation: all fields are entered
+    - Captcha must be entered
+-->
+
 <?php
 
 require_once("php/global.php");
@@ -15,29 +28,6 @@ require_once("php/global.php");
     <body>
         <?php require_once("templates/nav.php") ?>
 
-        <?php
-            $fname = $lname = $email = $pwd = "";
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $fname = test_input($_POST["first_name"]);
-                $lname = test_input($_POST["last_name"]);
-                $address = test_input($_POST["address"]);
-                $phone = test_input($_POST["phone"]);
-                $email = test_input($_POST["email"]);
-                $pwd = encrypt($_POST["password"]);
-            }
-
-            function test_input($data) {
-                # Testing/editing data here
-                return $data;
-            }
-
-            function encrypt($pass) {
-                return sha1($pass);
-            }
-
-        ?>
-
         <main id="main">
             <div class="center-align">
                 <h5>Registration</h5>
@@ -45,35 +35,35 @@ require_once("php/global.php");
                 <form class="col s12" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="row">
                         <div class="input-field col s6" >
-                            <input id="first_name" type="text" class="validate" name="first_name">
+                            <input id="first_name" type="text" class="validate" name="first_name" required aria-required=”true”/>
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="last_name" type="text" class="validate" name="last_name">
+                            <input id="last_name" type="text" class="validate" name="last_name" required aria-required=”true”/>
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="address" type="text" class="validate" name="address">
+                            <input id="address" type="text" class="validate" name="address" required aria-required=”true”/>
                             <label for="address">Address</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="phone" type="text" class="validate" name="phone">
+                            <input id="phone" type="text" class="validate" name="phone" required aria-required=”true”/>
                             <label for="phone">Phone Number</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12" >
-                            <input id="password" type="password" class="validate" name="password">
+                            <input id="password" type="password" class="validate" name="password" required aria-required=”true”/>
                             <label for="password">Password</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="email" type="email" class="validate" name="email">
+                            <input id="email" type="email" class="validate" name="email" required aria-required=”true”/>
                             <label for="email">Email</label>
                         </div>
                     </div>
@@ -87,6 +77,33 @@ require_once("php/global.php");
         </main>
 
         <?php
+        ####### TO BE INPUT INTO SEPARATE FILE ########
+        $fname;$lname;$address;$phone;$email;$pwd;$captcha = 1;
+
+        # Ensuring the captcha has been entered.  If it hasn't, do not enter data in DB
+        if(isset($_POST['g-recaptcha-response'])){
+            $captcha=$_POST['g-recaptcha-response'];
+        }
+        if(!$captcha){
+            echo '<h2>Please check the the captcha form.</h2>';
+            exit;
+        }
+
+        #Save values after form submit
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $fname = $_POST["first_name"];
+            $lname = $_POST["last_name"];
+            $address = $_POST["address"];
+            $phone = $_POST["phone"];
+            $email = $_POST["email"];
+            $pwd = encrypt($_POST["password"]);
+        }
+
+        function encrypt($pass) {
+            return sha1($pass);
+        }
+
+
         $servername = "localhost";
         $username = "root";
         $password = "";

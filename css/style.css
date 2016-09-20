@@ -244,3 +244,14 @@ main
     object-fit: cover;
     object-position: center;
 }
+
+/* ============================================== FORM === */
+input:invalid,
+input:out-of-range {
+    border-color:hsl(0, 50%, 50%);
+}
+
+
+
+
+
