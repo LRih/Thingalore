@@ -2,6 +2,11 @@
 /* Runs on page load */
 $(function()
 {
-    // to get the navigation drawer to work
-    $(".button-collapse").sideNav();
+    // nothing
 });
+
+/* Go to specified URL */
+function navigate(url)
+{
+    window.document.location = url;
+}

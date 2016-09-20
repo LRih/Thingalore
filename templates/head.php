@@ -25,5 +25,5 @@
 
 
 <link type="text/css" rel="stylesheet" href="css/style.css" />
-<script type="text/javascript" src="scripts/script.js"></script>
+<script type="text/javascript" src="css/script.js"></script>
 <link href="images/icon.png" rel="icon" />

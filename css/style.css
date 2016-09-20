@@ -21,7 +21,7 @@ body
 {
     margin-top: 32px;
 }
-
+td{ cursor: pointer;}
 .vert-align
 {
     vertical-align: middle;
