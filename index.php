@@ -2,9 +2,27 @@
 
 require_once("php/global.php");
 
-// check if category is valid
-if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
-    redirect("index.php");
+$products = [];
+
+// search takes precedence over category
+if (isset($_GET["search"]))
+{
+    // check for empty search query
+    if (empty($_GET["search"]))
+        redirect("index.php");
+
+    $products = SQL::getProductsBySearch(htmlspecialchars($_GET["search"]));
+}
+else if (isset($_GET["category"]))
+{
+    // check if category is valid
+    if (!SQL::isCategoryValid($_GET["category"]))
+        redirect("index.php");
+
+    $products = SQL::getProductsByCategory($_GET["category"]);
+}
+else
+    $products = SQL::getProducts();
 
 ?>
 
@@ -15,6 +33,8 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
         <?php require_once("templates/head.php") ?>
         <title>
             <?php
+                if (isset($_GET["search"]))
+                    echo "Search results | ";
                 if (isset($_GET["category"]))
                     echo $_GET["category"]." | ";
 
@@ -38,14 +58,17 @@ if (isset($_GET["category"]) && !SQL::isCategoryValid($_GET["category"]))
                 <div id="product-container" class="col s12 m9">
                     <div class='header'>
                         <?php
-                            // only show new products header when category is not selected
-                            echo isset($_GET["category"]) ? strtoupper($_GET["category"]) : "NEW PRODUCTS";
+                            // header depends on viewing mode
+                            if (isset($_GET["search"]))
+                                echo "Search results for <strong>".htmlspecialchars($_GET["search"])."</strong>";
+                            else if (isset($_GET["category"]))
+                                echo strtoupper($_GET["category"]);
+                            else
+                                echo "NEW PRODUCTS";
                         ?>
                     </div>
 
                     <?php
-                        $products = isset($_GET["category"]) ? SQL::getProductsByCategory($_GET["category"]) : SQL::getProducts();
-
                         foreach ($products as $p)
                         {
                             echo "<a class='product z-depth-1 hoverable' href='product-detail.php?id=".$p->id."'>";

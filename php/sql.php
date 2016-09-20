@@ -57,6 +57,42 @@ class SQL
         return $products;
     }
 
+    /**
+     * Very rudimentary search procedure.
+     */
+    public static function getProductsBySearch($search)
+    {
+        $search = "%".$search."%";
+
+        $con = sql::connection();
+
+        if ($con->connect_error)
+            return [];
+
+        $products = [];
+
+        $query = "SELECT Products.id, Products.name, Products.description, Products.price, Products.image ".
+                 "FROM Products ".
+                 "WHERE LOWER(Products.name) LIKE LOWER(?) ".
+                 "ORDER BY id DESC";
+
+        // prepared statements prevent SQL injection (I'm sure)
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("s", $search) && $statement->execute())
+            {
+                $statement->bind_result($id, $name, $desc, $price, $image);
+
+                while ($statement->fetch())
+                    array_push($products, new Product($id, $name, $desc, $price, $image));
+            }
+        }
+
+        $con->close();
+
+        return $products;
+    }
+
     public static function getProduct($id)
     {
         $con = sql::connection();

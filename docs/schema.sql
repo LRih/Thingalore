@@ -68,8 +68,9 @@ INSERT INTO ProductCategories (name) VALUES ("Model Kits");
 INSERT INTO ProductCategories (name) VALUES ("Recreation");
 
 INSERT INTO Products (category_id, name, price, image, description) VALUES (3, "Pine Tree", 450, "pine_tree.jpg", "A tree.");
+INSERT INTO Products (category_id, name, price, image, description) VALUES (1, "Hatsune Miku 1/8th scale", 5238, "miku.jpg", "This 1/8 scale figure of Hatsune Miku was first released in September, but due to it's overwhelming popularity, a re-release has already been announced for October! From VOCALOID2's popular ""Character Vocal Series 01"" comes a realistic PVC figure of the mascot character Hatsune Miku.\nThis particular pose was based off an original illustration by the character's original designer, KEI. Special care has been taken in preserving every enchanting detail, from her trademark twintails fluttering around her, to the hand on her headset, everything comes together and makes her seem ready to burst into song at any moment. She's jumped out of the virtual world and into this cute figure, so be sure to take one home with you.");
 INSERT INTO Products (category_id, name, price, image, description) VALUES (3, "Pier", 995, "pier.jpg", "Made of wood.");
-INSERT INTO Products (category_id, name, price, image, description) VALUES (3, "Pencil", 1400, "pencil.jpg", "One pencil.");
+INSERT INTO Products (category_id, name, price, image, description) VALUES (3, "Pencil", 1400, "pencil.jpg", "One pencil. Of the finest craftmanship by DIXON.\n Includes revolutionary top-tipped eraser mechanism.");
 
 INSERT INTO Products (category_id, name, price, image, description) VALUES (2, "MG Gundam SEED 1/100 Freedom Gundam", 4860, "mg_freedom.jpg", "Frame, exterior both revamped proportions in the new shape completely. Detail has followed the SEED Ver.RM system.\nDesigned to achieve a natural moving close to human. Fully reproduce the heroic poses of Freedom Gundam.\nArms stretch movable elbow joints. Delicate movement can also be realized.\nThigh armor to the slide mechanism, and adopt a double joint specification of the toe.\nWarp, crouched, twisting and flexibly abdomen moving.");
 
