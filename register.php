@@ -43,6 +43,8 @@ require_once("php/global.php");
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
+
+                    <!-- Address -->
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="address" type="text" class="validate" name="address" required aria-required=”true”/>
@@ -50,9 +52,30 @@ require_once("php/global.php");
                         </div>
                     </div>
                     <div class="row">
+                        <div class="input-field col s4">
+                        <select class="browser-default" name="state">
+                            <option value="" disabled selected>State</option>
+                            <option value="NSW">NSW</option>
+                            <option value="NT">NT</option>
+                            <option value="QLD">QLD</option>
+                            <option value="SA">SA</option>
+                            <option value="TAS">TAS</option>
+                            <option value="VIC">VIC</option>
+                            <option value="WA">WA</option>
+                        </select>
+                        </div>
+                        <div class="input-field col s2"></div>
+                        <div class="input-field col s3">
+                            <input id="postcode" type="text" class="validate" name="postcode" required aria-required=”true”/>
+                            <label for="postcode">Postcode</label>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
                         <div class="input-field col s12">
                             <input id="phone" type="text" class="validate" name="phone" required aria-required=”true”/>
-                            <label for="phone">Phone Number</label>
+                            <label for="phone">Telephone</label>
                         </div>
                     </div>
                     <div class="row">
@@ -80,30 +103,48 @@ require_once("php/global.php");
         ####### TO BE INPUT INTO SEPARATE FILE ########
         $fname;$lname;$address;$phone;$email;$pwd;$captcha = 1;
 
-        # Ensuring the captcha has been entered.  If it hasn't, do not enter data in DB
+        ################ CHECKING CAPTCHA ###########
         if(isset($_POST['g-recaptcha-response'])){
             $captcha=$_POST['g-recaptcha-response'];
         }
+
         if(!$captcha){
             echo '<h2>Please check the the captcha form.</h2>';
             exit;
         }
-
+            /*else {
+                $secretKey = "6LedrSkTAAAAAEgtdp4x6OujcEszFP2i4XA5EwRz";
+                $ip = $_SERVER['REMOTE_ADDR'];
+                $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
+                echo $response;
+                $responseKeys = json_decode($response,true);
+                echo $responseKeys;
+                
+                if(intval($responseKeys["success"]) !== 1) {
+                    echo '<h2>You are spammer !</h2>';
+                } 
+                else {
+                    echo '<h2>DONE</h2>';
+                }
+            }*/
+        
+        
         #Save values after form submit
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $fname = $_POST["first_name"];
             $lname = $_POST["last_name"];
-            $address = $_POST["address"];
+            $address = $_POST["address"].", ".$_POST["state"].", ".$_POST["postcode"];
             $phone = $_POST["phone"];
             $email = $_POST["email"];
             $pwd = encrypt($_POST["password"]);
         }
 
         function encrypt($pass) {
-            return sha1($pass);
+            return password_hash($pass, PASSWORD_BCRYPT);
         }
 
 
+        ################# DATA INTO DATABASE ###
         $servername = "localhost";
         $username = "root";
         $password = "";
