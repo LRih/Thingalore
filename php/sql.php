@@ -35,7 +35,7 @@ class SQL
 
         $products = [];
 
-        $query = "SELECT Products.id, Products.name, Products.description, Products.price, Products.image ".
+        $query = "SELECT Products.* ".
                  "FROM Products, ProductCategories ".
                  "WHERE Products.category_id = ProductCategories.id AND LOWER(ProductCategories.name) = ? ".
                  "ORDER BY id DESC";
@@ -45,7 +45,7 @@ class SQL
         {
             if ($statement->bind_param("s", $category) && $statement->execute())
             {
-                $statement->bind_result($id, $name, $desc, $price, $image);
+                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image);
 
                 while ($statement->fetch())
                     array_push($products, new Product($id, $name, $desc, $price, $image));
@@ -71,7 +71,7 @@ class SQL
 
         $products = [];
 
-        $query = "SELECT Products.id, Products.name, Products.description, Products.price, Products.image ".
+        $query = "SELECT * ".
                  "FROM Products ".
                  "WHERE LOWER(Products.name) LIKE LOWER(?) ".
                  "ORDER BY id DESC";
@@ -81,7 +81,7 @@ class SQL
         {
             if ($statement->bind_param("s", $search) && $statement->execute())
             {
-                $statement->bind_result($id, $name, $desc, $price, $image);
+                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image);
 
                 while ($statement->fetch())
                     array_push($products, new Product($id, $name, $desc, $price, $image));
@@ -102,14 +102,14 @@ class SQL
 
         $product = NULL;
 
-        $query = "SELECT Products.id, Products.name, Products.description, Products.price, Products.image FROM Products WHERE id = ?";
+        $query = "SELECT * FROM Products WHERE id = ?";
 
         // prepared statements prevent SQL injection (I'm sure)
         if ($statement = $con->prepare($query))
         {
             if ($statement->bind_param("s", $id) && $statement->execute())
             {
-                $statement->bind_result($id, $name, $desc, $price, $image);
+                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image);
 
                 if ($statement->fetch())
                     $product = new Product($id, $name, $desc, $price, $image);
@@ -167,6 +167,34 @@ class SQL
         $con->close();
 
         return $valid;
+    }
+
+    public static function getOrders($customer_id)
+    {
+        $con = sql::connection();
+
+        if ($con->connect_error)
+            return [];
+
+        $orders = [];
+
+        $query = "SELECT id, DATE_FORMAT(order_date, '%d/%m/%Y'), status FROM Orders WHERE customer_id = ? ORDER BY order_date DESC";
+
+        // prepared statements prevent SQL injection (I'm sure)
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("s", $customer_id) && $statement->execute())
+            {
+                $statement->bind_result($id, $date, $status);
+
+                while ($statement->fetch())
+                    array_push($orders, new Order($id, $date, $status));
+            }
+        }
+
+        $con->close();
+
+        return $orders;
     }
 
     private static function connection()

@@ -23,27 +23,32 @@ require_once("php/global.php");
                 
                 <div class="col s12 m9">
                     <h5>Orders</h5>
+                    <p class="red-text">TODO change with current user's data</p>
                     <div class="section">
                         <table class="bordered highlight">
                             <thead>
                                 <tr>
                                     <th class="center-align">Order ID</th>
+                                    <th class="center-align">Total</th>
                                     <th class="center-align">Date</th>
                                     <th class="center-align">Status</th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <tr class="clickable" onclick="navigate('user-order-detail.php')">
-                                    <td class="center-align">123</td>
-                                    <td class="center-align">23/04/2016</td>
-                                    <td class="center-align">Processing</td>
-                                </tr>
-                                <tr class="clickable" onclick="navigate('user-order-detail.php')">
-                                    <td class="center-align">124</td>
-                                    <td class="center-align">01/03/2016</td>
-                                    <td class="center-align">Shipped</td>
-                                </tr>
+                                <?php
+                                    $orders = SQL::getOrders(1);
+
+                                    foreach ($orders as $order)
+                                    {
+                                        echo "<tr class='clickable' onclick='navigate(\"user-order-detail.php\")'>";
+                                        echo "    <td class='center-align'>".$order->id."</td>";
+                                        echo "    <td class='center-align'>$ XX.YY</td>";
+                                        echo "    <td class='center-align'>".$order->date."</td>";
+                                        echo "    <td class='center-align'>".$order->status."</td>";
+                                        echo "</tr>";
+                                    }
+                                ?>
                             </tbody>
                         </table>
                     </div>
