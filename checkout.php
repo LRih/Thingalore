@@ -16,10 +16,52 @@ require_once("php/global.php");
         <?php require_once("templates/nav.php") ?>
 
         <main id="main">
-            <div class="row container section">
+            <div class="container">
                 <h5>Checkout</h5>
-                <p>This is the checkout page. If user is not logged in, redirect to login page. Otherwise show the standard checkout UI.</p>
-                <a href="mock-paypal.php"><img src="images/checkout.png"></a>
+
+                <div class="section">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h5>Item details</h5>
+                                    <p>Blah blah blah</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h5>Shipping details</h5>
+                                    <p>Blah blah blah</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 m6">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h5>Pay with credit card</h5>
+                                    <p>Unavailable</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col s12 m6">
+                            <div class="card">
+                                <div class="card-content">
+                                    <h5>Pay with PayPal</h5>
+                                    <a href="mock-paypal.php"><img src="images/checkout.png"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </main>
 
