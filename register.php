@@ -1,7 +1,5 @@
 <!--
     TO DO:
-    - Phone number valid
-    - Address drop down boxes
     - Captcha is true
     - Password mix of capital, lowercase, numbers and symbols
     - Message, "REGISTRATION SUCCESSFULL" or email validation
@@ -9,6 +7,7 @@
     DONE:
     - Client side validation: all fields are entered
     - Captcha must be entered
+    - Address drop down boxes
 -->
 
 <?php
@@ -27,6 +26,11 @@ require_once("php/global.php");
 
     <body>
         <?php require_once("templates/nav.php") ?>
+        <script>
+            $(document).ready(function() {
+                $('select').material_select();
+            });
+        </script>
 
         <main id="main">
             <div class="center-align">
@@ -52,9 +56,10 @@ require_once("php/global.php");
                         </div>
                     </div>
                     <div class="row">
+
                         <div class="input-field col s4">
-                        <select class="browser-default" name="state">
-                            <option value="" disabled selected>State</option>
+                        <select name="state">
+                            <option disabled selected>State</option>
                             <option value="NSW">NSW</option>
                             <option value="NT">NT</option>
                             <option value="QLD">QLD</option>
