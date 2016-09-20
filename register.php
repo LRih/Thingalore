@@ -21,6 +21,8 @@ require_once("php/global.php");
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $fname = test_input($_POST["first_name"]);
                 $lname = test_input($_POST["last_name"]);
+                $address = test_input($_POST["address"]);
+                $phone = test_input($_POST["phone"]);
                 $email = test_input($_POST["email"]);
                 $pwd = test_input($_POST["password"]);
             }
@@ -45,6 +47,18 @@ require_once("php/global.php");
                         <div class="input-field col s6">
                             <input id="last_name" type="text" class="validate" name="last_name">
                             <label for="last_name">Last Name</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="address" type="text" class="validate" name="address">
+                            <label for="address">Address</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <input id="phone" type="text" class="validate" name="phone">
+                            <label for="phone">Phone Number</label>
                         </div>
                     </div>
                     <div class="row">
@@ -76,7 +90,7 @@ require_once("php/global.php");
 
         $conn = new mysqli($servername, $username, $password, $dbname);
         $sql = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
-            VALUES ('$fname', '$lname', '$email', '1 Test Street', 0393002312, '$pwd', 0, 'insert_code_here')";
+            VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
         $conn->query($sql);
 
         ?>
