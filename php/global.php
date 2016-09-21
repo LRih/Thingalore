@@ -9,6 +9,10 @@
     $TITLE = "Thingalore";
 
     $GLOBALS["test_mode"] = true;
+    
+    $GLOBALS["paypal_user"] = "richard1421-facilitator_api1.msn.com";
+    $GLOBALS["paypal_pwd"] = "39BP2SU6ASXTK95N";
+    $GLOBALS["paypal_signature"] = "AFcWxV21C7fd0v3bYYYRCpSSRl31Av6s9SFPSURsdjinrZcZARkajtEU";
 
 
     // only show errors when testing
