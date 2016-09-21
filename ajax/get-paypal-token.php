@@ -4,7 +4,7 @@ require_once("../php/global.php");
 
 $price = number_format($_SESSION["cart"]->price() / 100, 2, '.', '');
 
-$host = $GLOBALS["test_mode"] ? "http://localhost" : $GLOBALS["paypal_host"]
+$host = $GLOBALS["test_mode"] ? "http://localhost" : $GLOBALS["paypal_host"];
 
 $nvp = array(
     'USER' => $GLOBALS["paypal_user"],
@@ -13,8 +13,8 @@ $nvp = array(
     'VERSION' => '98',
     'METHOD' => 'SetExpressCheckout',
 
-    'RETURNURL' => "http://".$_SERVER['SERVER_NAME']."/checkout-review.php",
-    'CANCELURL' => "http://".$_SERVER['SERVER_NAME']."/checkout.php",
+    'RETURNURL' => "{$host}/checkout-review.php",
+    'CANCELURL' => "{$host}/checkout.php",
 
     'PAYMENTREQUEST_0_AMT' => $price,
     'PAYMENTREQUEST_0_CURRENCYCODE' => "AUD",
