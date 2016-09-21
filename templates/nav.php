@@ -3,7 +3,7 @@
         <div class="white-text valign">
             <a class="white-text left" href="index.php"><img class="valign" src="images/title.png"></a>
             <form class="right hide-on-small-only" method="get" action="index.php">
-                <input id="search-box" class="grey-text text-darken-2 vert-align" name="search" type="text" placeholder="search" required><button id="search-btn" class="btn waves-effect waves-light btn-flat orange darken-1 white-text vert-align" type="submit"><i class="material-icons">search</i></button>
+                <input id="search-box" class="grey-text text-darken-2 vert-align" name="search" type="text" placeholder="search"><button id="search-btn" class="btn waves-effect waves-light btn-flat orange darken-1 white-text vert-align" type="submit"><i class="material-icons">search</i></button>
             </form>
         </div>
     </div>

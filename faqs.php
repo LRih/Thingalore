@@ -29,6 +29,11 @@ require_once("php/global.php");
                         <h5>What payment options are available?</h5>
                         <p>We accept payments via PayPal.</p>
                     </div>
+                    
+                    <div class="section">
+                        <h5>What shipping method is used?</h5>
+                        <p>All orders are shipped using Regular Post by Australia Post.</p>
+                    </div>
                 </div>
             </div>
         </main>
