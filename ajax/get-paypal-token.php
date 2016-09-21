@@ -4,6 +4,8 @@ require_once("../php/global.php");
 
 $price = number_format($_SESSION["cart"]->price() / 100, 2, '.', '');
 
+$host = $GLOBALS["test_mode"] ? "http://localhost" : $GLOBALS["paypal_host"]
+
 $nvp = array(
     'USER' => $GLOBALS["paypal_user"],
     'PWD' => $GLOBALS["paypal_pwd"],
