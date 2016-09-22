@@ -1,6 +1,5 @@
 <!--
     TO DO:
-    - Captcha is true
     - Message, "REGISTRATION SUCCESSFULL" or email validation
 
     DONE:
@@ -8,6 +7,7 @@
     - Captcha must be entered
     - Address drop down boxes
     - Password mix of capital, lowercase, numbers and symbols
+    - Captcha is true
 -->
 
 <?php
@@ -20,7 +20,7 @@ require_once("php/global.php");
 
 <html>
     <head>
-        <?php require_once("templates/head.php") ?>
+        <?php require_once("templates/head.php");?>
         <title>Register | <?php echo $TITLE ?></title>
     </head>
 
@@ -39,6 +39,13 @@ require_once("php/global.php");
             <div class="center-align">
                 <h5>Registration</h5>
                 <div class="center-align" style="width:600px; margin-right:auto; margin-left:auto;">
+                
+                <!-- Display warning if captcha not entered -->
+                <?php 
+                    if(isset($_POST['g-recaptcha-response']) && !$captcha)
+                        { echo 'Please check the the captcha form.'; }
+                ?>
+                
                 <form class="col s12" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="row">
                         <div class="input-field col s6" >
@@ -119,53 +126,37 @@ require_once("php/global.php");
         if(isset($_POST['g-recaptcha-response'])){
             $captcha=$_POST['g-recaptcha-response'];
         }
-
-        if(!$captcha){
-            echo '<h2>Please check the the captcha form.</h2>';
-            exit;
-        }
-            /*else {
-                $secretKey = "6LedrSkTAAAAAEgtdp4x6OujcEszFP2i4XA5EwRz";
-                $ip = $_SERVER['REMOTE_ADDR'];
-                $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
-                echo $response;
-                $responseKeys = json_decode($response,true);
-                echo $responseKeys;
-                
-                if(intval($responseKeys["success"]) !== 1) {
-                    echo '<h2>You are spammer !</h2>';
-                } 
-                else {
-                    echo '<h2>DONE</h2>';
-                }
-            }*/
+        #False check for captcha in code
         
-        
-        #Save values after form submit
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $fname = $_POST["first_name"];
-            $lname = $_POST["last_name"];
-            $address = $_POST["address"].", ".$_POST["state"].", ".$_POST["postcode"];
-            $phone = $_POST["phone"];
-            $email = $_POST["email"];
-            $pwd = encrypt($_POST["password"]);
+        #Captcha = true
+        if($captcha)
+        {
+            #Save values after form submit
+            if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                $fname = $_POST["first_name"];
+                $lname = $_POST["last_name"];
+                $address = $_POST["address"].", ".$_POST["state"].", ".$_POST["postcode"];
+                $phone = $_POST["phone"];
+                $email = $_POST["email"];
+                $pwd = encrypt($_POST["password"]);
+            }
+
+            function encrypt($pass) {
+                return password_hash($pass, PASSWORD_BCRYPT);
+            }
+
+
+            ################# DATA INTO DATABASE ###
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "sec_ecommerce";
+
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            $sql = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
+                VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
+            $conn->query($sql);
         }
-
-        function encrypt($pass) {
-            return password_hash($pass, PASSWORD_BCRYPT);
-        }
-
-
-        ################# DATA INTO DATABASE ###
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "sec_ecommerce";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-        $sql = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
-            VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
-        $conn->query($sql);
 
         ?>
 
