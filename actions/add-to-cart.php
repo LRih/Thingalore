@@ -1,6 +1,6 @@
 <?php
 
-require_once("../php/global.php");
+require_once(dirname(dirname(__FILE__))."/php/global.php");
 
 // only allow post
 if ($_SERVER["REQUEST_METHOD"] !== "POST")

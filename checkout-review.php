@@ -9,7 +9,7 @@ require_once("php/global.php");
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>Checkout | <?php echo $TITLE ?></title>
+        <title>Review Order | <?php echo $TITLE ?></title>
 
         <script type="text/javascript">
             // test code

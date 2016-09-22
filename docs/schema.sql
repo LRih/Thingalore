@@ -52,6 +52,7 @@ CREATE TABLE Orders
 (
     id INT NOT NULL AUTO_INCREMENT,
     customer_id INT NOT NULL,
+    shipping_label VARCHAR(255) NOT NULL, -- stored because customer address may change after order is placed
     order_date DATE NOT NULL,
     status VARCHAR(50) NOT NULL,
     PRIMARY KEY (id),
@@ -87,8 +88,8 @@ INSERT INTO Products (category_id, name, price, image, qty, description) VALUES 
 
 -- Richard's TEST DATA
 INSERT INTO Customers (id, fname, lname, email, address, phone, password_hash, verification_code) VALUES (1, "John", "Smith", "test@test.com", "123 Fake St", 555, "imahash", "code");
-INSERT INTO Orders (id, customer_id, order_date, status) VALUES (1, 1, "2008-11-23", "Shipped");
+INSERT INTO Orders (id, customer_id, shipping_label, order_date, status) VALUES (1, 1, "John\n123 Fake St\nMelbourne", "2008-11-23", "Shipped");
 INSERT INTO OrderLines (id, order_id, product_id, qty, total_price) VALUES (1, 1, 1, 2, 1200);
 INSERT INTO OrderLines (id, order_id, product_id, qty, total_price) VALUES (2, 1, 2, 1, 99000);
-INSERT INTO Orders (id, customer_id, order_date, status) VALUES (2, 1, "2014-08-10", "Processing");
+INSERT INTO Orders (id, customer_id, shipping_label, order_date, status) VALUES (2, 1, "John\n123 Real St\nMelbourne", "2014-08-10", "Processing");
 INSERT INTO OrderLines (id, order_id, product_id, qty, total_price) VALUES (3, 2, 3, 3, 4000);
