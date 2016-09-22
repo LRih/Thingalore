@@ -1,13 +1,13 @@
 <!--
     TO DO:
     - Captcha is true
-    - Password mix of capital, lowercase, numbers and symbols
     - Message, "REGISTRATION SUCCESSFULL" or email validation
 
     DONE:
     - Client side validation: all fields are entered
     - Captcha must be entered
     - Address drop down boxes
+    - Password mix of capital, lowercase, numbers and symbols
 -->
 
 <?php
@@ -29,6 +29,9 @@ require_once("php/global.php");
         <script>
             $(document).ready(function() {
                 $('select').material_select();
+            });
+            $(document).ready(function(){
+                $('.tooltipped').tooltip({delay: 50});
             });
         </script>
 
@@ -85,7 +88,11 @@ require_once("php/global.php");
                     </div>
                     <div class="row">
                         <div class="input-field col s12" >
-                            <input id="password" type="password" class="validate" name="password" required aria-required=”true”/>
+                            <input id="password" type="password" name="password" required aria-required=”true”
+                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$"
+                                class="tooltipped" data-delay="50"
+                                data-tooltip="Password must be between 8-20 characters. It must contain at least one of each: 
+                                Lowercase, Uppercase letters, Numbers, Symbols."/>
                             <label for="password">Password</label>
                         </div>
                     </div>
