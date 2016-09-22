@@ -14,8 +14,9 @@ class Cart
         if (!array_key_exists($product->id, $this->items))
             $this->items[$product->id] = new CartItem($product);
 
-        // increment quantity
-        $this->items[$product->id]->qty++;
+        // increment quantity if less than 9
+        if ($this->items[$product->id]->qty < 9)
+            $this->items[$product->id]->qty++;
     }
 
     function remove($productId)

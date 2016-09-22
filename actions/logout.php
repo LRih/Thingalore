@@ -2,7 +2,7 @@
 
 require_once(dirname(dirname(__FILE__))."/php/global.php");
 
-/* PERFORM LOGOUT FUNCTION HERE */
+unset($_SESSION["user"]);
 
 redirect("../index.php");
 
