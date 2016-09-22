@@ -31,7 +31,7 @@ require_once("php/global.php");
                 $.get("ajax/complete-paypal-payment.php?token=" + token, function(data)
                 {
                     // redirect user to complete page if successful
-                    if (data)
+                    if (data == "Success")
                         window.document.location = "checkout-complete.php";
                     else
                         window.document.location = "checkout-review.php";

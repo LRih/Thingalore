@@ -16,5 +16,7 @@ if (array_key_exists("TOKEN", $response))
 
     echo $token;
 }
+else
+    echo "Failure";
 
 ?>

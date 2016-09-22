@@ -18,6 +18,29 @@ class Cart
         $this->items[$product->id]->qty++;
     }
 
+    function remove($productId)
+    {
+        if (array_key_exists($productId, $this->items))
+        {
+            $this->items[$productId]->qty--;
+
+            // remove key if qty is zero
+            if ($this->items[$productId] <= 0)
+                unset($this->items[$productId]);
+        }
+    }
+
+    function removeAll($productId)
+    {
+        if (array_key_exists($productId, $this->items))
+            unset($this->items[$productId]);
+    }
+
+    function clear()
+    {
+        $this->items = [];
+    }
+
     function qty()
     {
         $qty = 0;

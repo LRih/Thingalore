@@ -16,7 +16,7 @@ if ($response["ACK"] != "Success")
 if (!isset($_SESSION["paypal_token"]) || $_SESSION["paypal_token"] != $_GET["token"])
     die;
 
-// TODO add to SQL database and empty cart
+// TODO add to SQL database
 
 // send final payment request
 $response = PayPal::doExpressCheckoutPayment($response["TOKEN"], $response["PAYERID"], $response["AMT"]);
@@ -25,6 +25,10 @@ $response = PayPal::doExpressCheckoutPayment($response["TOKEN"], $response["PAYE
 if ($response["ACK"] != "Success")
     die;
 
+// empty cart
+$_SESSION["cart"]->clear();
+
+// flag order complete
 $_SESSION['allow_checkout_complete'] = true;
 echo "Success";
 

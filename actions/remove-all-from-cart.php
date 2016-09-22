@@ -2,21 +2,14 @@
 
 require_once(dirname(dirname(__FILE__))."/php/global.php");
 
-$p = SQL::getProduct($_GET["id"]);
-
-// invalid product id
-if (is_null($p))
+if (!isset($_SESSION["cart"]) || !isset($_GET["id"]))
     redirect("../cart.php");
-
-// create cart object if required
-if (!isset($_SESSION["cart"]))
-    $_SESSION["cart"] = new Cart();
 
 // remove any paypal token (prevents user from modifying cart after going through PayPal)
 unset($_SESSION["paypal_token"]);
 
 // add product to cart
-$_SESSION["cart"]->add($p);
+$_SESSION["cart"]->removeAll($_GET["id"]);
 
 // redirect to cart
 redirect("../cart.php");

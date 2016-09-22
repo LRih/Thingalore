@@ -35,7 +35,7 @@ if (!isset($_SESSION["cart"]) || $_SESSION["cart"]->qty() == 0)
                 $.get("ajax/get-paypal-token.php", function(data)
                 {
                     // redirect user to PayPal if successful
-                    if (data)
+                    if (data != "Failure")
                         window.document.location = "https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=" + data;
                     else
                     {
