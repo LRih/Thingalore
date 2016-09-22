@@ -11,15 +11,32 @@ require_once("php/global.php");
         <?php require_once("templates/head.php") ?>
         <title>Review Order | <?php echo $TITLE ?></title>
 
-        <script type="text/javascript">
-            // test code
-            var testToken = <?php echo isset($_GET["token"]) ? "'".$_GET["token"]."'" : "''"; ?>;
-
-            // AJAX request for paypal order details
-            $.get("ajax/get-paypal-order.php?token=" + testToken, function(data)
+        <style type="text/css">
+            .modal
             {
-                $("#test").html(data);
+                max-width: 320px !important;
+            }
+        </style>
+
+        <script type="text/javascript">
+            $(document).ready(function()
+            {
+                $('#checkout').leanModal({ dismissible: false });
             });
+
+            function complete_paypal_payment()
+            {
+                var token = <?php echo isset($_GET["token"]) ? "'".$_GET["token"]."'" : "''" ?>;
+
+                $.get("ajax/complete-paypal-payment.php?token=" + token, function(data)
+                {
+                    // redirect user to complete page if successful
+                    if (data)
+                        window.document.location = "checkout-complete.php";
+                    else
+                        window.document.location = "checkout-review.php";
+                });
+            }
         </script>
     </head>
 
@@ -28,27 +45,24 @@ require_once("php/global.php");
 
         <main id="main">
             <div class="container">
-                <h5>Review Order</h5>
-                <p class="red-text">TODO This page is displayed after PayPal payment and gives the customer a chance to review their order before confirming payment.</p>
-                <div id="test" class="center-align">
-                    <div class="preloader-wrapper big active">
-                    <div class="spinner-layer spinner-blue-only">
-                    <div class="circle-clipper left">
-                    <div class="circle"></div>
-                    </div><div class="gap-patch">
-                    <div class="circle"></div>
-                    </div><div class="circle-clipper right">
-                    <div class="circle"></div>
-                    </div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <a href="checkout.php" class="waves-effect waves-light btn-flat blue white-text right">Place Order</a>
-                </div>
+                <?php
+                    // valid token is required
+                    if (isset($_GET["token"]) && isset($_SESSION["paypal_token"]) && $_SESSION["paypal_token"] == $_GET["token"])
+                        require_once("templates/checkout-review-valid.php");
+                    else
+                        require_once("templates/checkout-review-invalid.php");
+                ?>
             </div>
         </main>
+
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <p class="grey-text text-darken-1">Finalizing payment...</p>
+                <div class="progress blue">
+                    <div class="indeterminate blue lighten-5"></div>
+                </div>
+            </div>
+        </div>
 
         <?php require_once("templates/footer.php") ?>
     </body>

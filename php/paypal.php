@@ -6,7 +6,7 @@ class PayPal
     {
     }
 
-    public static function set_express_checkout($price)
+    public static function setExpressCheckout($price)
     {
         $nvp = array(
             'USER' => $GLOBALS["paypal_user"],
@@ -24,6 +24,44 @@ class PayPal
             "L_PAYMENTREQUEST_0_NAME0" => "Order",
             "L_PAYMENTREQUEST_0_AMT0" => $price,
             "L_PAYMENTREQUEST_0_CURRENCYCODE0" => "AUD"
+        );
+
+        $request = 'https://api-3t.sandbox.paypal.com/nvp?'.http_build_query($nvp);
+
+        return PayPal::request($request);
+    }
+
+    public static function getExpressCheckoutDetails($token)
+    {
+        $nvp = array(
+            'USER' => $GLOBALS["paypal_user"],
+            'PWD' => $GLOBALS["paypal_pwd"],
+            'SIGNATURE' => $GLOBALS["paypal_signature"],
+            'VERSION' => '98',
+            'METHOD' => 'GetExpressCheckoutDetails',
+
+            'TOKEN' => $token
+        );
+
+        $request = 'https://api-3t.sandbox.paypal.com/nvp?'.http_build_query($nvp);
+
+        return PayPal::request($request);
+    }
+
+    public static function doExpressCheckoutPayment($token, $payerId, $price)
+    {
+        $nvp = array(
+            'USER' => $GLOBALS["paypal_user"],
+            'PWD' => $GLOBALS["paypal_pwd"],
+            'SIGNATURE' => $GLOBALS["paypal_signature"],
+            'VERSION' => '98',
+            'METHOD' => 'DoExpressCheckoutPayment',
+
+            'TOKEN' => $token,
+            'PAYERID' => $payerId,
+
+            'PAYMENTREQUEST_0_AMT' => $price,
+            'PAYMENTREQUEST_0_CURRENCYCODE' => "AUD"
         );
 
         $request = 'https://api-3t.sandbox.paypal.com/nvp?'.http_build_query($nvp);
