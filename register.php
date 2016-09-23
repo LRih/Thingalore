@@ -1,6 +1,9 @@
 <!--
     TO DO:
-    - Message, "REGISTRATION SUCCESSFULL" or email validation
+    - Message, "REGISTRATION SUCCESSFULL" 
+        > Make sure page can't be viewed unless actually registered?
+        > Expires?
+    - 
 
     DONE:
     - Client side validation: all fields are entered
@@ -42,7 +45,7 @@ require_once("php/global.php");
                 
                 <!-- Display warning if captcha not entered -->
                 <?php 
-                    if(isset($_POST['g-recaptcha-response']) && !$captcha)
+                    if(!($_POST['g-recaptcha-response']) and $_POST["state"])
                         { echo 'Please check the the captcha form.'; }
                 ?>
                 
@@ -68,7 +71,7 @@ require_once("php/global.php");
                     <div class="row">
 
                         <div class="input-field col s4">
-                        <select name="state">
+                        <select name="state" required aria-required=”true”>
                             <option disabled selected>State</option>
                             <option value="NSW">NSW</option>
                             <option value="NT">NT</option>
@@ -110,9 +113,11 @@ require_once("php/global.php");
                         </div>
                     </div>
                     <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
-                    <div><button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i>
-                    </button></div>
+                    <div>
+                        <button href="register_success.php" class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i></button>
+                        </a>
+                    </div>
                 </form>
                 </div>
             </div>
@@ -120,7 +125,10 @@ require_once("php/global.php");
 
         <?php
         ####### TO BE INPUT INTO SEPARATE FILE ########
-        $fname;$lname;$address;$phone;$email;$pwd;$captcha = 1;
+        $fname;$lname;$address;$phone;$email;$pwd;$captcha;
+        function encrypt($pass) {
+                return password_hash($pass, PASSWORD_BCRYPT);
+        }
 
         ################ CHECKING CAPTCHA ###########
         if(isset($_POST['g-recaptcha-response'])){
@@ -129,7 +137,7 @@ require_once("php/global.php");
         #False check for captcha in code
         
         #Captcha = true
-        if($captcha)
+        if($captcha != 0)
         {
             #Save values after form submit
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -141,11 +149,6 @@ require_once("php/global.php");
                 $pwd = encrypt($_POST["password"]);
             }
 
-            function encrypt($pass) {
-                return password_hash($pass, PASSWORD_BCRYPT);
-            }
-
-
             ################# DATA INTO DATABASE ###
             $servername = "localhost";
             $username = "root";
@@ -156,6 +159,8 @@ require_once("php/global.php");
             $sql = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
                 VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
             $conn->query($sql);
+            header('register_success.php');
+
         }
 
         ?>
