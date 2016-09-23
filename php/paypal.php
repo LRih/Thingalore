@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * For handling operations with the PayPal API.
+ */
 class PayPal
 {
     function __construct()

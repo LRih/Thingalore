@@ -110,6 +110,7 @@ require_once("php/global.php");
                         <div class="input-field col s12">
                             <input id="email" type="email" class="validate" name="email" required aria-required=”true”/>
                             <label for="email">Email</label>
+                            <span class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1">CSS customizable tooltip, remove if you want. Visible when input gets focus.</span>
                         </div>
                     </div>
                     <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>

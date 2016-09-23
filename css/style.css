@@ -243,6 +243,28 @@ main
 }
 
 /* ============================================== FORM === */
+.tooltip
+{
+    opacity: 0;
+    font-size: 14px;
+    padding: 8px;
+    width: 200px;
+    border-radius: 2px;
+    position: absolute;
+    z-index: 10;
+    transition: 0.25s;
+
+    /* display on right */
+    left: 100%;
+
+    /* vertical centering */
+    top: 50%;
+    transform: translateY(-50%);
+
+    /* so tooltip disappears when hovering over it */
+    pointer-events: none;
+}
+
 input:invalid,
 input:out-of-range {
     border-color:hsl(0, 50%, 50%);
