@@ -228,7 +228,6 @@ class SQL
         return $orders;
     }
 
-    // TODO insert order lines too
     public static function insertOrder($customer, $cart, $status)
     {
         $con = SQL::connection();
@@ -236,16 +235,45 @@ class SQL
         if ($con->connect_error)
             return -1;
 
-        $success = -1;
-        if ($statement = $con->prepare("INSERT INTO Orders (customer_id, shipping_label, order_date, status) VALUES (?, ?, CURDATE(), ?)"))
+        // transaction ensures either all queries succeed or none at all
+        $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+
+        $orderId = -1;
+
+        // insert order
+        if ($statement = $con->prepare("INSERT INTO Orders (customer_id, shipping_label, order_date, status) VALUES (?, ?, NOW(), ?)"))
         {
-            if ($statement->bind_param("iss", $customer->id, $customer->address, $status) && $statement->execute())
-                $success = $con->insert_id;
+            $shipping_label = $customer->name()."\n".$customer->address;
+
+            if ($statement->bind_param("iss", $customer->id, $shipping_label, $status) && $statement->execute())
+                $orderId = $con->insert_id;
+            else
+            {
+                $con->rollback();
+                $con->close();
+                return -1;                
+            }
         }
 
+        // insert order lines
+        $statement = $con->prepare("INSERT INTO OrderLines (order_id, product_id, qty, total_price) VALUES (?, ?, ?, ?)");
+
+        foreach ($cart->items as $item)
+        {
+            $price = $item->price();
+
+            if (!$statement->bind_param("iiii", $orderId, $item->product->id, $item->qty, $price) || !$statement->execute())
+            {
+                $con->rollback();
+                $con->close();
+                return -1;                
+            }
+        }
+
+        $con->commit();
         $con->close();
 
-        return $success;
+        return $orderId;
     }
 
     public static function updateOrder($orderId, $status)

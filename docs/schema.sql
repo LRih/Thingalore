@@ -53,7 +53,7 @@ CREATE TABLE Orders
     id INT NOT NULL AUTO_INCREMENT,
     customer_id INT NOT NULL,
     shipping_label VARCHAR(255) NOT NULL, -- stored because customer address may change after order is placed
-    order_date DATE NOT NULL,
+    order_date DATETIME NOT NULL,
     status VARCHAR(50) NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (customer_id) REFERENCES Customers(id) ON DELETE CASCADE
