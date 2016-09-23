@@ -145,7 +145,7 @@ class SQL
 
     public static function isCategoryValid($category)
     {
-        $con = sql::connection();
+        $con = SQL::connection();
 
         if ($con->connect_error)
             return false;
@@ -173,7 +173,7 @@ class SQL
 
     public static function getCustomer($id)
     {
-        $con = sql::connection();
+        $con = SQL::connection();
 
         if ($con->connect_error)
             return NULL;
@@ -202,14 +202,14 @@ class SQL
 
     public static function getOrders($customer_id)
     {
-        $con = sql::connection();
+        $con = SQL::connection();
 
         if ($con->connect_error)
             return [];
 
         $orders = [];
 
-        $query = "SELECT id, DATE_FORMAT(order_date, '%d/%m/%Y'), status FROM Orders WHERE customer_id = ? ORDER BY order_date DESC";
+        $query = "SELECT id, DATE_FORMAT(order_date, '%d/%m/%Y'), status FROM Orders WHERE customer_id = ? ORDER BY order_date DESC, id DESC";
 
         // prepared statements prevent SQL injection (I'm sure)
         if ($statement = $con->prepare($query))
@@ -226,6 +226,45 @@ class SQL
         $con->close();
 
         return $orders;
+    }
+
+    // TODO insert order lines too
+    public static function insertOrder($customer, $cart, $status)
+    {
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return -1;
+
+        $success = -1;
+        if ($statement = $con->prepare("INSERT INTO Orders (customer_id, shipping_label, order_date, status) VALUES (?, ?, CURDATE(), ?)"))
+        {
+            if ($statement->bind_param("iss", $customer->id, $customer->address, $status) && $statement->execute())
+                $success = $con->insert_id;
+        }
+
+        $con->close();
+
+        return $success;
+    }
+
+    public static function updateOrder($orderId, $status)
+    {
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return false;
+
+        $success = false;
+        if ($statement = $con->prepare("UPDATE Orders SET status = ? WHERE id = ?"))
+        {
+            if ($statement->bind_param("si", $status, $orderId) && $statement->execute())
+                $success = true;
+        }
+
+        $con->close();
+
+        return $success;
     }
 
 

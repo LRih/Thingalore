@@ -44,7 +44,7 @@ if (!isset($_SESSION["user"]))
 
                                     foreach ($orders as $order)
                                     {
-                                        echo "<tr class='clickable' onclick='navigate(\"user-order-detail.php\")'>";
+                                        echo "<tr class='clickable' onclick='navigate(\"user-order-detail.php?id=".$order->id."\")'>";
                                         echo "    <td class='center-align'>".$order->id."</td>";
                                         echo "    <td class='center-align'>$ XX.YY</td>";
                                         echo "    <td class='center-align'>".$order->date."</td>";

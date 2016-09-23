@@ -27,7 +27,7 @@ if (!isset($_SESSION["user"]))
                 
                 <div class="col s12 m9">
                     <h5>Order #123</h5>
-                    <p>List items in order and related information.</p>
+                    <p class="red-text">TODO List items in order and related information.</p>
                 </div>
             </div>
         </main>

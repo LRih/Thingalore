@@ -19,6 +19,7 @@
     $GLOBALS["paypal_signature"] = "AFcWxV21C7fd0v3bYYYRCpSSRl31Av6s9SFPSURsdjinrZcZARkajtEU";
     
     $GLOBALS["paypal_host"] = "http://localhost";
+    // $GLOBALS["paypal_host"] = "http://sec1.onevis.net";
     // $GLOBALS["paypal_host"] = "https://onevis.net/sub/sec1";
 
     // ========================================================================
