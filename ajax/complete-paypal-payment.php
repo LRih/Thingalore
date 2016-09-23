@@ -16,14 +16,14 @@ if ($response["ACK"] != "Success")
 if (!isset($_SESSION["paypal_token"]) || $_SESSION["paypal_token"] != $_GET["token"])
     die;
 
-// TODO add to SQL database
-
 // send final payment request
 $response = PayPal::doExpressCheckoutPayment($response["TOKEN"], $response["PAYERID"], $response["AMT"]);
 
 // failed request
 if ($response["ACK"] != "Success")
     die;
+
+// TODO add to SQL database
 
 // empty cart
 $_SESSION["cart"]->clear();

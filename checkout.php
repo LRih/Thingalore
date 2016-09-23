@@ -2,7 +2,9 @@
 
 require_once("php/global.php");
 
-// TODO check logged in
+// redirect to login if not logged in
+if (!isset($_SESSION["user"]))
+    redirect("login.php");
 
 // cannot checkout with empty cart
 if (!isset($_SESSION["cart"]) || $_SESSION["cart"]->qty() == 0)

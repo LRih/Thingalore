@@ -1,5 +1,6 @@
 <?php
     require_once(dirname(__FILE__)."/sql.php");
+    require_once(dirname(__FILE__)."/customer.php");
     require_once(dirname(__FILE__)."/product.php");
     require_once(dirname(__FILE__)."/order.php");
     require_once(dirname(__FILE__)."/cart-item.php");
@@ -18,6 +19,7 @@
     $GLOBALS["paypal_signature"] = "AFcWxV21C7fd0v3bYYYRCpSSRl31Av6s9SFPSURsdjinrZcZARkajtEU";
     
     $GLOBALS["paypal_host"] = "http://localhost";
+    // $GLOBALS["paypal_host"] = "https://onevis.net/sub/sec1";
 
     // ========================================================================
 

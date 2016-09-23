@@ -2,6 +2,10 @@
 
 require_once("php/global.php");
 
+// redirect to login if not logged in
+if (!isset($_SESSION["user"]))
+    redirect("login.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +27,10 @@ require_once("php/global.php");
                 
                 <div class="col s12 m9">
                     <h5>Profile</h5>
-                    <p>Show user profile here.</p>
+                    <p><?php echo $_SESSION["user"]->name(); ?></p>
+                    <p><?php echo $_SESSION["user"]->email; ?></p>
+                    <?php echo $_SESSION["user"]->formattedAddress(); ?>
+                    <p><?php echo $_SESSION["user"]->phone; ?></p>
                 </div>
             </div>
         </main>

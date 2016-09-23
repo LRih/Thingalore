@@ -3,9 +3,8 @@
         <div class="row">
             <div class="col s12 m6">
                 <h5>Shipping details</h5>
-                <p>John Smith</p>
-                <p>123 Fake St</p>
-                <p>Melbourne, VIC 3000</p>
+                <p><?php echo $_SESSION["user"]->name(); ?></p>
+                <?php echo $_SESSION["user"]->formattedAddress(); ?>
             </div>
             <div class="col s12 m6">
                 <h5>Shipping method</h5>

@@ -2,6 +2,10 @@
 
 require_once("php/global.php");
 
+// redirect to login if not logged in
+if (!isset($_SESSION["user"]))
+    redirect("login.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -23,7 +27,6 @@ require_once("php/global.php");
                 
                 <div class="col s12 m9">
                     <h5>Orders</h5>
-                    <p class="red-text">TODO change with current user's data</p>
                     <div class="section">
                         <table class="bordered highlight">
                             <thead>
@@ -37,7 +40,7 @@ require_once("php/global.php");
 
                             <tbody>
                                 <?php
-                                    $orders = SQL::getOrders(1);
+                                    $orders = SQL::getOrders($_SESSION["user"]->id);
 
                                     foreach ($orders as $order)
                                     {

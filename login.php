@@ -2,6 +2,10 @@
 
 require_once("php/global.php");
 
+// redirect to profile if already logged in
+if (isset($_SESSION["user"]))
+    redirect("user-profile.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +38,7 @@ require_once("php/global.php");
                             <h5>Returning Customer</h5>
                             <strong>I am a returning customer</strong>
                         </div>
-                        <form>
+                        <form method="get", action="actions/login.php">
                             <div class="input-field col s12">
                                 <input id="email" type="email" class="validate">
                                 <label for="email">Email</label>
@@ -44,7 +48,7 @@ require_once("php/global.php");
                                 <label for="password">Password</label>
                             </div>
                             <div class="col s12">
-                                <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit" name="action">Login</button>
+                                <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit">Login</button>
                             </div>
                         </form>
                     </div>

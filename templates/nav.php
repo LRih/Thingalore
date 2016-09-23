@@ -10,7 +10,6 @@
 
     <div id="nav" class=" darken-1 right-align">
         <a href="index.php" class="waves-effect waves-light white-text nav-btn left"><i class="material-icons left">home</i>Home</a>
-        <a href="user-profile.php" class="waves-effect waves-light white-text nav-btn left"><i class="material-icons left">perm_identity</i>Temp Profile</a>
 
         <a href="cart.php" class="waves-effect waves-light white-text nav-btn">
             <i class="material-icons left">shopping_cart</i>
@@ -22,6 +21,8 @@
                     echo " <span id='cart-count' class='blue darken-2'>".$_SESSION["cart"]->qty()."</span>";
             ?>
         </a>
-        <a href="login.php" class="waves-effect waves-light white-text nav-btn"><i class="material-icons left">account_circle</i>Account</a>
+        <a href="user-profile.php" class="waves-effect waves-light white-text nav-btn">
+            <i class="material-icons left"><?php echo isset($_SESSION["user"]) ? "perm_identity</i>".$_SESSION["user"]->fname : "account_circle</i>Account" ?>
+        </a>
     </div>
 </div>

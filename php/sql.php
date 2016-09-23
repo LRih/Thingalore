@@ -121,6 +121,7 @@ class SQL
         return $product;
     }
 
+
     public static function getCategories()
     {
         $con = SQL::connection();
@@ -169,6 +170,36 @@ class SQL
         return $valid;
     }
 
+
+    public static function getCustomer($id)
+    {
+        $con = sql::connection();
+
+        if ($con->connect_error)
+            return NULL;
+
+        $product = NULL;
+
+        $query = "SELECT id, fname, lname, email, address, phone FROM Customers WHERE id = ?";
+
+        // prepared statements prevent SQL injection
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("s", $id) && $statement->execute())
+            {
+                $statement->bind_result($id, $fname, $lname, $email, $address, $phone);
+
+                if ($statement->fetch())
+                    $product = new Customer($id, $fname, $lname, $email, $address, $phone);
+            }
+        }
+
+        $con->close();
+
+        return $product;
+    }
+
+
     public static function getOrders($customer_id)
     {
         $con = sql::connection();
@@ -196,6 +227,7 @@ class SQL
 
         return $orders;
     }
+
 
     private static function connection()
     {

@@ -2,6 +2,10 @@
 
 require_once("php/global.php");
 
+// redirect to login if not logged in
+if (!isset($_SESSION["user"]))
+    redirect("login.php");
+
 ?>
 
 <!DOCTYPE html>
