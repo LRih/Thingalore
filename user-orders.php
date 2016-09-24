@@ -59,7 +59,7 @@ if (!isset($_SESSION["user"]))
                     <div class="center-align">
                         <ul class="pagination">
                             <li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
-                            <li class="active orange darken-2"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
+                            <li class="active blue lighten-1"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
                             <li class="disabled"><a><i class="material-icons">chevron_right</i></a></li>
                         </ul>
                     </div>

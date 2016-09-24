@@ -17,7 +17,7 @@ CREATE TABLE Customers
     lname VARCHAR(50) NOT NULL,
     email VARCHAR(50) NOT NULL,
     address VARCHAR(255) NOT NULL,
-    phone INT NOT NULL,
+    phone VARCHAR(50) NOT NULL,
     password_hash VARCHAR(255) NOT NULL,
     is_verified TINYINT(1) NOT NULL DEFAULT '0',
     verification_code VARCHAR(32) NOT NULL,
@@ -87,7 +87,7 @@ INSERT INTO Products (category_id, name, price, image, qty, description) VALUES 
 INSERT INTO Products (category_id, name, price, image, qty, description) VALUES (1, "DXF One-Punch Man Saitama", 5000, "saitama.jpg", 100, "Depicted giving one of his famous punches, Saitama from the hit series One-Punch Man is beautifully captured in this exciting painted ABS and PVC figure! With a height of 7.5"", it captures both his realistic form with carefully detailed muscles and his overwhelmingly powerful presence through the pose and dramatic cape, the combination of which can't help but inspire you. Doesn't seeing this make you want to cheer him on?!");
 
 -- Richard's TEST DATA
-INSERT INTO Customers (id, fname, lname, email, address, phone, password_hash, verification_code) VALUES (1, "John", "Smith", "test@test.com", "123 Fake St, Melbourne VIC 3000", 555, "imahash", "code");
+INSERT INTO Customers (id, fname, lname, email, address, phone, password_hash, verification_code) VALUES (1, "John", "Smith", "test@test.com", "123 Fake St, Melbourne VIC 3000", "0555-5555", "imahash", "code");
 INSERT INTO Orders (id, customer_id, shipping_label, order_date, status) VALUES (1, 1, "John\n123 Fake St, Melbourne VIC 3000", "2008-11-23", "Shipped");
 INSERT INTO OrderLines (id, order_id, product_id, qty, total_price) VALUES (1, 1, 1, 2, 1200);
 INSERT INTO OrderLines (id, order_id, product_id, qty, total_price) VALUES (2, 1, 2, 1, 99000);
