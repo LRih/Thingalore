@@ -6,6 +6,13 @@ require_once("php/global.php");
 if (!isset($_SESSION["user"]))
     redirect("login.php");
 
+$validToken = isset($_GET["token"]) && isset($_SESSION["paypal_order"]) && $_GET["token"] == $_SESSION["paypal_order"]->token;
+
+$order = NULL;
+
+if (isset($_SESSION["paypal_order"]))
+    $order = SQL::getOrder($_SESSION["paypal_order"]->orderId);
+
 ?>
 
 <!DOCTYPE html>
@@ -30,9 +37,7 @@ if (!isset($_SESSION["user"]))
 
             function complete_paypal_payment()
             {
-                var token = <?php echo isset($_GET["token"]) ? "'".$_GET["token"]."'" : "''" ?>;
-
-                $.get("ajax/complete-paypal-payment.php?token=" + token, function(data)
+                $.get("ajax/complete-paypal-payment.php", function(data)
                 {
                     // redirect user to complete page if successful
                     if (data == "Success")
@@ -51,7 +56,7 @@ if (!isset($_SESSION["user"]))
             <div class="container">
                 <?php
                     // valid token is required
-                    if (isset($_GET["token"]) && isset($_SESSION["paypal_token"]) && $_SESSION["paypal_token"] == $_GET["token"])
+                    if ($order != NULL && $validToken)
                         require_once("templates/checkout-review-valid.php");
                     else
                         require_once("templates/checkout-review-invalid.php");

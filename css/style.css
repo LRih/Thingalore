@@ -255,14 +255,18 @@ main
     transition: 0.25s;
 
     /* display on right */
-    left: 100%;
+    left: 98%;
 
     /* vertical centering */
     top: 50%;
     transform: translateY(-50%);
+}
 
-    /* so tooltip disappears when hovering over it */
-    pointer-events: none;
+/* all tooltips that are siblings of focused inputs */
+input:focus ~ .tooltip
+{
+    opacity: 1;
+    left: 100%;
 }
 
 input:invalid,

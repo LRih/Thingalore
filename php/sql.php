@@ -200,7 +200,7 @@ class SQL
     }
 
 
-    public static function getOrders($customer_id)
+    public static function getOrders($customerId)
     {
         $con = SQL::connection();
 
@@ -209,23 +209,54 @@ class SQL
 
         $orders = [];
 
-        $query = "SELECT id, DATE_FORMAT(order_date, '%d/%m/%Y'), status FROM Orders WHERE customer_id = ? ORDER BY order_date DESC, id DESC";
+        $query = "SELECT id, shipping_label, DATE_FORMAT(order_date, '%d/%m/%Y'), status ".
+                 "FROM Orders ".
+                 "WHERE customer_id = ? AND status <> 'Incomplete'".
+                 "ORDER BY order_date DESC, id DESC";
 
         // prepared statements prevent SQL injection (I'm sure)
         if ($statement = $con->prepare($query))
         {
-            if ($statement->bind_param("s", $customer_id) && $statement->execute())
+            if ($statement->bind_param("i", $customerId) && $statement->execute())
             {
-                $statement->bind_result($id, $date, $status);
+                $statement->bind_result($id, $shippingLabel, $date, $status);
 
                 while ($statement->fetch())
-                    array_push($orders, new Order($id, $date, $status));
+                    array_push($orders, new Order($id, $shippingLabel, $date, $status, SQL::getOrderLines($id)));
             }
         }
 
         $con->close();
 
         return $orders;
+    }
+
+    public static function getOrder($orderId)
+    {
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return NULL;
+
+        $order = NULL;
+
+        $query = "SELECT id, shipping_label, DATE_FORMAT(order_date, '%d/%m/%Y'), status FROM Orders WHERE id = ?";
+
+        // prepared statements prevent SQL injection
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("i", $orderId) && $statement->execute())
+            {
+                $statement->bind_result($id, $shippingLabel, $date, $status);
+
+                if ($statement->fetch())
+                    $order = new Order($id, $shippingLabel, $date, $status, SQL::getOrderLines($orderId));
+            }
+        }
+
+        $con->close();
+
+        return $order;
     }
 
     public static function insertOrder($customer, $cart, $status)
@@ -293,6 +324,39 @@ class SQL
         $con->close();
 
         return $success;
+    }
+
+
+    private static function getOrderLines($orderId)
+    {
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return [];
+
+        $orderLines = [];
+
+        $query = "SELECT Products.*, OrderLines.qty, OrderLines.total_price FROM Products, OrderLines ".
+                 "WHERE Products.id = OrderLines.product_id AND order_id = ?";
+
+        // prepared statements prevent SQL injection
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("i", $orderId) && $statement->execute())
+            {
+                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image, $qty, $totalPrice);
+
+                while ($statement->fetch())
+                {
+                    $product = new Product($id, $name, $desc, $price, $image);
+                    array_push($orderLines, new OrderItem($product, $qty, $totalPrice));
+                }
+            }
+        }
+
+        $con->close();
+
+        return $orderLines;
     }
 
 

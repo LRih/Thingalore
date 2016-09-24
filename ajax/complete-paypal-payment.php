@@ -3,45 +3,32 @@
 require_once(dirname(dirname(__FILE__))."/php/global.php");
 
 // required variables not set
-if (!isset($_GET["token"]) || !isset($_SESSION["paypal_token"]))
-    die;
-
-// unmatching token means cart modified, terminate
-if ($_SESSION["paypal_token"] != $_GET["token"])
-    die;
-
-// add order to DB as unpaid
-$orderId = SQL::insertOrder($_SESSION["user"], $_SESSION["cart"], "Unpaid");
-
-// FAILED insertion
-if ($orderId == -1)
+if (!isset($_SESSION["paypal_order"]))
     die;
 
 $paymentSuccessful = tryCompletePayment();
 
-if ($paymentSuccessful)
-{
-    // update order in DB to processing
-    SQL::updateOrder($orderId, "Processing");
+if (!$paymentSuccessful)
+    die;
 
-    // empty cart
-    $_SESSION["cart"]->clear();
+// update order in DB to processing
+SQL::updateOrder($_SESSION["paypal_order"]->orderId, "Processing");
 
-    // flag order complete
-    $_SESSION['checkout_complete_id'] = $orderId;
-    echo "Success";
-}
-else
-{
-    // TODO remove order from SQL database
-}
+// flag order complete
+$_SESSION['checkout_complete_id'] = $_SESSION["paypal_order"]->orderId;
+
+// empty cart and remove in-progress order
+unset($_SESSION["paypal_order"]);
+$_SESSION["cart"]->clear();
+
+echo "Success";
 
 
 
 function tryCompletePayment()
 {
     // submit request for paypal order details
-    $response = PayPal::getExpressCheckoutDetails($_GET["token"]);
+    $response = PayPal::getExpressCheckoutDetails($_SESSION["paypal_order"]->token);
 
     // FAILED get details
     if ($response["ACK"] != "Success")

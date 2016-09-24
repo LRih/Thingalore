@@ -12,9 +12,6 @@ if (is_null($p))
 if (!isset($_SESSION["cart"]))
     $_SESSION["cart"] = new Cart();
 
-// remove any paypal token (prevents user from modifying cart after going through PayPal)
-unset($_SESSION["paypal_token"]);
-
 // add product to cart
 $_SESSION["cart"]->add($p);
 

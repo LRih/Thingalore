@@ -2,10 +2,12 @@
     require_once(dirname(__FILE__)."/sql.php");
     require_once(dirname(__FILE__)."/customer.php");
     require_once(dirname(__FILE__)."/product.php");
+    require_once(dirname(__FILE__)."/order-item.php");
     require_once(dirname(__FILE__)."/order.php");
     require_once(dirname(__FILE__)."/cart-item.php");
     require_once(dirname(__FILE__)."/cart.php");
     require_once(dirname(__FILE__)."/paypal.php");
+    require_once(dirname(__FILE__)."/paypal-order.php");
 
 
     // ======================================================================== pre-defined constants

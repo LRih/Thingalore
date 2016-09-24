@@ -9,7 +9,7 @@ class PayPal
     {
     }
 
-    public static function setExpressCheckout($price)
+    public static function setExpressCheckout($orderId, $price)
     {
         $nvp = array(
             'USER' => $GLOBALS["paypal_user"],
@@ -24,7 +24,7 @@ class PayPal
             'PAYMENTREQUEST_0_AMT' => $price,
             'PAYMENTREQUEST_0_CURRENCYCODE' => "AUD",
             
-            "L_PAYMENTREQUEST_0_NAME0" => "Order",
+            "L_PAYMENTREQUEST_0_NAME0" => "Order #".$orderId,
             "L_PAYMENTREQUEST_0_AMT0" => $price,
             "L_PAYMENTREQUEST_0_CURRENCYCODE0" => "AUD"
         );

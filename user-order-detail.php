@@ -6,6 +6,16 @@ require_once("php/global.php");
 if (!isset($_SESSION["user"]))
     redirect("login.php");
 
+// when no id set, redirect to orders page
+if (!isset($_GET["id"]))
+    redirect("user-orders.php");
+
+$order = SQL::getOrder($_GET["id"]);
+
+// check if order is valid
+if ($order == NULL)
+    redirect("user-orders.php");
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +36,7 @@ if (!isset($_SESSION["user"]))
                 </div>
                 
                 <div class="col s12 m9">
-                    <h5>Order #123</h5>
+                    <h5>Order #<?php echo $order->id ?></h5>
                     <p class="red-text">TODO List items in order and related information.</p>
                 </div>
             </div>

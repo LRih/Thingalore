@@ -46,7 +46,7 @@ if (!isset($_SESSION["user"]))
                                     {
                                         echo "<tr class='clickable' onclick='navigate(\"user-order-detail.php?id=".$order->id."\")'>";
                                         echo "    <td class='center-align'>".$order->id."</td>";
-                                        echo "    <td class='center-align'>$ XX.YY</td>";
+                                        echo "    <td class='center-align'>".$order->formattedPrice()."</td>";
                                         echo "    <td class='center-align'>".$order->date."</td>";
                                         echo "    <td class='center-align'>".$order->status."</td>";
                                         echo "</tr>";
@@ -54,6 +54,14 @@ if (!isset($_SESSION["user"]))
                                 ?>
                             </tbody>
                         </table>
+                    </div>
+
+                    <div class="center-align">
+                        <ul class="pagination">
+                            <li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
+                            <li class="active orange darken-2"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
+                            <li class="disabled"><a><i class="material-icons">chevron_right</i></a></li>
+                        </ul>
                     </div>
                 </div>
             </div>
