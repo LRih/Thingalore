@@ -94,10 +94,10 @@ require_once("php/global.php");
                         <div class="input-field col s12">
                             <input id="phone" type="text" class="validate" name="phone" required aria-required=”true”/>
                             <label for="phone">Telephone</label>
-                            <span class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
+                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
                                 Tooltip with strength bar. Color and length adjustable in JS
                                 <p><strong>Strength:</strong><br><span id="strength-bar"></span></p>
-                            </span>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -114,7 +114,7 @@ require_once("php/global.php");
                         <div class="input-field col s12">
                             <input id="email" type="email" class="validate" name="email" required aria-required=”true”/>
                             <label for="email">Email</label>
-                            <span class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1">CSS customizable tooltip, remove if you want. Visible when input gets focus.</span>
+                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1">CSS customizable tooltip, remove if you want. Visible when input gets focus.</div>
                         </div>
                     </div>
                     <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
