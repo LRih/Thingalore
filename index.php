@@ -77,11 +77,13 @@ else
                             echo "    <div class='product-text'>";
                             echo "        <div class='product-name'>".$p->name."</div>";
 
-                            // show discounted label
-                            if ($p->retailPrice != NULL)
-                                echo "        <div class='product-price grey-text text-lighten-1 left'>".$p->discountPercent()."% OFF</div>";
+                            // create discounted label
+                            $discountLabel = "";
 
-                            echo "        <div class='product-price red-text right-align'>".$p->formattedPrice()."</div>";
+                            if ($p->price != NULL)
+                                $discountLabel = "<span class='discount-label grey-text text-darken-1 vert-align'>".$p->discountPercent()."% OFF</span>";
+
+                            echo "        <div class='product-price red-text right-align'>".$discountLabel.$p->formattedPrice()."</div>";
                             echo "    </div>";
                             echo "</a>";
                         }

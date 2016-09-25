@@ -6,18 +6,18 @@ class Product
     public $name;
     public $desc;
     public $manufacturer;
-    public $retailPrice;
+    public $rrp;
     public $price;
     public $image;
 
-    function __construct($id, $name, $desc, $manufacturer, $retailPrice, $price, $image)
+    function __construct($id, $name, $desc, $manufacturer, $rrp, $price, $image)
     {
         // htmlspecialchars removes XSS threat
         $this->id = $id;
         $this->name = htmlspecialchars($name);
         $this->desc = htmlspecialchars($desc);
         $this->manufacturer = htmlspecialchars($manufacturer);
-        $this->retailPrice = $retailPrice;
+        $this->rrp = $rrp;
         $this->price = $price;
         $this->image = htmlspecialchars($image);
     }
@@ -32,7 +32,7 @@ class Product
             $row["name"],
             $row["description"],
             array_key_exists("manufacturer", $row) ? $row["manufacturer"] : NULL,
-            array_key_exists("retail_price", $row) ? $row["retail_price"] : NULL,
+            array_key_exists("rrp", $row) ? $row["rrp"] : NULL,
             $row["price"],
             $row["image"]
         );
@@ -54,16 +54,21 @@ class Product
 
     function discountPercent()
     {
-        return round((1 - $this->price / $this->retailPrice) * 100);
+        return round((1 - $this->price / $this->rrp) * 100);
     }
 
-    function formattedRetailPrice()
+    function price()
     {
-        return "$ ".number_format($this->retailPrice / 100, 2, '.', ',');
+        return $this->price != NULL ? $this->price : $this->rrp;
+    }
+
+    function formattedRRP()
+    {
+        return "$ ".number_format($this->rrp / 100, 2, '.', ',');
     }
     function formattedPrice()
     {
-        return "$ ".number_format($this->price / 100, 2, '.', ',');
+        return "$ ".number_format($this->price() / 100, 2, '.', ',');
     }
 }
 

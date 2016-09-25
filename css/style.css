@@ -194,6 +194,14 @@ main
     margin-top: 8px;
 }
 
+.discount-label
+{
+    font-size: 12px;
+    font-weight: 400;
+    font-style: italic;
+    margin-right: 12px;
+}
+
 /* ============================================== PRODUCT DETAILS === */
 #detail-header
 {

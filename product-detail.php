@@ -49,8 +49,8 @@ if (is_null($p))
                     <div id="detail-options" class="center-align">
                         <div id="detail-price" class="red-text"><?php echo $p->formattedPrice() ?></div>
                         <?php
-                            if ($p->retailPrice != NULL)
-                                echo "<div id='retail-price' class='grey-text'>".$p->formattedRetailPrice()."</div>";
+                            if ($p->price != NULL)
+                                echo "<div id='retail-price' class='grey-text text-darken-1'>".$p->formattedRRP()."</div>";
                         ?>
 
                         <form id="add-to-cart-form" method="get" action="actions/add-to-cart.php">

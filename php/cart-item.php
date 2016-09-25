@@ -12,7 +12,7 @@ class CartItem
 
     function price()
     {
-        return $this->product->price * $this->qty;
+        return $this->product->price() * $this->qty;
     }
 
     function formattedPrice()
