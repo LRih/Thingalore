@@ -22,6 +22,21 @@ class Customer
         $this->phone = $phone;
     }
 
+    /**
+     * Construct object from SQL row.
+     */
+    public static function fromRow($row)
+    {
+        return new Customer(
+            $row["id"],
+            $row["fname"],
+            $row["lname"],
+            $row["email"],
+            $row["address"],
+            $row["phone"]
+        );
+    }
+
     function name()
     {
         return $this->fname." ".$this->lname;

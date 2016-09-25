@@ -48,10 +48,21 @@ if (is_null($p))
                 <div class="col s12 m3">
                     <div id="detail-options" class="center-align">
                         <div id="detail-price" class="red-text"><?php echo $p->formattedPrice() ?></div>
-                        <form method="get" action="actions/add-to-cart.php">
+                        <?php
+                            if ($p->retailPrice != NULL)
+                                echo "<div id='retail-price' class='grey-text'>".$p->formattedRetailPrice()."</div>";
+                        ?>
+
+                        <form id="add-to-cart-form" method="get" action="actions/add-to-cart.php">
                             <input type="hidden" name="id" value="<?php echo $p->id ?>" />
                             <button class="btn waves-effect waves-light btn-flat orange white-text" type="submit"><i class="material-icons left">add</i>Add to cart</button>
                         </form>
+                    </div>
+
+                    <div class="container section">
+                        <strong>Manufacturer</strong>
+                        <div class="divider"></div>
+                        <?php echo $p->manufacturer != NULL ? $p->manufacturer : "Unknown" ?>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,10 @@
 
-/* ============================================== TEMP === */
+/* ============================================== MISC === */
 .g-recaptcha
 {
     display: inline-block;
 }
 
-/* ============================================== MISC === */
 body
 {
     max-width: 1100px;
@@ -224,7 +223,17 @@ main
     line-height: 1;
     font-size: 24px;
     font-weight: 500;
-    margin-bottom: 20px;
+}
+
+#retail-price
+{
+    text-decoration: line-through;
+    margin-top: 4px;
+}
+
+#add-to-cart-form
+{
+    margin-top: 20px;
 }
 
 /* ============================================== CART === */
@@ -267,6 +276,14 @@ input:focus ~ .tooltip
 {
     opacity: 1;
     left: 100%;
+}
+
+#strength-bar
+{
+    background-color: #C33;
+    width: 75%;
+    height: 10px;
+    display: inline-block;
 }
 
 input:invalid,

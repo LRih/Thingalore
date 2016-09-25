@@ -17,8 +17,10 @@ class SQL
         // show newest products first with ORDER BY
         if ($result = $con->query("SELECT * FROM Products ORDER BY id DESC"))
         {
-            while ($row = $result->fetch_assoc())
-                array_push($products, new Product($row["id"], $row["name"], $row["description"], $row["price"], $row["image"]));
+            $rows = SQL::fetch($result);
+
+            foreach ($rows as $row)
+                array_push($products, Product::fromRow($row));
         }
 
         $con->close();
@@ -45,10 +47,10 @@ class SQL
         {
             if ($statement->bind_param("s", $category) && $statement->execute())
             {
-                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image);
+                $rows = SQL::fetch($statement);
 
-                while ($statement->fetch())
-                    array_push($products, new Product($id, $name, $desc, $price, $image));
+                foreach ($rows as $row)
+                    array_push($products, Product::fromRow($row));
             }
         }
 
@@ -81,10 +83,10 @@ class SQL
         {
             if ($statement->bind_param("s", $search) && $statement->execute())
             {
-                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image);
+                $rows = SQL::fetch($statement);
 
-                while ($statement->fetch())
-                    array_push($products, new Product($id, $name, $desc, $price, $image));
+                foreach ($rows as $row)
+                    array_push($products, Product::fromRow($row));
             }
         }
 
@@ -109,10 +111,10 @@ class SQL
         {
             if ($statement->bind_param("s", $id) && $statement->execute())
             {
-                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image);
+                $rows = SQL::fetch($statement);
 
-                if ($statement->fetch())
-                    $product = new Product($id, $name, $desc, $price, $image);
+                if (count($rows) > 0)
+                    $product = Product::fromRow($rows[0]);
             }
         }
 
@@ -178,7 +180,7 @@ class SQL
         if ($con->connect_error)
             return NULL;
 
-        $product = NULL;
+        $customer = NULL;
 
         $query = "SELECT id, fname, lname, email, address, phone FROM Customers WHERE id = ?";
 
@@ -187,16 +189,16 @@ class SQL
         {
             if ($statement->bind_param("s", $id) && $statement->execute())
             {
-                $statement->bind_result($id, $fname, $lname, $email, $address, $phone);
+                $rows = SQL::fetch($statement);
 
-                if ($statement->fetch())
-                    $product = new Customer($id, $fname, $lname, $email, $address, $phone);
+                if (count($rows) > 0)
+                    $customer = Customer::fromRow($rows[0]);
             }
         }
 
         $con->close();
 
-        return $product;
+        return $customer;
     }
 
 
@@ -344,12 +346,12 @@ class SQL
         {
             if ($statement->bind_param("i", $orderId) && $statement->execute())
             {
-                $statement->bind_result($id, $cat_id, $name, $desc, $manufacturer, $price, $qty, $image, $qty, $totalPrice);
+                $rows = SQL::fetch($statement);
 
-                while ($statement->fetch())
+                foreach ($rows as $row)
                 {
-                    $product = new Product($id, $name, $desc, $price, $image);
-                    array_push($orderLines, new OrderItem($product, $qty, $totalPrice));
+                    $product = Product::fromRow($row);
+                    array_push($orderLines, new OrderItem($product, $row["qty"], $row["total_price"]));
                 }
             }
         }
@@ -357,6 +359,46 @@ class SQL
         $con->close();
 
         return $orderLines;
+    }
+
+
+    /**
+     * Fetches all rows from a result set - either normal or prepared.
+     * Sourced from php.net by nieprzeklinaj at gmail dot com
+     */
+    private static function fetch($result)
+    {   
+        $array = array();
+       
+        if ($result instanceof mysqli_stmt)
+        {
+            $result->store_result();
+           
+            $variables = array();
+            $data = array();
+            $meta = $result->result_metadata();
+           
+            while ($field = $meta->fetch_field())
+                $variables[] = &$data[$field->name]; // pass by reference
+           
+            call_user_func_array(array($result, 'bind_result'), $variables);
+           
+            $i = 0;
+            while($result->fetch())
+            {
+                $array[$i] = array();
+                foreach ($data as $k=>$v)
+                    $array[$i][$k] = $v;
+                $i++;
+            }
+        }
+        elseif ($result instanceof mysqli_result)
+        {
+            while($row = $result->fetch_assoc())
+                $array[] = $row;
+        }
+       
+        return $array;
     }
 
 

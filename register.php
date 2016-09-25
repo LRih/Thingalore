@@ -94,6 +94,10 @@ require_once("php/global.php");
                         <div class="input-field col s12">
                             <input id="phone" type="text" class="validate" name="phone" required aria-required=”true”/>
                             <label for="phone">Telephone</label>
+                            <span class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
+                                Tooltip with strength bar. Color and length adjustable in JS
+                                <p><strong>Strength:</strong><br><span id="strength-bar"></span></p>
+                            </span>
                         </div>
                     </div>
                     <div class="row">
