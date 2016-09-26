@@ -16,9 +16,11 @@
             <?php
                 foreach ($_SESSION["cart"]->items as $item)
                 {
+                    $href = "href='product-detail.php?id=".$item->product->id."'";
+
                     echo "<tr>";
-                    echo "    <td><img class='cart-image vert-align' src='images/products/".$item->product->image."'></td>";
-                    echo "    <td>".$item->product->name."</td>";
+                    echo "    <td><a {$href}><img class='cart-image vert-align' src='images/products/".$item->product->image."'></a></td>";
+                    echo "    <td><a class='grey-text text-darken-4' {$href}>".$item->product->name."</a></td>";
                     echo "    <td class='center-align'>";
                     echo "         <a href='actions/remove-from-cart.php?id=".$item->product->id."'><i class='vert-align material-icons grey-text text-lighten-1'>chevron_left</i></a>";
                     echo "             <span class='vert-align'>".$item->qty."</span>";

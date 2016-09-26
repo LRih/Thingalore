@@ -23,6 +23,7 @@ if ($order == NULL)
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
+        <title>Order #<?php echo $order->id ?> | <?php echo $TITLE ?></title>
         <title>Orders | <?php echo $TITLE ?></title>
     </head>
 

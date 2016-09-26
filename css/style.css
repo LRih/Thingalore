@@ -49,8 +49,8 @@ body
     height: 40px;
     margin: 0;
     padding: 0 12px;
-    border: 1px solid #fb8c00;
-    border-right: 0;
+    border: 1px solid #ef6c00;
+    border-right: none;
     border-radius: 5px 0 0 5px;
     box-sizing: border-box;
     background-color: #fff;
@@ -61,6 +61,8 @@ body
 {
     height: 40px;
     margin: 0;
+    border: 1px solid #ef6c00;
+    border-left: none;
     border-radius: 0 5px 5px 0;
     box-sizing: border-box;
     line-height: normal;
