@@ -6,6 +6,23 @@ require_once("php/global.php");
 if (isset($_SESSION["user"]))
     redirect("user-profile.php");
 
+$incorrectCredentials = false;
+
+// only allow logins from post
+if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_POST["password"]))
+{
+    $customer = SQL::getCustomerByLogin($_POST["email"], $_POST["password"]);
+
+    // set user and redirect
+    if ($customer != NULL)
+    {
+        $_SESSION["user"] = $customer;
+        redirect("index.php");
+    }
+    else
+        $incorrectCredentials = true; // invalid credentials
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -38,13 +55,23 @@ if (isset($_SESSION["user"]))
                             <h5>Returning Customer</h5>
                             <strong>I am a returning customer</strong>
                         </div>
-                        <form method="get", action="actions/login.php">
+                        <?php
+                            if ($incorrectCredentials)
+                            {
+                                echo "<div class='col s12'>";
+                                echo "    <div class='error-box red lighten-5 red-text text-darken-2'>";
+                                echo "        The credentials you have entered are incorrect.";
+                                echo "    </div>";
+                                echo "</div>";
+                            }
+                        ?>
+                        <form method="post">
                             <div class="input-field col s12">
-                                <input id="email" type="text">
+                                <input id="email" name="email" type="text">
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="password" type="password">
+                                <input id="password" name="password" type="password">
                                 <label for="password">Password</label>
                             </div>
                             <div class="col s12">

@@ -26,6 +26,14 @@ body
     vertical-align: middle;
 }
 
+.error-box
+{
+    border: 1px solid #ef9a9a; /* red lighten-3 */
+    border-radius: 4px;
+    margin-top: 16px;
+    padding: 8px 16px;
+}
+
 /* ============================================== NAV === */
 #banner-container
 {

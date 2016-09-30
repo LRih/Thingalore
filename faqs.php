@@ -34,6 +34,11 @@ require_once("php/global.php");
                         <h5>What shipping method is used?</h5>
                         <p>All orders are shipped using Regular Post by Australia Post.</p>
                     </div>
+                    
+                    <div class="section">
+                        <h5>Who are we?</h5>
+                        <p>The leading providers of quality mountain lakes!</p>
+                    </div>
                 </div>
             </div>
         </main>

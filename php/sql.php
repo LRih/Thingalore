@@ -5,6 +5,7 @@
  */
 class SQL
 {
+    //========================================================================= PRODUCTS
     public static function getProducts()
     {
         $con = SQL::connection();
@@ -124,6 +125,7 @@ class SQL
     }
 
 
+    //========================================================================= CATEGORIES
     public static function getCategories()
     {
         $con = SQL::connection();
@@ -173,6 +175,7 @@ class SQL
     }
 
 
+    //========================================================================= CUSTOMERS
     public static function getCustomer($id)
     {
         $con = SQL::connection();
@@ -201,7 +204,17 @@ class SQL
         return $customer;
     }
 
+    /**
+        NULL indicates invalid credentials.
+     */
+    public static function getCustomerByLogin($email, $password)
+    {
+        // TODO implement this
+        return SQL::getCustomer(1);
+    }
 
+
+    //========================================================================= ORDERS
     public static function getOrders($customerId)
     {
         $con = SQL::connection();
@@ -333,6 +346,7 @@ class SQL
     }
 
 
+    //========================================================================= ORDER LINES
     private static function getOrderLines($orderId)
     {
         $con = SQL::connection();
@@ -366,6 +380,7 @@ class SQL
     }
 
 
+    //========================================================================= MISCELLANEOUS
     /**
      * Fetches all rows from a result set - either normal or prepared.
      * Sourced from php.net by nieprzeklinaj at gmail dot com
