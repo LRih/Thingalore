@@ -210,7 +210,10 @@ class SQL
     public static function getCustomerByLogin($email, $password)
     {
         // TODO implement this
-        return SQL::getCustomer(1);
+        if ($email === "john")
+            return SQL::getCustomer(1);
+        else
+            return NULL;
     }
 
 

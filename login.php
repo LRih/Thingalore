@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                                 <label for="password">Password</label>
                             </div>
                             <div class="col s12">
-                                <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit">Login (i currently auto-login)</button>
+                                <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit">Login ("john" auto logs in)</button>
                             </div>
                         </form>
                     </div>

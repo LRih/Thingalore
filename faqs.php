@@ -37,7 +37,7 @@ require_once("php/global.php");
                     
                     <div class="section">
                         <h5>Who are we?</h5>
-                        <p>The leading providers of quality mountain lakes!</p>
+                        <p>The leading provider of quality mountain lakes!</p>
                     </div>
                 </div>
             </div>
