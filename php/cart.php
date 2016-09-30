@@ -26,7 +26,7 @@ class Cart
             $this->items[$productId]->qty--;
 
             // remove key if qty is zero
-            if ($this->items[$productId] <= 0)
+            if ($this->items[$productId]->qty <= 0)
                 unset($this->items[$productId]);
         }
     }
