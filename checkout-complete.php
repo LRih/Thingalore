@@ -2,11 +2,13 @@
 
 require_once("php/global.php");
 
+// redirect to home if not coming from successful order
 if (!isset($_SESSION['checkout_complete_id']))
     redirect("index.php");
 
 $orderId = $_SESSION['checkout_complete_id'];
 
+// unset flag so this page cannot be navigated to a second time
 unset($_SESSION['checkout_complete_id']);
 
 ?>
