@@ -40,11 +40,11 @@ if (isset($_SESSION["user"]))
                         </div>
                         <form method="get", action="actions/login.php">
                             <div class="input-field col s12">
-                                <input id="email" type="email" class="validate">
+                                <input id="email" type="text">
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="password" type="password" class="validate">
+                                <input id="password" type="password">
                                 <label for="password">Password</label>
                             </div>
                             <div class="col s12">
