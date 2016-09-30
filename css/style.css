@@ -174,7 +174,6 @@ main
 .product:hover > .product-image-container
 {
     opacity: 1;
-    transition: 0.25s;
 }
 
 .product-text
