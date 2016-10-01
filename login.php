@@ -3,9 +3,6 @@
 require_once("php/global.php");
 
 // redirect to profile if already logged in
-function encrypt($pass) {
-    return password_hash($pass, PASSWORD_BCRYPT);
-}
 if (isset($_SESSION["user"]))
     redirect("user-profile.php");
 
@@ -79,7 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                                 <label for="password">Password</label>
                             </div>
                             <div class="col s12">
-                                <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit">Login ("john" auto logs in)</button>
+                                <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit">Login</button>
                             </div>
                         </form>
                     </div>

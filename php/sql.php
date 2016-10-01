@@ -192,7 +192,7 @@ class SQL
         $query = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         $is_ver = 0;
-        $ver_code = 'insert_code_here';
+        $ver_code = md5(rand(40000, 50000));
 
         if ($statement = $con->prepare($query))
         {
@@ -216,7 +216,7 @@ class SQL
 
         $customer = NULL;
 
-        $query = "SELECT id, fname, lname, email, address, phone FROM Customers WHERE id = ?";
+        $query = "SELECT * FROM Customers WHERE id = ?";
 
         // prepared statements prevent SQL injection
         if ($statement = $con->prepare($query))
@@ -240,13 +240,12 @@ class SQL
      */
     public static function getCustomerByLogin($email, $password)
     {
-        $id;
         $con = SQL::connection();
 
         if ($con->connect_error)
-            return [];
+            return NULL;
 
-        $customer = [];
+        $customer = NULL;
         $query = "SELECT id, password_hash FROM Customers WHERE (email=?)";
 
         // prepared statements prevent SQL injection (I'm sure)
@@ -260,20 +259,14 @@ class SQL
                 {
                     //Check if passwords match
                     if (password_verify($password, $row[0]['password_hash']))
-                    {
                         $customer = SQL::getCustomer($row[0]['id']);
-                        return $customer;
-                    }
-                    else
-                    {
-                        return NULL;
-                    }
                 }
             }
         }
-        
-        else
-            return NULL;
+
+        $con->close();
+
+        return $customer;
     }
 
 
