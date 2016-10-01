@@ -209,9 +209,38 @@ class SQL
      */
     public static function getCustomerByLogin($email, $password)
     {
-        // TODO implement this
-        if ($email === "john")
-            return SQL::getCustomer(1);
+        $id;
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return [];
+
+        $customer = [];
+        $query = "SELECT id, password_hash FROM Customers WHERE (email=?)";
+
+        // prepared statements prevent SQL injection (I'm sure)
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("s", $email) && $statement->execute())
+            {
+                $row = SQL::fetch($statement); //Contains id and hash
+
+                if (count($row) > 0)
+                {
+                    //Check if passwords match
+                    if (password_verify($password, $row[0]['password_hash']))
+                    {
+                        $customer = SQL::getCustomer($row[0]['id']);
+                        return $customer;
+                    }
+                    else
+                    {
+                        return NULL;
+                    }
+                }
+            }
+        }
+        
         else
             return NULL;
     }

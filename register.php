@@ -3,7 +3,6 @@
     - Message, "REGISTRATION SUCCESSFULL" 
         > Make sure page can't be viewed unless actually registered?
         > Expires?
-    - 
 
     DONE:
     - Client side validation: all fields are entered
@@ -14,7 +13,7 @@
 -->
 
 <?php
-
+if (captcha != 0) { header('register_success.php'); }
 require_once("php/global.php");
 
 ?>
@@ -23,7 +22,8 @@ require_once("php/global.php");
 
 <html>
     <head>
-        <?php require_once("templates/head.php");?>
+        <?php 
+            require_once("templates/head.php");?>
         <title>Register | <?php echo $TITLE ?></title>
     </head>
 
@@ -131,6 +131,7 @@ require_once("php/global.php");
         <?php
         ####### TO BE INPUT INTO SEPARATE FILE ########
         $fname;$lname;$address;$phone;$email;$pwd;$captcha;
+        
         function encrypt($pass) {
                 return password_hash($pass, PASSWORD_BCRYPT);
         }
@@ -164,8 +165,6 @@ require_once("php/global.php");
             $sql = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
                 VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
             $conn->query($sql);
-            header('register_success.php');
-
         }
 
         ?>

@@ -3,6 +3,9 @@
 require_once("php/global.php");
 
 // redirect to profile if already logged in
+function encrypt($pass) {
+    return password_hash($pass, PASSWORD_BCRYPT);
+}
 if (isset($_SESSION["user"]))
     redirect("user-profile.php");
 
@@ -11,6 +14,7 @@ $incorrectCredentials = false;
 // only allow logins from post
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_POST["password"]))
 {
+    
     $customer = SQL::getCustomerByLogin($_POST["email"], $_POST["password"]);
 
     // set user and redirect
@@ -65,13 +69,13 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                                 echo "</div>";
                             }
                         ?>
-                        <form method="post">
+                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                             <div class="input-field col s12">
-                                <input id="email" name="email" type="text">
+                                <input id="email" name="email" type="text" required aria-required=”true”/>
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="password" name="password" type="password">
+                                <input id="password" name="password" type="password" required aria-required=”true”/>
                                 <label for="password">Password</label>
                             </div>
                             <div class="col s12">
@@ -83,6 +87,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
             </div>
         </main>
 
-        <?php require_once("templates/footer.php") ?>
+        <?php 
+
+        require_once("templates/footer.php") ?>
     </body>
 </html>
