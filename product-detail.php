@@ -56,10 +56,10 @@ $moreProducts = SQL::getProductsByManufacturer($p->manufacturer, $p->id);
                             echo "        More from <strong>".$p->manufacturer."</strong>";
                             echo "    </div>";
 
-                            foreach ($moreProducts as $p)
+                            foreach ($moreProducts as $product)
                             {
-                                echo "    <a href='product-detail.php?id=".$p->id."'>";
-                                echo "        <div class='more-image-container' style='background-image:url(\"images/products/".$p->image."\")'>";
+                                echo "    <a href='product-detail.php?id=".$product->id."'>";
+                                echo "        <div class='more-image-container' style='background-image:url(\"images/products/".$product->image."\")'>";
                                 echo "        </div>";
                                 echo "    </a>";
                             }
