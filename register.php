@@ -45,11 +45,14 @@ require_once("php/global.php");
                 
                 <!-- Display warning if captcha not entered -->
                 <?php 
-                    if(!($_POST['g-recaptcha-response']) and $_POST["state"])
+                    if ($_SERVER["REQUEST_METHOD"] == "POST")
                     {
-                        echo "    <div class='error-box red lighten-5 red-text text-darken-2'>";
-                        echo "        Please check the the captcha form.";
-                        echo "    </div>";
+                        if (isset($_POST['g-recaptcha-response']) && !$_POST['g-recaptcha-response'])
+                        {
+                            echo "<div class='error-box red lighten-5 red-text text-darken-2'>";
+                            echo "    Please check the the captcha form.";
+                            echo "</div>";
+                        }
                     }
                 ?>
                 
@@ -88,7 +91,8 @@ require_once("php/global.php");
                         </div>
                         <div class="input-field col s2"></div>
                         <div class="input-field col s3">
-                            <input id="postcode" type="text" class="validate" name="postcode" required aria-required=”true”/>
+                            <input id="postcode" type="text" class="validate" name="postcode" required aria-required=”true”
+                                pattern="^\d{4}$" title="4 digits" />
                             <label for="postcode">Postcode</label>
                         </div>
                     </div>
