@@ -12,6 +12,8 @@ $p = SQL::getProduct($_GET["id"]);
 if (is_null($p))
     redirect("index.php");
 
+$moreProducts = SQL::getProductsByManufacturer($p->manufacturer);
+
 ?>
 
 <!DOCTYPE html>
@@ -43,6 +45,21 @@ if (is_null($p))
                         <div class="divider"></div>
                         <?php echo $p->formattedDesc() ?>
                     </div>
+
+                    <?php
+                        // show more products by manufacturer
+                        if (count($moreProducts) > 0)
+                        {
+                            echo "<div class='header'>";
+                            echo "    More from ".$p->manufacturer;
+                            echo "</div>";
+
+                            foreach ($moreProducts as $p)
+                            {
+                                echo "<img id='detail-image' src='images/products/".$p->image."'>";
+                            }
+                        }
+                    ?>
                 </div>
 
                 <div class="col s12 m3">

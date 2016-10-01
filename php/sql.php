@@ -60,6 +60,37 @@ class SQL
         return $products;
     }
 
+    public static function getProductsByManufacturer($manufacturer)
+    {
+        $con = sql::connection();
+
+        if ($con->connect_error)
+            return [];
+
+        $products = [];
+
+        $query = "SELECT * ".
+                 "FROM Products ".
+                 "WHERE manufacturer = ? ".
+                 "ORDER BY RAND() LIMIT 5";
+
+        // prepared statements prevent SQL injection (I'm sure)
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("s", $manufacturer) && $statement->execute())
+            {
+                $rows = SQL::fetch($statement);
+
+                foreach ($rows as $row)
+                    array_push($products, Product::fromRow($row));
+            }
+        }
+
+        $con->close();
+
+        return $products;
+    }
+
     /**
      * Very rudimentary search procedure.
      */
