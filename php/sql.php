@@ -60,7 +60,7 @@ class SQL
         return $products;
     }
 
-    public static function getProductsByManufacturer($manufacturer)
+    public static function getProductsByManufacturer($manufacturer, $excludedId)
     {
         $con = sql::connection();
 
@@ -71,13 +71,12 @@ class SQL
 
         $query = "SELECT * ".
                  "FROM Products ".
-                 "WHERE manufacturer = ? ".
+                 "WHERE manufacturer = ? AND id <> ? ".
                  "ORDER BY RAND() LIMIT 5";
 
-        // prepared statements prevent SQL injection (I'm sure)
         if ($statement = $con->prepare($query))
         {
-            if ($statement->bind_param("s", $manufacturer) && $statement->execute())
+            if ($statement->bind_param("si", $manufacturer, $excludedId) && $statement->execute())
             {
                 $rows = SQL::fetch($statement);
 

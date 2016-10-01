@@ -253,6 +253,23 @@ main
     margin-top: 20px;
 }
 
+.more-image-container
+{
+    background-size: cover;
+    background-position: center center;
+    opacity: 0.8;
+    width: 90px;
+    height: 90px;
+    margin: 4px 6px;
+    overflow: hidden;
+    transition: 0.25s;
+    display: inline-block;
+}
+.more-image-container:hover
+{
+    opacity: 1;
+}
+
 /* ============================================== CART === */
 .cart-image
 {

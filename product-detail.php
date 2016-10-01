@@ -12,7 +12,8 @@ $p = SQL::getProduct($_GET["id"]);
 if (is_null($p))
     redirect("index.php");
 
-$moreProducts = SQL::getProductsByManufacturer($p->manufacturer);
+// get other products by the same manufacturer
+$moreProducts = SQL::getProductsByManufacturer($p->manufacturer, $p->id);
 
 ?>
 
@@ -56,7 +57,10 @@ $moreProducts = SQL::getProductsByManufacturer($p->manufacturer);
 
                             foreach ($moreProducts as $p)
                             {
-                                echo "<img id='detail-image' src='images/products/".$p->image."'>";
+                                echo "<a href='product-detail.php?id=".$p->id."'>";
+                                echo "    <div class='more-image-container' style='background-image:url(\"images/products/".$p->image."\")'>";
+                                echo "    </div>";
+                                echo "</a>";
                             }
                         }
                     ?>
