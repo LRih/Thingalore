@@ -182,6 +182,9 @@ class SQL
 
     public static function createCustomer($fname, $lname, $address, $phone, $email, $pwd)
     {
+        // TODO server-side validation here and return false if invalid data
+        // TODO also check if e-mail already exists
+
         $con = SQL::connection();
 
         if ($con->connect_error)

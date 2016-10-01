@@ -46,7 +46,11 @@ require_once("php/global.php");
                 <!-- Display warning if captcha not entered -->
                 <?php 
                     if(!($_POST['g-recaptcha-response']) and $_POST["state"])
-                        { echo 'Please check the the captcha form.'; }
+                    {
+                        echo "    <div class='error-box red lighten-5 red-text text-darken-2'>";
+                        echo "        Please check the the captcha form.";
+                        echo "    </div>";
+                    }
                 ?>
                 
                 <form class="col s12" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
