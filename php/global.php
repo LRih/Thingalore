@@ -27,12 +27,20 @@
     // ========================================================================
 
 
-    // only show errors when testing
     if ($GLOBALS["test_mode"])
+    {
+        // only show errors when testing
         error_reporting(E_ALL);
+    }
     else
+    {
+        // always use https website in production
+        if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off")
+            redirect($GLOBALS["paypal_host"]);
+
         error_reporting(0);
-    
+    }
+
     // so we can make use of session state
     session_start();
 
