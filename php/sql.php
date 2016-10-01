@@ -190,12 +190,14 @@ class SQL
         $pwd = SQL::encrypt($pwd);
 
         $query = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
-                VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        $is_ver = 0;
+        $ver_code = 'insert_code_here';
 
         if ($statement = $con->prepare($query))
         {
             //if ($statement->bind_param("s", $id) && $statement->execute())
-            if ($statement->execute())
+            if ($statement->bind_param("ssssssis", $fname, $lname, $email, $address, $phone, $pwd, $is_ver, $ver_code) && $statement->execute())
             {
                 $con->query($query);
             }
