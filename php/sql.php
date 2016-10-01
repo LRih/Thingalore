@@ -176,6 +176,35 @@ class SQL
 
 
     //========================================================================= CUSTOMERS
+    public static function encrypt($pass) {
+                return password_hash($pass, PASSWORD_BCRYPT);
+    }
+
+    public static function createCustomer($fname, $lname, $address, $phone, $email, $pwd)
+    {
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return NULL;
+
+        $pwd = SQL::encrypt($pwd);
+
+        $query = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
+                VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
+
+        if ($statement = $con->prepare($query))
+        {
+            //if ($statement->bind_param("s", $id) && $statement->execute())
+            if ($statement->execute())
+            {
+                $con->query($query);
+            }
+        }
+        
+        //TODO: edit later...
+        return TRUE;
+    }
+
     public static function getCustomer($id)
     {
         $con = SQL::connection();

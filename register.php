@@ -129,18 +129,12 @@ require_once("php/global.php");
         </main>
 
         <?php
-        ####### TO BE INPUT INTO SEPARATE FILE ########
         $fname;$lname;$address;$phone;$email;$pwd;$captcha;
-        
-        function encrypt($pass) {
-                return password_hash($pass, PASSWORD_BCRYPT);
-        }
 
         ################ CHECKING CAPTCHA ###########
         if(isset($_POST['g-recaptcha-response'])){
             $captcha=$_POST['g-recaptcha-response'];
         }
-        #False check for captcha in code
         
         #Captcha = true
         if($captcha != 0)
@@ -152,19 +146,10 @@ require_once("php/global.php");
                 $address = $_POST["address"].", ".$_POST["state"].", ".$_POST["postcode"];
                 $phone = $_POST["phone"];
                 $email = $_POST["email"];
-                $pwd = encrypt($_POST["password"]);
+                $pwd = $_POST["password"];
             }
-
             ################# DATA INTO DATABASE ###
-            $servername = "localhost";
-            $username = "root";
-            $password = "";
-            $dbname = "sec_ecommerce";
-
-            $conn = new mysqli($servername, $username, $password, $dbname);
-            $sql = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
-                VALUES ('$fname', '$lname', '$email', '$address', '$phone', '$pwd', 0, 'insert_code_here')";
-            $conn->query($sql);
+            SQL::createCustomer($fname, $lname, $address, $phone, $email, $pwd);
         }
 
         ?>
