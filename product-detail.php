@@ -51,17 +51,19 @@ $moreProducts = SQL::getProductsByManufacturer($p->manufacturer, $p->id);
                         // show more products by manufacturer
                         if (count($moreProducts) > 0)
                         {
-                            echo "<div class='header'>";
-                            echo "    More from ".$p->manufacturer;
-                            echo "</div>";
+                            echo "<div class='section'>";
+                            echo "    <div class='header'>";
+                            echo "        More from <strong>".$p->manufacturer."</strong>";
+                            echo "    </div>";
 
                             foreach ($moreProducts as $p)
                             {
-                                echo "<a href='product-detail.php?id=".$p->id."'>";
-                                echo "    <div class='more-image-container' style='background-image:url(\"images/products/".$p->image."\")'>";
-                                echo "    </div>";
-                                echo "</a>";
+                                echo "    <a href='product-detail.php?id=".$p->id."'>";
+                                echo "        <div class='more-image-container' style='background-image:url(\"images/products/".$p->image."\")'>";
+                                echo "        </div>";
+                                echo "    </a>";
                             }
+                            echo "</div>";
                         }
                     ?>
                 </div>
