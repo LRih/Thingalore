@@ -32,10 +32,31 @@ require_once("php/global.php");
         <script>
             $(document).ready(function() {
                 $('select').material_select();
-            });
-            $(document).ready(function(){
                 $('.tooltipped').tooltip({delay: 50});
+
+                // initialize password strength to one
+                $("#password-bar").css("width", "1%");
             });
+
+            function onPasswordChange(e)
+            {
+                var val = $("#password").val();
+
+                var length = Math.min(Math.max(val.length * 10, 1), 100);
+
+                // determine color based on steps
+                var col;
+                if (length > 75)
+                    col = "#cddc39"; // green
+                else if (length > 50)
+                    col = "#ffeb3b"; // yellow
+                else if (length > 25)
+                    col = "#ffa500"; // orange
+                else
+                    col = "#f44336"; // red
+
+                $("#password-bar").css( { "background-color": col, "width": length + "%" });
+            }
         </script>
 
         <main id="main">
@@ -102,20 +123,20 @@ require_once("php/global.php");
                         <div class="input-field col s12">
                             <input id="phone" type="text" class="validate" name="phone" required aria-required=”true”/>
                             <label for="phone">Telephone</label>
-                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
-                                Tooltip with strength bar. Color and length adjustable in JS
-                                <p><strong>Strength:</strong><br><span id="strength-bar"></span></p>
-                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12" >
-                            <input id="password" type="password" name="password" required aria-required=”true”
+                            <input id="password" type="password" name="password" required aria-required=”true” onkeydown="onPasswordChange()"
                                 pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$"
                                 class="tooltipped" data-delay="50"
                                 data-tooltip="Password must be between 8-20 characters. It must contain at least one of each: 
                                 Lowercase, Uppercase letters, Numbers, Symbols."/>
                             <label for="password">Password</label>
+                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
+                                Tooltip with strength bar. Color and length adjustable in JS
+                                <p><strong>Strength:</strong><br><span id="password-bar" class="strength-bar"></span></p>
+                            </div>
                         </div>
                     </div>
                     <div class="row">

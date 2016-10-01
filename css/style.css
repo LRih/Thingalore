@@ -312,7 +312,7 @@ input:focus ~ .tooltip
     left: 100%;
 }
 
-#strength-bar
+.strength-bar
 {
     background-color: #C33;
     width: 75%;
