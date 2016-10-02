@@ -6,6 +6,7 @@ function createSideNav($selectedTab)
     $links = array(
         "Profile" => "user-profile.php",
         "Orders" => "user-orders.php",
+        "Password" => "user-password.php",
         "Logout" => "actions/logout.php"
     );
 

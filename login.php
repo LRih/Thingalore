@@ -11,7 +11,6 @@ $incorrectCredentials = false;
 // only allow logins from post
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_POST["password"]))
 {
-    
     $customer = SQL::getCustomerByLogin($_POST["email"], $_POST["password"]);
 
     // set user and redirect
@@ -60,19 +59,19 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                             if ($incorrectCredentials)
                             {
                                 echo "<div class='col s12'>";
-                                echo "    <div class='error-box red lighten-5 red-text text-darken-2'>";
-                                echo "        The credentials you have entered are incorrect.";
+                                echo "    <div class='error-box'>";
+                                echo "        The credentials you entered are incorrect.";
                                 echo "    </div>";
                                 echo "</div>";
                             }
                         ?>
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                             <div class="input-field col s12">
-                                <input id="email" name="email" type="text" required aria-required=”true”/>
+                                <input id="email" name="email" type="text" required />
                                 <label for="email">Email</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="password" name="password" type="password" required aria-required=”true”/>
+                                <input id="password" name="password" type="password" required />
                                 <label for="password">Password</label>
                             </div>
                             <div class="col s12">

@@ -70,7 +70,7 @@ require_once("php/global.php");
                     {
                         if (isset($_POST['g-recaptcha-response']) && !$_POST['g-recaptcha-response'])
                         {
-                            echo "<div class='error-box red lighten-5 red-text text-darken-2'>";
+                            echo "<div class='error-box'>";
                             echo "    Please check the the captcha form.";
                             echo "</div>";
                         }

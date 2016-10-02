@@ -26,8 +26,19 @@ body
     vertical-align: middle;
 }
 
+.confirm-box
+{
+    color: #689f38; /* light-green-text darken-2 */
+    background-color: #f1f8e9; /* light-green lighten-5 */
+    border: 1px solid #c5e1a5; /* light-green lighten-3 */
+    border-radius: 4px;
+    margin: 16px 0;
+    padding: 8px 16px;
+}
 .error-box
 {
+    color: #d32f2f; /* red-text darken-2 */
+    background-color: #ffebee; /* red lighten-5 */
     border: 1px solid #ef9a9a; /* red lighten-3 */
     border-radius: 4px;
     margin: 16px 0;
