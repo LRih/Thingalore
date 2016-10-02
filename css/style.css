@@ -71,6 +71,7 @@ body
     border: 1px solid #ef6c00;
     border-right: none;
     border-radius: 5px 0 0 5px;
+    box-shadow: none;
     box-sizing: border-box;
     background-color: #fff;
     line-height: normal;
