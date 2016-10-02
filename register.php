@@ -16,6 +16,30 @@
 
 require_once("php/global.php");
 
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    $fname = $_POST["first_name"];
+    $lname = $_POST["last_name"];
+    $address = $_POST["address"].", ".$_POST["state"].", ".$_POST["postcode"];
+    $phone = $_POST["phone"];
+    $email = $_POST["email"];
+    $pwd = $_POST["password"];
+
+    ################ CHECKING CAPTCHA ###########
+    $captcha = isset($_POST['g-recaptcha-response']) && $_POST['g-recaptcha-response'];
+
+    #Captcha = true
+    if (!$captcha)
+        $error = "Please check the the captcha form.";
+    else
+    {
+        $error = "No error. (REMOVE LATER)";
+        ################# DATA INTO DATABASE ###
+        SQL::createCustomer($fname, $lname, $address, $phone, $email, $pwd);
+    }
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +56,6 @@ require_once("php/global.php");
         <script>
             $(document).ready(function() {
                 $('select').material_select();
-                $('.tooltipped').tooltip({delay: 50});
 
                 // initialize password strength to one
                 $("#password-bar").css("width", "1%");
@@ -60,21 +83,14 @@ require_once("php/global.php");
         </script>
 
         <main id="main">
-            <div class="center-align">
-                <h5>Registration</h5>
-                <div class="center-align" style="max-width:600px; margin-right:auto; margin-left:auto;">
-                
+            <h5 class="center-align">Registration</h5>
+
+            <div class="center-align" style="max-width:600px; margin-right:auto; margin-left:auto;">
+            
                 <!-- Display warning if captcha not entered -->
                 <?php 
-                    if ($_SERVER["REQUEST_METHOD"] == "POST")
-                    {
-                        if (isset($_POST['g-recaptcha-response']) && !$_POST['g-recaptcha-response'])
-                        {
-                            echo "<div class='error-box'>";
-                            echo "    Please check the the captcha form.";
-                            echo "</div>";
-                        }
-                    }
+                    if (isset($error))
+                        echo "<div class='error-box'>{$error}</div>";
                 ?>
                 
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -94,6 +110,7 @@ require_once("php/global.php");
                         <div class="input-field col s12">
                             <input id="address" type="text" class="validate" name="address" required />
                             <label for="address">Address</label>
+                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">We only ship to Australian addresses.</div>
                         </div>
                     </div>
 
@@ -120,21 +137,20 @@ require_once("php/global.php");
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="phone" type="text" class="validate" name="phone" required />
+                            <input id="phone" type="text" class="validate" name="phone" required
+                                pattern="^\d+$" />
                             <label for="phone">Telephone</label>
+                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">Please enter only numbers.</div>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12" >
                             <input id="password" type="password" name="password" required onkeydown="onPasswordChange()"
-                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$"
-                                class="tooltipped" data-delay="50"
-                                data-tooltip="Password must be between 8-20 characters. It must contain at least one of each: 
-                                Lowercase, Uppercase letters, Numbers, Symbols."/>
+                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
                             <label for="password">Password</label>
                             <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
-                                Tooltip with strength bar. Color and length adjustable in JS
+                                Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.
                                 <p><strong>Strength:</strong><br><span id="password-bar" class="strength-bar"></span></p>
                             </div>
                         </div>
@@ -144,46 +160,18 @@ require_once("php/global.php");
                         <div class="input-field col s12">
                             <input id="email" type="email" class="validate" name="email" required />
                             <label for="email">Email</label>
-                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1">CSS customizable tooltip, remove if you want. Visible when input gets focus.</div>
                         </div>
                     </div>
 
                     <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
-                    
+
                     <div class="section">
                         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                         <i class="material-icons right">send</i></button>
                     </div>
                 </form>
-                </div>
             </div>
         </main>
-
-        <?php
-        $fname;$lname;$address;$phone;$email;$pwd;$captcha;
-
-        ################ CHECKING CAPTCHA ###########
-        if(isset($_POST['g-recaptcha-response'])){
-            $captcha=$_POST['g-recaptcha-response'];
-        }
-        
-        #Captcha = true
-        if(isset($captcha) && $captcha != 0)
-        {
-            #Save values after form submit
-            if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                $fname = $_POST["first_name"];
-                $lname = $_POST["last_name"];
-                $address = $_POST["address"].", ".$_POST["state"].", ".$_POST["postcode"];
-                $phone = $_POST["phone"];
-                $email = $_POST["email"];
-                $pwd = $_POST["password"];
-            }
-            ################# DATA INTO DATABASE ###
-            SQL::createCustomer($fname, $lname, $address, $phone, $email, $pwd);
-        }
-
-        ?>
 
         <?php require_once("templates/footer.php") ?>
     </body>
