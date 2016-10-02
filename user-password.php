@@ -7,20 +7,8 @@ if (!isset($_SESSION["user"]))
     redirect("login.php");
 
 // password change request
-if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_POST["password"]))
-{
-    
-    $customer = SQL::getCustomerByLogin($_POST["email"], $_POST["password"]);
-
-    // set user and redirect
-    if ($customer != NULL)
-    {
-        $_SESSION["user"] = $customer;
-        redirect("index.php");
-    }
-    else
-        $incorrectCredentials = true; // invalid credentials
-}
+if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["cur-password"]) && isset($_POST["new-password"]) && isset($_POST["retype-new-password"]))
+    $res = SQL::updatePassword($_SESSION["user"]->id, $_POST["cur-password"], $_POST["new-password"], $_POST["retype-new-password"]);
 
 ?>
 
@@ -29,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
 <html>
     <head>
         <?php require_once("templates/head.php") ?>
-        <title>Profile | <?php echo $TITLE ?></title>
+        <title>Password | <?php echo $TITLE ?></title>
         <script>
             $(document).ready(function() {
                 // initialize password strength to one
@@ -72,11 +60,17 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
 
                     <div class="row container">
                         <?php
-                            echo "<div class='col s12'>";
-                            echo "    <div class='confirm-box'>";
-                            echo "        Password changed successfully.";
-                            echo "    </div>";
-                            echo "</div>";
+                            if (isset($res))
+                            {
+                                echo "<div class='col s12'>";
+
+                                if ($res === true)
+                                    echo "<div class='confirm-box'>Password changed successfully.</div>";
+                                else
+                                    echo "<div class='error-box'>{$res}</div>";
+
+                                echo "</div>";
+                            }
                         ?>
 
                         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
@@ -85,7 +79,8 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                                 <label for="cur-password">Current password</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="new-password" name="new-password" type="password" onkeydown="onPasswordChange()" required />
+                                <input id="new-password" name="new-password" type="password" onkeydown="onPasswordChange()" required
+                                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
                                 <label for="new-password">New password</label>
                                 <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
                                     Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.

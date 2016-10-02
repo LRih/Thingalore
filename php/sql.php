@@ -206,7 +206,7 @@ class SQL
 
 
     //========================================================================= CUSTOMERS
-    public static function encrypt($pass) {
+    private static function encrypt($pass) {
                 return password_hash($pass, PASSWORD_BCRYPT);
     }
 
@@ -300,6 +300,64 @@ class SQL
         $con->close();
 
         return $customer;
+    }
+
+    /**
+     * Check password for particular user.
+     */
+    private static function checkPassword($id, $password)
+    {
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return false;
+
+        $success = false;
+        $query = "SELECT password_hash FROM Customers WHERE id = ?";
+
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("i", $id) && $statement->execute())
+            {
+                $rows = SQL::fetch($statement);
+
+                if (count($rows) > 0 && password_verify($password, $rows[0]['password_hash']))
+                    $success = true;
+            }
+        }
+
+        $con->close();
+
+        return $success;
+    }
+
+    public static function updatePassword($id, $curPwd, $newPwd, $retypeNewPwd)
+    {
+        // validation
+        if (!SQL::checkPassword($id, $curPwd))
+            return 'Current password is incorrect.';
+        else if (!Validator::checkPassword($newPwd))
+            return 'Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.';
+        else if ($newPwd != $retypeNewPwd)
+            return 'Passwords do not match.';
+
+
+        $ret = 'Operation failed.';
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return $ret;
+
+        if ($statement = $con->prepare("UPDATE Customers SET password_hash = ? WHERE id = ?"))
+        {
+            $pwd = SQL::encrypt($newPwd);
+            if ($statement->bind_param("si", $pwd, $id) && $statement->execute())
+                $success = true;
+        }
+
+        $con->close();
+
+        return $success;
     }
 
 

@@ -74,6 +74,9 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                                 <input id="password" name="password" type="password" required />
                                 <label for="password">Password</label>
                             </div>
+                            <div class="row col s12">
+                                <a href="#">Forget your password?</a>
+                            </div>
                             <div class="col s12">
                                 <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit">Login</button>
                             </div>
