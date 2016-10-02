@@ -18,7 +18,7 @@ require_once("php/global.php");
 
         <main id="main">
             <div class="center-align">
-                <h5>Registration Sucessfull!</h5>
+                <h5>Registration Sucessful!</h5>
                 <p>Thank you for joining Thingalore! Begin shopping by logging into your account.</p>
         </main>
 

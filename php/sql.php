@@ -207,36 +207,36 @@ class SQL
 
     //========================================================================= CUSTOMERS
     private static function encrypt($pass) {
-                return password_hash($pass, PASSWORD_BCRYPT);
+        return password_hash($pass, PASSWORD_BCRYPT);
     }
 
     public static function createCustomer($fname, $lname, $address, $phone, $email, $pwd)
     {
         // TODO server-side validation (email and pwd) here and return error message if invalid data
+        if (SQL::isEmailExist($email))
+            return 'E-mail already exists.';
 
+        $ret = 'Operation failed.';
         $con = SQL::connection();
 
         if ($con->connect_error)
-            return NULL;
+            return $ret;
 
         $pwd = SQL::encrypt($pwd);
 
-        $query = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, is_verified, verification_code) 
+        $query = "INSERT INTO CUSTOMERS (fname, lname, email, address, phone, password_hash, verification_code) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $is_ver = 0;
         $ver_code = md5(rand(40000, 50000));
 
         if ($statement = $con->prepare($query))
         {
-            //if ($statement->bind_param("s", $id) && $statement->execute())
-            if ($statement->bind_param("ssssssis", $fname, $lname, $email, $address, $phone, $pwd, $is_ver, $ver_code) && $statement->execute())
-            {
-                $con->query($query);
-            }
+            if ($statement->bind_param("ssssssis", $fname, $lname, $email, $address, $phone, $pwd, $ver_code) && $statement->execute())
+                $ret = true;
         }
+
+        $con->close();
         
-        //TODO: edit later...
-        return true;
+        return $ret;
     }
 
     public static function getCustomer($id)
@@ -299,6 +299,12 @@ class SQL
         $con->close();
 
         return $customer;
+    }
+
+    private static function isEmailExist($email)
+    {
+        // TODO
+        return true;
     }
 
     /**

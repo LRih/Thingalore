@@ -21,9 +21,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $fname = $_POST["first_name"];
     $lname = $_POST["last_name"];
-    $address = $_POST["address"].", ".$_POST["state"].", ".$_POST["postcode"];
+
+    $address = $_POST["address"];
+    $state = $_POST["state"];
+    $postcode = $_POST["postcode"];
+    $fulladdress = $address.", ".$state.", ".$postcode;
+
     $phone = $_POST["phone"];
     $email = $_POST["email"];
+
     $pwd = $_POST["password"];
 
     ################ CHECKING CAPTCHA ###########
@@ -34,9 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $error = "Please check the the captcha form.";
     else
     {
-        $error = "No error. (REMOVE LATER)";
         ################# DATA INTO DATABASE ###
-        SQL::createCustomer($fname, $lname, $address, $phone, $email, $pwd);
+        $error = SQL::createCustomer($fname, $lname, $fulladdress, $phone, $email, $pwd);
+
+        // register successful
+        if ($error === true)
+            redirect("register_success.php");
     }
 }
 
@@ -78,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 else
                     col = "#f44336"; // red
 
-                $("#password-bar").css( { "background-color": col, "width": length + "%" });
+                $("#password-bar").css({ "background-color": col, "width": length + "%" });
             }
         </script>
 
@@ -96,11 +105,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="row">
                         <div class="input-field col s6" >
-                            <input id="first_name" type="text" class="validate" name="first_name" required />
+                            <input id="first_name" type="text" class="validate" name="first_name" required
+                                <?php if (isset($error) && isset($fname)) echo "value='{$fname}'" ?> />
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="last_name" type="text" class="validate" name="last_name" required />
+                            <input id="last_name" type="text" class="validate" name="last_name" required
+                                <?php if (isset($error) && isset($lname)) echo "value='{$lname}'" ?> />
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
@@ -108,7 +119,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <!-- Address -->
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="address" type="text" class="validate" name="address" required />
+                            <input id="address" type="text" class="validate" name="address" required
+                                <?php if (isset($error) && isset($address)) echo "value='{$address}'" ?> />
                             <label for="address">Address</label>
                             <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">We only ship to Australian addresses.</div>
                         </div>
@@ -116,7 +128,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row">
                         <div class="input-field col s4">
-                        <select name="state" required aria-required=”true”>
+                        <select name="state" required>
                             <option disabled selected>State</option>
                             <option value="NSW">NSW</option>
                             <option value="NT">NT</option>
@@ -130,7 +142,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="input-field col s2"></div>
                         <div class="input-field col s3">
                             <input id="postcode" type="text" class="validate" name="postcode" required 
-                                pattern="^\d{4}$" title="4 digits" />
+                                pattern="^\d{4}$" title="4 digits"
+                                <?php if (isset($error) && isset($postcode)) echo "value='{$postcode}'" ?> />
                             <label for="postcode">Postcode</label>
                         </div>
                     </div>
@@ -138,7 +151,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="row">
                         <div class="input-field col s12">
                             <input id="phone" type="text" class="validate" name="phone" required
-                                pattern="^\d+$" />
+                                pattern="^\d+$"
+                                <?php if (isset($error) && isset($phone)) echo "value='{$phone}'" ?> />
                             <label for="phone">Telephone</label>
                             <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">Please enter only numbers.</div>
                         </div>
@@ -147,7 +161,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="row">
                         <div class="input-field col s12" >
                             <input id="password" type="password" name="password" required onkeydown="onPasswordChange()"
-                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
+                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$"
+                                <?php if (isset($error) && isset($pwd)) echo "value='{$pwd}'" ?> />
                             <label for="password">Password</label>
                             <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
                                 Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.
@@ -158,7 +173,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="email" type="email" class="validate" name="email" required />
+                            <input id="email" type="email" class="validate" name="email" required
+                                <?php if (isset($error) && isset($email)) echo "value='{$email}'" ?> />
                             <label for="email">Email</label>
                         </div>
                     </div>
