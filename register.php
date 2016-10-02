@@ -13,7 +13,7 @@
 -->
 
 <?php
-if (captcha != 0) { header('register_success.php'); }
+
 require_once("php/global.php");
 
 ?>
@@ -62,7 +62,7 @@ require_once("php/global.php");
         <main id="main">
             <div class="center-align">
                 <h5>Registration</h5>
-                <div class="center-align" style="width:600px; margin-right:auto; margin-left:auto;">
+                <div class="center-align" style="max-width:600px; margin-right:auto; margin-left:auto;">
                 
                 <!-- Display warning if captcha not entered -->
                 <?php 
@@ -77,14 +77,14 @@ require_once("php/global.php");
                     }
                 ?>
                 
-                <form class="col s12" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
                     <div class="row">
                         <div class="input-field col s6" >
-                            <input id="first_name" type="text" class="validate" name="first_name" required aria-required=”true”/>
+                            <input id="first_name" type="text" class="validate" name="first_name" required />
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
-                            <input id="last_name" type="text" class="validate" name="last_name" required aria-required=”true”/>
+                            <input id="last_name" type="text" class="validate" name="last_name" required />
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
@@ -92,12 +92,12 @@ require_once("php/global.php");
                     <!-- Address -->
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="address" type="text" class="validate" name="address" required aria-required=”true”/>
+                            <input id="address" type="text" class="validate" name="address" required />
                             <label for="address">Address</label>
                         </div>
                     </div>
-                    <div class="row">
 
+                    <div class="row">
                         <div class="input-field col s4">
                         <select name="state" required aria-required=”true”>
                             <option disabled selected>State</option>
@@ -112,22 +112,22 @@ require_once("php/global.php");
                         </div>
                         <div class="input-field col s2"></div>
                         <div class="input-field col s3">
-                            <input id="postcode" type="text" class="validate" name="postcode" required aria-required=”true”
+                            <input id="postcode" type="text" class="validate" name="postcode" required 
                                 pattern="^\d{4}$" title="4 digits" />
                             <label for="postcode">Postcode</label>
                         </div>
                     </div>
 
-
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="phone" type="text" class="validate" name="phone" required aria-required=”true”/>
+                            <input id="phone" type="text" class="validate" name="phone" required />
                             <label for="phone">Telephone</label>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="input-field col s12" >
-                            <input id="password" type="password" name="password" required aria-required=”true” onkeydown="onPasswordChange()"
+                            <input id="password" type="password" name="password" required onkeydown="onPasswordChange()"
                                 pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$"
                                 class="tooltipped" data-delay="50"
                                 data-tooltip="Password must be between 8-20 characters. It must contain at least one of each: 
@@ -139,18 +139,20 @@ require_once("php/global.php");
                             </div>
                         </div>
                     </div>
+
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="email" type="email" class="validate" name="email" required aria-required=”true”/>
+                            <input id="email" type="email" class="validate" name="email" required />
                             <label for="email">Email</label>
                             <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1">CSS customizable tooltip, remove if you want. Visible when input gets focus.</div>
                         </div>
                     </div>
+
                     <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
-                    <div>
-                        <button href="register_success.php" class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    
+                    <div class="section">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                         <i class="material-icons right">send</i></button>
-                        </a>
                     </div>
                 </form>
                 </div>
@@ -166,7 +168,7 @@ require_once("php/global.php");
         }
         
         #Captcha = true
-        if($captcha != 0)
+        if(isset($captcha) && $captcha != 0)
         {
             #Save values after form submit
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
