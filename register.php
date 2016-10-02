@@ -41,11 +41,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else
     {
         ################# DATA INTO DATABASE ###
-        $error = SQL::createCustomer($fname, $lname, $fulladdress, $phone, $email, $pwd);
 
-        // register successful
-        if ($error === true)
-            redirect("register_success.php");
+        //your site secret key
+        $secret = '6LedrSkTAAAAAEgtdp4x6OujcEszFP2i4XA5EwRz';
+
+        $gRecaptcha = $_POST['g-recaptcha-response'];
+        $gRecaptcha = "https://www.google.com/recaptcha/api/siteverify?secret=".$secret."&response=".$_POST['g-recaptcha-response'];
+
+        $response = file_get_contents($gRecaptcha);
+        $responseData = json_decode($response);
+
+        //If captcha true
+        if($responseData->success)
+        {
+            $error = SQL::createCustomer($fname, $lname, $fulladdress, $phone, $email, $pwd);
+
+            if ($error === true)
+            {
+                redirect("register_success.php");
+            }
+        }   
+        else
+        {
+            echo 'ROBOT!!!';
+        }
+
     }
 }
 
@@ -184,6 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="section">
                         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                         <i class="material-icons right">send</i></button>
+                        
                     </div>
                 </form>
             </div>
