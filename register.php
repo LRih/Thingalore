@@ -180,9 +180,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row">
                         <div class="input-field col s12" >
-                            <input id="password" type="password" name="password" required onkeydown="onPasswordChange()"
-                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$"
-                                <?php if (isset($error) && isset($pwd)) echo "value='{$pwd}'" ?> />
+                            <input id="password" type="password" name="password" required onkeyup="onPasswordChange()"
+                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
                             <label for="password">Password</label>
                             <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
                                 Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.

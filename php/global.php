@@ -21,8 +21,6 @@
     $GLOBALS["paypal_pwd"] = "39BP2SU6ASXTK95N";
     $GLOBALS["paypal_signature"] = "AFcWxV21C7fd0v3bYYYRCpSSRl31Av6s9SFPSURsdjinrZcZARkajtEU";
     
-    $GLOBALS["paypal_host"] = "http://localhost";
-    // $GLOBALS["paypal_host"] = "http://sec1.onevis.net";
     // $GLOBALS["paypal_host"] = "https://onevis.net/sub/sec1";
 
     // ========================================================================
@@ -30,11 +28,15 @@
 
     if ($GLOBALS["test_mode"])
     {
+        $GLOBALS["paypal_host"] = "http://localhost";
+
         // only show errors when testing
         error_reporting(E_ALL);
     }
     else
     {
+        $GLOBALS["paypal_host"] = "https://onevis.net/sub/sec1";
+
         // always use https website in production
         if (empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "off")
             redirect($GLOBALS["paypal_host"]);

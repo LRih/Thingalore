@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["cur-password"]) && is
                                 <label for="cur-password">Current password</label>
                             </div>
                             <div class="input-field col s12">
-                                <input id="new-password" name="new-password" type="password" onkeydown="onPasswordChange()" required
+                                <input id="new-password" name="new-password" type="password" onkeyup="onPasswordChange()" required
                                     pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
                                 <label for="new-password">New password</label>
                                 <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">

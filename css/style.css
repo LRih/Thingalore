@@ -300,6 +300,7 @@ main
 .tooltip
 {
     opacity: 0;
+    display: none;
     font-size: 14px;
     padding: 8px;
     width: 200px;
@@ -320,6 +321,7 @@ main
 input:focus ~ .tooltip
 {
     opacity: 1;
+    display: block;
     left: 100%;
 }
 
