@@ -212,9 +212,11 @@ class SQL
 
     public static function createCustomer($fname, $lname, $address, $phone, $email, $pwd)
     {
-        // TODO server-side validation (email and pwd) here and return error message if invalid data
+        // validation
         if (SQL::isEmailExist($email))
             return 'E-mail already exists.';
+        else if (!Validator::checkPassword($pwd))
+            return 'Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.';
 
         $ret = 'Operation failed.';
         $con = SQL::connection();
