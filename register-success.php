@@ -3,6 +3,13 @@
 
 require_once("php/global.php");
 
+// redirect to home if not coming from successful registration
+if (!isset($_SESSION['register_success']))
+    redirect("index.php");
+
+// unset flag so this page cannot be navigated to a second time
+unset($_SESSION['register_success']);
+
 ?>
 
 <!DOCTYPE html>

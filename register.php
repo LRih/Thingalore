@@ -1,17 +1,3 @@
-<!--
-    TO DO:
-    - Message, "REGISTRATION SUCCESSFULL" 
-        > Make sure page can't be viewed unless actually registered?
-        > Expires?
-
-    DONE:
-    - Client side validation: all fields are entered
-    - Captcha must be entered
-    - Address drop down boxes
-    - Password mix of capital, lowercase, numbers and symbols
-    - Captcha is true
--->
-
 <?php
 
 require_once("php/global.php");
@@ -33,22 +19,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $pwd = $_POST["password"];
 
     ################ CHECKING CAPTCHA ###########
-    $captcha = isset($_POST['g-recaptcha-response']) && $_POST['g-recaptcha-response'];
+    $captcha = $_POST['g-recaptcha-response'];
 
     #Captcha = true
-    if (!$captcha)
+    if (!isset($captcha))
         $error = "Please check the the captcha form.";
     else
     {
         ################# DATA INTO DATABASE ###
+        $captcha = "https://www.google.com/recaptcha/api/siteverify?secret=".$GLOBALS["captcha_key"]."&response=".$captcha;
 
-        //your site secret key
-        $secret = '6LedrSkTAAAAAEgtdp4x6OujcEszFP2i4XA5EwRz';
-
-        $gRecaptcha = $_POST['g-recaptcha-response'];
-        $gRecaptcha = "https://www.google.com/recaptcha/api/siteverify?secret=".$secret."&response=".$_POST['g-recaptcha-response'];
-
-        $response = file_get_contents($gRecaptcha);
+        $response = file_get_contents($captcha);
         $responseData = json_decode($response);
 
         //If captcha true
@@ -58,13 +39,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($error === true)
             {
-                redirect("register_success.php");
+                // flag register success
+                $_SESSION['register_success'] = true;
+
+                redirect("register-success.php");
             }
         }   
         else
-        {
-            echo 'ROBOT!!!';
-        }
+            $error = "Please check the the captcha form.";
 
     }
 }
@@ -99,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // determine color based on steps
                 var col;
                 if (length > 75)
-                    col = "#cddc39"; // green
+                    col = "#8bc34a"; // green
                 else if (length > 50)
                     col = "#ffeb3b"; // yellow
                 else if (length > 25)
@@ -147,25 +129,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class="row">
+                        <div class="col s1"></div>
                         <div class="input-field col s4">
-                        <select name="state" required>
-                            <option disabled <?php if (!isset($error) || !isset($state)) echo "selected" ?>>State</option>
-                            <option value="NSW" <?php if (isset($error) && isset($state) && $state == "NSW") echo "selected" ?>>NSW</option>
-                            <option value="NT" <?php if (isset($error) && isset($state) && $state == "NT") echo "selected" ?>>NT</option>
-                            <option value="QLD" <?php if (isset($error) && isset($state) && $state == "QLD") echo "selected" ?>>QLD</option>
-                            <option value="SA" <?php if (isset($error) && isset($state) && $state == "SA") echo "selected" ?>>SA</option>
-                            <option value="TAS" <?php if (isset($error) && isset($state) && $state == "TAS") echo "selected" ?>>TAS</option>
-                            <option value="VIC" <?php if (isset($error) && isset($state) && $state == "VIC") echo "selected" ?>>VIC</option>
-                            <option value="WA" <?php if (isset($error) && isset($state) && $state == "WA") echo "selected" ?>>WA</option>
-                        </select>
+                            <select name="state" required>
+                                <option disabled <?php if (!isset($error) || !isset($state)) echo "selected" ?>>State</option>
+                                <option value="NSW" <?php if (isset($error) && isset($state) && $state == "NSW") echo "selected" ?>>NSW</option>
+                                <option value="NT" <?php if (isset($error) && isset($state) && $state == "NT") echo "selected" ?>>NT</option>
+                                <option value="QLD" <?php if (isset($error) && isset($state) && $state == "QLD") echo "selected" ?>>QLD</option>
+                                <option value="SA" <?php if (isset($error) && isset($state) && $state == "SA") echo "selected" ?>>SA</option>
+                                <option value="TAS" <?php if (isset($error) && isset($state) && $state == "TAS") echo "selected" ?>>TAS</option>
+                                <option value="VIC" <?php if (isset($error) && isset($state) && $state == "VIC") echo "selected" ?>>VIC</option>
+                                <option value="WA" <?php if (isset($error) && isset($state) && $state == "WA") echo "selected" ?>>WA</option>
+                            </select>
                         </div>
-                        <div class="input-field col s2"></div>
-                        <div class="input-field col s3">
+                        
+                        <div class="col s2"></div>
+
+                        <div class="input-field col s4">
                             <input id="postcode" type="text" class="validate" name="postcode" required 
-                                pattern="^\d{4}$" title="4 digits"
+                                pattern="^\d{4}$"
                                 <?php if (isset($error) && isset($postcode)) echo "value='{$postcode}'" ?> />
                             <label for="postcode">Postcode</label>
+                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">4 digits.</div>
                         </div>
+                        <div class="col s1"></div>
                     </div>
 
                     <div class="row">
@@ -180,7 +167,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row">
                         <div class="input-field col s12" >
-                            <input id="password" type="password" name="password" required onkeyup="onPasswordChange()"
+                            <input id="password" type="password" class="validate" name="password" required onkeyup="onPasswordChange()"
                                 pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
                             <label for="password">Password</label>
                             <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
@@ -201,9 +188,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
 
                     <div class="section">
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit" name="action">Submit
                         <i class="material-icons right">send</i></button>
-                        
                     </div>
                 </form>
             </div>
