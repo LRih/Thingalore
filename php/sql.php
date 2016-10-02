@@ -456,11 +456,7 @@ class SQL
             return -1;
 
         // transaction ensures either all queries succeed or none at all
-        // not thread safe?
-        $con->autocommit(FALSE);
-
-        // can't use this since php version does not support it
-        // $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
+        $con->begin_transaction(MYSQLI_TRANS_START_READ_WRITE);
 
         $orderId = -1;
 
