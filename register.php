@@ -19,16 +19,16 @@ require_once("php/global.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    $fname = $_POST["first_name"];
-    $lname = $_POST["last_name"];
+    $fname = htmlentities(trim($_POST["first_name"]));
+    $lname = htmlentities(trim($_POST["last_name"]));
 
-    $address = $_POST["address"];
-    $state = $_POST["state"];
-    $postcode = $_POST["postcode"];
+    $address = htmlentities(trim($_POST["address"]));
+    $state = htmlentities(trim($_POST["state"]));
+    $postcode = htmlentities(trim($_POST["postcode"]));
     $fulladdress = $address.", ".$state.", ".$postcode;
 
-    $phone = $_POST["phone"];
-    $email = $_POST["email"];
+    $phone = htmlentities(trim($_POST["phone"]));
+    $email = htmlentities(trim($_POST["email"]));
 
     $pwd = $_POST["password"];
 
@@ -129,14 +129,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <div class="row">
                         <div class="input-field col s4">
                         <select name="state" required>
-                            <option disabled selected>State</option>
-                            <option value="NSW">NSW</option>
-                            <option value="NT">NT</option>
-                            <option value="QLD">QLD</option>
-                            <option value="SA">SA</option>
-                            <option value="TAS">TAS</option>
-                            <option value="VIC">VIC</option>
-                            <option value="WA">WA</option>
+                            <option disabled <?php if (!isset($error) || !isset($state)) echo "selected" ?>>State</option>
+                            <option value="NSW" <?php if (isset($error) && isset($state) && $state == "NSW") echo "selected" ?>>NSW</option>
+                            <option value="NT" <?php if (isset($error) && isset($state) && $state == "NT") echo "selected" ?>>NT</option>
+                            <option value="QLD" <?php if (isset($error) && isset($state) && $state == "QLD") echo "selected" ?>>QLD</option>
+                            <option value="SA" <?php if (isset($error) && isset($state) && $state == "SA") echo "selected" ?>>SA</option>
+                            <option value="TAS" <?php if (isset($error) && isset($state) && $state == "TAS") echo "selected" ?>>TAS</option>
+                            <option value="VIC" <?php if (isset($error) && isset($state) && $state == "VIC") echo "selected" ?>>VIC</option>
+                            <option value="WA" <?php if (isset($error) && isset($state) && $state == "WA") echo "selected" ?>>WA</option>
                         </select>
                         </div>
                         <div class="input-field col s2"></div>

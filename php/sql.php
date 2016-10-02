@@ -305,8 +305,29 @@ class SQL
 
     private static function isEmailExist($email)
     {
-        // TODO
-        return false;
+        $con = SQL::connection();
+
+        // for safety, just say e-mail exists if operation fails
+        if ($con->connect_error)
+            return true;
+
+        $exists = true;
+        $query = "SELECT * FROM Customers WHERE email = ?";
+
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("s", $email) && $statement->execute())
+            {
+                $rows = SQL::fetch($statement);
+
+                if (count($rows) == 0)
+                    $exists = false;
+            }
+        }
+
+        $con->close();
+
+        return $exists;
     }
 
     /**
