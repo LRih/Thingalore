@@ -2,25 +2,46 @@
 
 require_once("php/global.php");
 
+function showCaptcha()
+{
+    return isset($_SESSION["login_failures"]) && $_SESSION["login_failures"] >= 3;
+}
+
 // redirect to profile if already logged in
 if (isset($_SESSION["user"]))
     redirect("user-profile.php");
 
-$incorrectCredentials = false;
-
 // only allow logins from post
 if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_POST["password"]))
 {
-    $customer = SQL::getCustomerByLogin($_POST["email"], $_POST["password"]);
-
-    // set user and redirect
-    if ($customer != NULL)
-    {
-        $_SESSION["user"] = $customer;
-        redirect("index.php");
-    }
+    // check captcha solved if shown
+    if (showCaptcha() && (!isset($_POST["g-recaptcha-response"]) || !$_POST["g-recaptcha-response"]))
+        $error = "Please check the the captcha form.";
     else
-        $incorrectCredentials = true; // invalid credentials
+    {
+        $customer = SQL::getCustomerByLogin($_POST["email"], $_POST["password"]);
+
+        // set user and redirect
+        if ($customer != NULL)
+        {
+            // reset login failure count
+            $_SESSION["login_failures"] = 0;
+
+            // set user and redirect
+            $_SESSION["user"] = $customer;
+            redirect("index.php");
+        }
+        else
+        {
+            // invalid credentials
+            $error = "The credentials you entered are incorrect.";
+
+            // update number of login failures
+            if (!isset($_SESSION["login_failures"]))
+                $_SESSION["login_failures"] = 0;
+            $_SESSION["login_failures"]++;
+        }
+    }
 }
 
 ?>
@@ -56,12 +77,10 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                             <strong>I am a returning customer</strong>
                         </div>
                         <?php
-                            if ($incorrectCredentials)
+                            if (isset($error))
                             {
                                 echo "<div class='col s12'>";
-                                echo "    <div class='error-box'>";
-                                echo "        The credentials you entered are incorrect.";
-                                echo "    </div>";
+                                echo "    <div class='error-box'>{$error}</div>";
                                 echo "</div>";
                             }
                         ?>
@@ -77,6 +96,17 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                             <div class="row col s12">
                                 <a href="forgot-password.php">Forget your password?</a>
                             </div>
+                            
+                            <?php
+                                // show captcha when login failed too many times
+                                if (showCaptcha())
+                                {
+                                    echo "<div class='row col s12'>";
+                                    echo "    <div class='g-recaptcha' data-sitekey='".$GLOBALS["captcha_pub_key"]."'></div>";
+                                    echo "</div>";
+                                }
+                            ?>
+
                             <div class="col s12">
                                 <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit">Login</button>
                             </div>

@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else
     {
         ################# DATA INTO DATABASE ###
-        $captcha = "https://www.google.com/recaptcha/api/siteverify?secret=".$GLOBALS["captcha_key"]."&response=".$captcha;
+        $captcha = "https://www.google.com/recaptcha/api/siteverify?secret=".$GLOBALS["captcha_pub_key"]."&response=".$captcha;
 
         $response = file_get_contents($captcha);
         $responseData = json_decode($response);
@@ -76,21 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             function onPasswordChange(e)
             {
                 var val = $("#password").val();
-
-                var length = Math.min(Math.max(val.length * 10, 1), 100);
-
-                // determine color based on steps
-                var col;
-                if (length > 75)
-                    col = "#8bc34a"; // green
-                else if (length > 50)
-                    col = "#ffeb3b"; // yellow
-                else if (length > 25)
-                    col = "#ffa500"; // orange
-                else
-                    col = "#f44336"; // red
-
-                $("#password-bar").css({ "background-color": col, "width": length + "%" });
+                $("#password-bar").css({ "background-color": getPasswordColor(val), "width": getPasswordStrength(val) + "%" });
             }
 
             // For password verification
@@ -207,7 +193,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <div class="g-recaptcha" data-sitekey="6LedrSkTAAAAAN7BN1Or_fqjzS4ZbQBVGjerKkt9"></div>
+                    <div class="g-recaptcha" data-sitekey="<?php echo $GLOBALS["captcha_pub_key"] ?>"></div>
 
                     <div class="section">
                         <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit" name="action">Submit

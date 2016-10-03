@@ -27,21 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["cur-password"]) && is
             function onPasswordChange(e)
             {
                 var val = $("#new-password").val();
-
-                var length = Math.min(Math.max(val.length * 10, 1), 100);
-
-                // determine color based on steps
-                var col;
-                if (length > 75)
-                    col = "#cddc39"; // green
-                else if (length > 50)
-                    col = "#ffeb3b"; // yellow
-                else if (length > 25)
-                    col = "#ffa500"; // orange
-                else
-                    col = "#f44336"; // red
-
-                $("#password-bar").css( { "background-color": col, "width": length + "%" });
+                $("#password-bar").css({ "background-color": getPasswordColor(val), "width": getPasswordStrength(val) + "%" });
             }
         </script>
     </head>
