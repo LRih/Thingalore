@@ -68,6 +68,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 // initialize password strength to one
                 $("#password-bar").css("width", "1%");
+
+                //Check password and pass_verify match
+                $("#password, #pass_verify").keyup(checkPasswordMatch);
             });
 
             function onPasswordChange(e)
@@ -88,6 +91,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     col = "#f44336"; // red
 
                 $("#password-bar").css({ "background-color": col, "width": length + "%" });
+            }
+
+            // For password verification
+            function checkPasswordMatch() 
+            {
+                var password = $("#password").val();
+                var confirmPassword = $("#pass_verify").val();
+
+                if (password != confirmPassword)
+                    $("#pass_verify_text").html("Passwords do not match!");
+                else
+                    $("#pass_verify_text").html("Passwords match.");
             }
         </script>
 
@@ -172,6 +187,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.
                                 <p><strong>Strength:</strong><br><span id="password-bar" class="strength-bar"></span></p>
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="input-field col s12" >
+                            <input id="pass_verify" type="password" class="validate" name="pass_verify" required onChange="checkPasswordMatch();"/>
+                            <label for="pass_verify">Verify Password</label>
+                            <div id="pass_verify_text" class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
+                                Retype password.</div>
                         </div>
                     </div>
 
