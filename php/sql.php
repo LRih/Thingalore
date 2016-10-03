@@ -227,6 +227,7 @@ class SQL
         $pwd = SQL::encrypt($pwd);
 
         $query = "INSERT INTO Customers (fname, lname, email, address, phone, password_hash, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
         $ver_code = md5(rand(40000, 50000));
 
         if ($statement = $con->prepare($query))
