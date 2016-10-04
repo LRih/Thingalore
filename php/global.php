@@ -48,6 +48,8 @@
     // so we can make use of session state
     session_start();
 
+    // TODO cookie for persistent login state
+
 
     /**
      * Convenience function for setting redirect.

@@ -5,6 +5,7 @@ require_once("php/global.php");
 $maxOnPage = 9;
 $products = [];
 
+// TODO limit max number of pages to show in pagination list
 // TODO in future, only get as required for current page
 
 // search takes precedence over category
