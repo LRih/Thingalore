@@ -6,19 +6,25 @@ class Product
     public $name;
     public $desc;
     public $manufacturer;
+    public $series;
     public $rrp;
     public $price;
     public $image;
 
-    function __construct($id, $name, $desc, $manufacturer, $rrp, $price, $image)
+    function __construct($id, $name, $desc, $manufacturer, $series, $rrp, $price, $image)
     {
         // htmlspecialchars removes XSS threat
         $this->id = $id;
+        
         $this->name = htmlspecialchars($name);
         $this->desc = htmlspecialchars($desc);
+
         $this->manufacturer = htmlspecialchars($manufacturer);
+        $this->series = htmlspecialchars($series);
+
         $this->rrp = $rrp;
         $this->price = $price;
+
         $this->image = htmlspecialchars($image);
     }
 
@@ -32,6 +38,7 @@ class Product
             $row["name"],
             $row["description"],
             array_key_exists("manufacturer", $row) ? $row["manufacturer"] : NULL,
+            array_key_exists("series", $row) ? $row["series"] : NULL,
             array_key_exists("rrp", $row) ? $row["rrp"] : NULL,
             $row["price"],
             $row["image"]

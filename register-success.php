@@ -27,6 +27,7 @@ unset($_SESSION['register_success']);
             <div class="center-align">
                 <h5>Registration Sucessful!</h5>
                 <p>Thank you for joining Thingalore! Begin shopping by logging into your account.</p>
+            </div>
         </main>
 
         <?php require_once("templates/footer.php") ?>

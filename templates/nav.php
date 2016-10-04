@@ -9,12 +9,12 @@
     </div>
 
     <div id="nav" class=" darken-1 right-align">
-        <a href="index.php" class="waves-effect waves-light white-text nav-btn left"><i class="material-icons left">home</i>Home</a>
+        <a href="index.php" class="waves-effect waves-light white-text nav-btn left"><i class="material-icons left">home</i><span class='hide-on-small-only'>Home</span></a>
 
         <a href="cart.php" class="waves-effect waves-light white-text nav-btn">
             <i class="material-icons left">shopping_cart</i>
             <?php
-                echo "Cart";
+                echo "<span class='hide-on-small-only'>Cart</span>";
 
                 // show cart count
                 if (isset($_SESSION["cart"]) && $_SESSION["cart"]->qty() > 0)
@@ -22,7 +22,11 @@
             ?>
         </a>
         <a href="user-profile.php" class="waves-effect waves-light white-text nav-btn">
-            <i class="material-icons left"><?php echo isset($_SESSION["user"]) ? "perm_identity</i>".$_SESSION["user"]->fname : "account_circle</i>Account" ?>
+            <?php
+                $icon = isset($_SESSION["user"]) ? "perm_identity" : "account_circle";
+                $name = isset($_SESSION["user"]) ? $_SESSION["user"]->fname : "Account";
+                echo "<i class='material-icons left'>{$icon}</i><span class='hide-on-small-only'>{$name}</span>";
+            ?>
         </a>
     </div>
 </div>

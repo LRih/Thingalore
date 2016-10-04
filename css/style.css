@@ -300,6 +300,9 @@ main
 /* ============================================== FORM === */
 .tooltip
 {
+    color: #424242; /* grey darken-3 */
+    background-color: #fafafa; /* grey lighten-5 */
+
     opacity: 0;
     display: none;
     font-size: 14px;

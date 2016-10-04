@@ -90,6 +90,36 @@ class SQL
         return $products;
     }
 
+    public static function getProductsBySeries($series, $excludedId)
+    {
+        $con = sql::connection();
+
+        if ($con->connect_error)
+            return [];
+
+        $products = [];
+
+        $query = "SELECT * ".
+                 "FROM Products ".
+                 "WHERE series = ? AND id <> ? ".
+                 "ORDER BY RAND() LIMIT 5";
+
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("si", $series, $excludedId) && $statement->execute())
+            {
+                $rows = SQL::fetch($statement);
+
+                foreach ($rows as $row)
+                    array_push($products, Product::fromRow($row));
+            }
+        }
+
+        $con->close();
+
+        return $products;
+    }
+
     /**
      * Very rudimentary search procedure.
      */

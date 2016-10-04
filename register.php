@@ -114,114 +114,116 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </script>
 
         <main id="main">
-            <h5 class="center-align">Registration</h5>
+            <div class="row section center-align">
+                <h5>Registration</h5>
 
-            <div class="center-align" style="max-width:600px; margin-right:auto; margin-left:auto;">
-            
-                <!-- Display warning if captcha not entered -->
-                <?php 
-                    if (isset($error))
-                        echo "<div class='error-box'>{$error}</div>";
-                ?>
+                <div style="max-width:600px; margin-right:auto; margin-left:auto;">
                 
-                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                    <div class="row">
-                        <div class="input-field col s6" >
-                            <input id="first_name" type="text" class="validate" name="first_name" required
-                                <?php if (isset($error) && isset($fname)) echo "value='{$fname}'" ?> />
-                            <label for="first_name">First Name</label>
-                        </div>
-                        <div class="input-field col s6">
-                            <input id="last_name" type="text" class="validate" name="last_name" required
-                                <?php if (isset($error) && isset($lname)) echo "value='{$lname}'" ?> />
-                            <label for="last_name">Last Name</label>
-                        </div>
-                    </div>
-
-                    <!-- Address -->
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="address" type="text" class="validate" name="address" required
-                                <?php if (isset($error) && isset($address)) echo "value='{$address}'" ?> />
-                            <label for="address">Address</label>
-                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">We only ship to Australian addresses.</div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col s1"></div>
-                        <div class="input-field col s4">
-                            <select name="state" required>
-                                <option disabled <?php if (!isset($error) || !isset($state)) echo "selected" ?>>State</option>
-                                <option value="NSW" <?php if (isset($error) && isset($state) && $state == "NSW") echo "selected" ?>>NSW</option>
-                                <option value="NT" <?php if (isset($error) && isset($state) && $state == "NT") echo "selected" ?>>NT</option>
-                                <option value="QLD" <?php if (isset($error) && isset($state) && $state == "QLD") echo "selected" ?>>QLD</option>
-                                <option value="SA" <?php if (isset($error) && isset($state) && $state == "SA") echo "selected" ?>>SA</option>
-                                <option value="TAS" <?php if (isset($error) && isset($state) && $state == "TAS") echo "selected" ?>>TAS</option>
-                                <option value="VIC" <?php if (isset($error) && isset($state) && $state == "VIC") echo "selected" ?>>VIC</option>
-                                <option value="WA" <?php if (isset($error) && isset($state) && $state == "WA") echo "selected" ?>>WA</option>
-                            </select>
-                        </div>
-                        
-                        <div class="col s2"></div>
-
-                        <div class="input-field col s4">
-                            <input id="postcode" type="text" class="validate" name="postcode" required 
-                                pattern="^\d{4}$"
-                                <?php if (isset($error) && isset($postcode)) echo "value='{$postcode}'" ?> />
-                            <label for="postcode">Postcode</label>
-                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">4 digits.</div>
-                        </div>
-                        <div class="col s1"></div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="phone" type="text" class="validate" name="phone" required
-                                pattern="^\d+$"
-                                <?php if (isset($error) && isset($phone)) echo "value='{$phone}'" ?> />
-                            <label for="phone">Telephone</label>
-                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">Please enter only numbers.</div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="input-field col s12" >
-                            <input id="password" type="password" class="validate" name="password" required onkeyup="onPasswordChange()"
-                                pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
-                            <label for="password">Password</label>
-                            <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
-                                Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.
-                                <p><strong id="password-validity"></strong></p>
-                                <p><strong>Strength:</strong><br><span id="password-bar" class="strength-bar"></span></p>
+                    <!-- Display warning if captcha not entered -->
+                    <?php 
+                        if (isset($error))
+                            echo "<div class='error-box'>{$error}</div>";
+                    ?>
+                    
+                    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <div class="row">
+                            <div class="input-field col s6" >
+                                <input id="first_name" type="text" class="validate" name="first_name" required
+                                    <?php if (isset($error) && isset($fname)) echo "value='{$fname}'" ?> />
+                                <label for="first_name">First Name</label>
+                            </div>
+                            <div class="input-field col s6">
+                                <input id="last_name" type="text" class="validate" name="last_name" required
+                                    <?php if (isset($error) && isset($lname)) echo "value='{$lname}'" ?> />
+                                <label for="last_name">Last Name</label>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="input-field col s12" >
-                            <input id="pass_verify" type="password" class="validate" name="pass_verify" required onkeyup="checkPasswordMatch();"/>
-                            <label for="pass_verify">Verify Password</label>
-                            <div id="pass_verify_text" class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
-                                Retype password.</div>
+                        <!-- Address -->
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="address" type="text" class="validate" name="address" required
+                                    <?php if (isset($error) && isset($address)) echo "value='{$address}'" ?> />
+                                <label for="address">Address</label>
+                                <div class="tooltip z-depth-1 left-align">We only ship to Australian addresses.</div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <input id="email" type="email" class="validate" name="email" required
-                                <?php if (isset($error) && isset($email)) echo "value='{$email}'" ?> />
-                            <label for="email">Email</label>
+                        <div class="row">
+                            <div class="col s1"></div>
+                            <div class="input-field col s4">
+                                <select name="state" required>
+                                    <option disabled <?php if (!isset($error) || !isset($state)) echo "selected" ?>>State</option>
+                                    <option value="NSW" <?php if (isset($error) && isset($state) && $state == "NSW") echo "selected" ?>>NSW</option>
+                                    <option value="NT" <?php if (isset($error) && isset($state) && $state == "NT") echo "selected" ?>>NT</option>
+                                    <option value="QLD" <?php if (isset($error) && isset($state) && $state == "QLD") echo "selected" ?>>QLD</option>
+                                    <option value="SA" <?php if (isset($error) && isset($state) && $state == "SA") echo "selected" ?>>SA</option>
+                                    <option value="TAS" <?php if (isset($error) && isset($state) && $state == "TAS") echo "selected" ?>>TAS</option>
+                                    <option value="VIC" <?php if (isset($error) && isset($state) && $state == "VIC") echo "selected" ?>>VIC</option>
+                                    <option value="WA" <?php if (isset($error) && isset($state) && $state == "WA") echo "selected" ?>>WA</option>
+                                </select>
+                            </div>
+                            
+                            <div class="col s2"></div>
+
+                            <div class="input-field col s4">
+                                <input id="postcode" type="text" class="validate" name="postcode" required 
+                                    pattern="^\d{4}$"
+                                    <?php if (isset($error) && isset($postcode)) echo "value='{$postcode}'" ?> />
+                                <label for="postcode">Postcode</label>
+                                <div class="tooltip z-depth-1 left-align">4 digits.</div>
+                            </div>
+                            <div class="col s1"></div>
                         </div>
-                    </div>
 
-                    <div class="g-recaptcha" data-sitekey="<?php echo $GLOBALS["captcha_pub_key"] ?>"></div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="phone" type="text" class="validate" name="phone" required
+                                    pattern="^\d+$"
+                                    <?php if (isset($error) && isset($phone)) echo "value='{$phone}'" ?> />
+                                <label for="phone">Telephone</label>
+                                <div class="tooltip z-depth-1 left-align">Please enter only numbers.</div>
+                            </div>
+                        </div>
 
-                    <div class="section">
-                        <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit" name="action">Submit
-                        <i class="material-icons right">send</i></button>
-                    </div>
-                </form>
+                        <div class="row">
+                            <div class="input-field col s12" >
+                                <input id="password" type="password" class="validate" name="password" required onkeyup="onPasswordChange()"
+                                    pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,20}$" />
+                                <label for="password">Password</label>
+                                <div class="tooltip z-depth-1 hide-on-small-only left-align">
+                                    Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.
+                                    <p><strong id="password-validity"></strong></p>
+                                    <p><strong>Strength:</strong><br><span id="password-bar" class="strength-bar"></span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12" >
+                                <input id="pass_verify" type="password" class="validate" name="pass_verify" required onkeyup="checkPasswordMatch();"/>
+                                <label for="pass_verify">Verify Password</label>
+                                <div id="pass_verify_text" class="tooltip z-depth-1 left-align">
+                                    Retype password.</div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="email" type="email" class="validate" name="email" required
+                                    <?php if (isset($error) && isset($email)) echo "value='{$email}'" ?> />
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+
+                        <div class="g-recaptcha" data-sitekey="<?php echo $GLOBALS["captcha_pub_key"] ?>"></div>
+
+                        <div class="section">
+                            <button class="btn waves-effect waves-light btn-flat blue white-text" type="submit" name="action">Submit
+                            <i class="material-icons right">send</i></button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
 

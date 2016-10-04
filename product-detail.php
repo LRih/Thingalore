@@ -12,8 +12,9 @@ $p = SQL::getProduct($_GET["id"]);
 if (is_null($p))
     redirect("index.php");
 
-// get other products by the same manufacturer
-$moreProducts = SQL::getProductsByManufacturer($p->manufacturer, $p->id);
+// get other products from same series/manufacturer
+$moreFromSeries = SQL::getProductsBySeries($p->series, $p->id);
+$moreFromManu = SQL::getProductsByManufacturer($p->manufacturer, $p->id);
 
 ?>
 
@@ -48,15 +49,35 @@ $moreProducts = SQL::getProductsByManufacturer($p->manufacturer, $p->id);
                     </div>
 
                     <?php
-                        // show more products by manufacturer
-                        if (count($moreProducts) > 0)
+                        // show more products from series
+                        if (count($moreFromSeries) > 0)
+                        {
+                            echo "<div class='section'>";
+                            echo "    <div class='header'>";
+                            echo "        More from <strong>".$p->series."</strong>";
+                            echo "    </div>";
+
+                            foreach ($moreFromSeries as $product)
+                            {
+                                echo "    <a href='product-detail.php?id=".$product->id."'>";
+                                echo "        <div class='more-image-container' style='background-image:url(\"images/products/".$product->image."\")'>";
+                                echo "        </div>";
+                                echo "    </a>";
+                            }
+                            echo "</div>";
+                        }
+                    ?>
+
+                    <?php
+                        // show more products from manufacturer
+                        if (count($moreFromManu) > 0)
                         {
                             echo "<div class='section'>";
                             echo "    <div class='header'>";
                             echo "        More from <strong>".$p->manufacturer."</strong>";
                             echo "    </div>";
 
-                            foreach ($moreProducts as $product)
+                            foreach ($moreFromManu as $product)
                             {
                                 echo "    <a href='product-detail.php?id=".$product->id."'>";
                                 echo "        <div class='more-image-container' style='background-image:url(\"images/products/".$product->image."\")'>";
@@ -82,10 +103,17 @@ $moreProducts = SQL::getProductsByManufacturer($p->manufacturer, $p->id);
                         </form>
                     </div>
 
-                    <div class="container section">
-                        <strong>Manufacturer</strong>
-                        <div class="divider"></div>
-                        <?php echo $p->manufacturer != NULL ? $p->manufacturer : "Unknown" ?>
+                    <div class="container">
+                        <div class="section">
+                            <strong>Series</strong>
+                            <div class="divider"></div>
+                            <?php echo $p->series != NULL ? $p->series : "Unknown" ?>
+                        </div>
+                        <div class="section">
+                            <strong>Manufacturer</strong>
+                            <div class="divider"></div>
+                            <?php echo $p->manufacturer != NULL ? $p->manufacturer : "Unknown" ?>
+                        </div>
                     </div>
                 </div>
             </div>

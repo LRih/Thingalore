@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                                 <label for="password">Password</label>
                             </div>
                             <div class="row col s12">
-                                <a href="forgot-password.php">Forget your password?</a>
+                                <a href="forgot-password.php">Forgot your password?</a>
                             </div>
                             
                             <?php
