@@ -77,6 +77,7 @@ INSERT INTO ProductCategories (name) VALUES ("Figurines");
 INSERT INTO ProductCategories (name) VALUES ("Model Kits");
 INSERT INTO ProductCategories (name) VALUES ("Recreation");
 
+INSERT INTO Products (category_id, name, rrp, image, qty, manufacturer, description) VALUES (1, "Hatsune Miku -Hanairogoromo- 1/8 Complete Figure", 12800, "miku_hanairogoromo.jpg", 100, "Stronger", "Was three-dimensional Miku than ""Hatsune Miku - Hanairokoromo ~"" series during deployment in character to cheer the Hokkaido is a shop and museum of ""Yuki Miku (Hatsune Miku)"" ""Snow Miku Sky Town"".\nBy Mr. popular illustrator Choco Fuji, the delicacy of the spread tails and colorful Sunday best clothes, of course, we expressed to the view of the world in the pedestal and three-dimensional flowers with the motif of the background.");
 INSERT INTO Products (category_id, name, rrp, image, qty, manufacturer, description) VALUES (3, "HB Pencil", 1400, "pencil.jpg", 100, "DIXON", "One pencil. Of the finest craftmanship by DIXON.\n Includes revolutionary top-tipped eraser mechanism.");
 INSERT INTO Products (category_id, name, rrp, image, qty, description) VALUES (3, "Pine Tree", 450, "pine_tree.jpg", 100, "A tree.");
 INSERT INTO Products (category_id, name, rrp, image, qty, description) VALUES (3, "Oak Pier", 995, "pier.jpg", 100, "Made of wood.");

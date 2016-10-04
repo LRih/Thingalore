@@ -2,7 +2,10 @@
 
 require_once("php/global.php");
 
+$maxOnPage = 9;
 $products = [];
+
+// TODO in future, only get as required for current page
 
 // search takes precedence over category
 if (isset($_GET["search"]))
@@ -23,6 +26,17 @@ else if (isset($_GET["category"]))
 }
 else
     $products = SQL::getProducts();
+
+// paginate
+$pages = ceil(count($products) / $maxOnPage);
+
+if (isset($_GET["page"]) && is_numeric($_GET["page"]))
+{
+    $curPage = intval($_GET["page"]);
+    $curPage = intval(min(max($curPage, 1), $pages)); // limit to page bounds
+}
+else
+    $curPage = 1;
 
 ?>
 
@@ -69,8 +83,13 @@ else
                     </div>
 
                     <?php
-                        foreach ($products as $p)
+                        $start = ($curPage - 1) * $maxOnPage;
+                        $end = min($curPage * $maxOnPage, count($products));
+
+                        for ($i = $start; $i < $end; $i++)
                         {
+                            $p = $products[$i];
+
                             echo "<a class='product z-depth-1 hoverable' href='product-detail.php?id=".$p->id."'>";
                             echo "    <div class='product-image-container' style='background-image:url(\"images/products/".$p->image."\")'>";
                             echo "    </div>";
@@ -91,9 +110,38 @@ else
 
                     <div class="center-align">
                         <ul class="pagination">
-                            <li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
-                            <li class="active orange darken-2"><a href="<?php echo $_SERVER['REQUEST_URI'] ?>">1</a></li>
-                            <li class="disabled"><a><i class="material-icons">chevron_right</i></a></li>
+                            <?php
+                                // left button
+                                $leftActive = $curPage > 1 ? "waves-effect" : "disabled";
+                                $leftUrl = $curPage > 1 ? "href='".getPageUrl($curPage - 1)."'" : "";
+                                echo "<li class='{$leftActive}'><a {$leftUrl}><i class='material-icons'>chevron_left</i></a></li>";
+
+                                // pages
+                                for ($i = 0; $i < $pages; $i++)
+                                {
+                                    $page = $i + 1;
+                                    $active = $curPage === $page ? "active orange darken-2" : "waves-effect";
+                                    $url = getPageUrl($page);
+
+                                    echo "<li class='{$active}'><a href='{$url}'>{$page}</a></li>";
+                                }
+
+                                // right button
+                                $rightActive = $curPage < $pages ? "waves-effect" : "disabled";
+                                $rightUrl = $curPage < $pages ? "href='".getPageUrl($curPage + 1)."'" : "#";
+                                echo "<li class='{$rightActive}'><a {$rightUrl}><i class='material-icons'>chevron_right</i></a></li>";
+
+                                function getPageUrl($page)
+                                {
+                                    $args = array("page" => $page);
+                                    if (isset($_GET["category"]))
+                                        $args["category"] = $_GET["category"];
+                                    if (isset($_GET["search"]))
+                                        $args["search"] = $_GET["search"];
+
+                                    return $_SERVER['PHP_SELF']."?".http_build_query($args);
+                                }
+                            ?>
                         </ul>
                     </div>
                 </div>

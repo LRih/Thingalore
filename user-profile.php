@@ -2,6 +2,8 @@
 
 require_once("php/global.php");
 
+// TODO implement edit profile
+
 // redirect to login if not logged in
 if (!isset($_SESSION["user"]))
     redirect("login.php");

@@ -2,6 +2,8 @@
 
 require_once("php/global.php");
 
+// TODO send password recover e-mail
+
 ?>
 
 <!DOCTYPE html>
