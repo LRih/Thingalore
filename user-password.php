@@ -19,14 +19,25 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["cur-password"]) && is
         <?php require_once("templates/head.php") ?>
         <title>Password | <?php echo $TITLE ?></title>
         <script>
-            $(document).ready(function() {
-                // initialize password strength to one
-                $("#password-bar").css("width", "1%");
+            $(document).ready(function()
+            {
+                // initialize password tooltip
+                onPasswordChange();
             });
 
-            function onPasswordChange(e)
+            function onPasswordChange()
             {
-                var val = $("#new-password").val();
+                var password = $("#new-password");
+                var validity = $("#password-validity");
+
+                // update validity message
+                if (password.is(":valid"))
+                    validity.html("Valid").css("color", "#689f38");
+                else
+                    validity.html("Invalid").css("color", "#d32f2f");
+
+                // update strength bar
+                var val = password.val();
                 $("#password-bar").css({ "background-color": getPasswordColor(val), "width": getPasswordStrength(val) + "%" });
             }
         </script>
@@ -70,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["cur-password"]) && is
                                 <label for="new-password">New password</label>
                                 <div class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
                                     Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.
+                                    <p><strong id="password-validity"></strong></p>
                                     <p><strong>Strength:</strong><br><span id="password-bar" class="strength-bar"></span></p>
                                 </div>
                             </div>
