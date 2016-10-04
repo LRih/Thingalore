@@ -17,17 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = htmlentities(trim($_POST["email"]));
 
     $pwd = $_POST["password"];
+    $pwd_v = $_POST["pass_verify"];
 
     ################ CHECKING CAPTCHA ###########
     $captcha = $_POST['g-recaptcha-response'];
 
+    if (strcmp($pwd,$pwd_v) !== 0)
+        $error = "Please make sure passwords match!";
     #Captcha = true
-    if (!isset($captcha))
+    else if (!isset($captcha))
         $error = "Please check the the captcha form.";
     else
     {
         ################# DATA INTO DATABASE ###
-        $captcha = "https://www.google.com/recaptcha/api/siteverify?secret=".$GLOBALS["captcha_pub_key"]."&response=".$captcha;
+        $captcha = "https://www.google.com/recaptcha/api/siteverify?secret=".$GLOBALS["captcha_pri_key"]."&response=".$captcha;
 
         $response = file_get_contents($captcha);
         $responseData = json_decode($response);
@@ -95,10 +98,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 var password = $("#password").val();
                 var confirmPassword = $("#pass_verify").val();
 
-                if (password != confirmPassword)
+                if (password != confirmPassword) 
                     $("#pass_verify_text").html("Passwords do not match!");
                 else
-                    $("#pass_verify_text").html("Passwords match.");
+                    $("#pass_verify_text").html("Passwords match.");         
             }
         </script>
 
