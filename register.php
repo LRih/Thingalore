@@ -99,9 +99,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 var confirmPassword = $("#pass_verify").val();
 
                 if (password != confirmPassword) 
+                {
                     $("#pass_verify_text").html("Passwords do not match!");
+                    document.getElementById("pass_verify").style.borderBottom = "1px solid #F44336";
+                    document.getElementById("pass_verify").style.boxShadow = "0 1px 0 0 #F44336";
+                }
                 else
-                    $("#pass_verify_text").html("Passwords match.");         
+                {
+                    $("#pass_verify_text").html("Passwords match.");
+                    document.getElementById("pass_verify").style.borderBottom = "1px solid #4CAF50";
+                    document.getElementById("pass_verify").style.boxShadow = "0 1px 0 0 #4CAF50";
+                }         
             }
         </script>
 
@@ -192,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <div class="row">
                         <div class="input-field col s12" >
-                            <input id="pass_verify" type="password" class="validate" name="pass_verify" required onChange="checkPasswordMatch();"/>
+                            <input id="pass_verify" type="password" class="validate" name="pass_verify" required onkeyup="checkPasswordMatch();"/>
                             <label for="pass_verify">Verify Password</label>
                             <div id="pass_verify_text" class="tooltip grey lighten-5 grey-text text-darken-3 z-depth-1 left-align">
                                 Retype password.</div>
