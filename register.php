@@ -61,10 +61,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <?php 
             require_once("templates/head.php");?>
         <title>Register | <?php echo $TITLE ?></title>
-    </head>
-
-    <body>
-        <?php require_once("templates/nav.php") ?>
         <script>
             $(document).ready(function() {
                 $('select').material_select();
@@ -111,7 +107,57 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     document.getElementById("pass_verify").style.boxShadow = "0 1px 0 0 #4CAF50";
                 }         
             }
+
+            // for checking if e-mail exists
+            var emailTimer;
+
+            // after 500ms of no typing, check if email exists from server using ajax
+            function onEmailChange()
+            {
+                clearTimeout(emailTimer);
+                emailTimer = setTimeout(validateEmail, 500);
+            }
+
+            function validateEmail()
+            {
+                var email = $("#email");
+                var tooltip = $("#email-tooltip");
+                var loader = $("#email-loader");
+
+                // doesn't match format
+                if (!email.is(":valid"))
+                {
+                    tooltip.html("Invalid e-mail.").css("color", "#d32f2f");
+                    email.css({ "border-bottom": "1px solid #F44336", "box-shadow": "0 1px 0 0 #F44336" })
+                    return;
+                }
+
+                // check existance
+                tooltip.hide();
+                loader.show();
+
+                $.get("ajax/validate-email.php?email=" + encodeURI($("#email").val()), function(data)
+                {
+                    if (data == "Exists")
+                    {
+                        tooltip.html("E-mail already exists!").css("color", "#d32f2f");
+                        email.css({ "border-bottom": "1px solid #F44336", "box-shadow": "0 1px 0 0 #F44336" })
+                    }
+                    else
+                    {
+                        tooltip.html("Valid e-mail.").css("color", "#689f38");
+                        email.css({ "border-bottom": "1px solid #4CAF50", "box-shadow": "0 1px 0 0 #4CAF50" })
+                    }
+
+                    tooltip.show();
+                    loader.hide();
+                });
+            }
         </script>
+    </head>
+
+    <body>
+        <?php require_once("templates/nav.php") ?>
 
         <main id="main">
             <div class="row section center-align">
@@ -210,9 +256,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="email" type="email" class="validate" name="email" required
+                                <input id="email" type="email" class="validate" name="email" required onkeyup="onEmailChange()"
                                     <?php if (isset($error) && isset($email)) echo "value='{$email}'" ?> />
                                 <label for="email">Email</label>
+                                <div class="tooltip z-depth-1 left-align">
+                                    <div id="email-tooltip">Enter an e-mail.</div>
+                                    <div id="email-loader" class="center-align" style='display:none'>
+                                        <div class="preloader-wrapper small active">
+                                            <div class="spinner-layer spinner-blue-only">
+                                                <div class="circle-clipper left"><div class="circle"></div></div>
+                                                <div class="gap-patch"><div class="circle"></div></div>
+                                                <div class="circle-clipper right"><div class="circle"></div></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

@@ -333,7 +333,7 @@ class SQL
         return $customer;
     }
 
-    private static function isEmailExist($email)
+    public static function isEmailExist($email)
     {
         $con = SQL::connection();
 

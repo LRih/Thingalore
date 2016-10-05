@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <div id="nav" class=" darken-1 right-align">
+    <div id="nav" class="right-align">
         <a href="index.php" class="waves-effect waves-light white-text nav-btn left"><i class="material-icons left">home</i><span class='hide-on-small-only'>Home</span></a>
 
         <a href="cart.php" class="waves-effect waves-light white-text nav-btn">
