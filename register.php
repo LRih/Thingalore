@@ -132,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     return;
                 }
 
-                // check existance
+                // check existence
                 tooltip.hide();
                 loader.show();
 
