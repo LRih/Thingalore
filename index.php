@@ -2,7 +2,6 @@
 
 require_once("php/global.php");
 
-$maxOnPage = 9;
 $products = [];
 
 // TODO limit max number of pages to show in pagination list
@@ -15,7 +14,7 @@ if (isset($_GET["search"]))
     if (empty($_GET["search"]))
         redirect("index.php");
 
-    $products = SQL::getProductsBySearch(htmlspecialchars($_GET["search"]));
+    $products = SQL::getProductsLikeName(htmlspecialchars($_GET["search"]));
 }
 else if (isset($_GET["category"]))
 {
@@ -29,15 +28,24 @@ else
     $products = SQL::getProducts();
 
 // paginate
-$pages = ceil(count($products) / $maxOnPage);
-
 if (isset($_GET["page"]) && is_numeric($_GET["page"]))
-{
     $curPage = intval($_GET["page"]);
-    $curPage = intval(min(max($curPage, 1), $pages)); // limit to page bounds
-}
 else
     $curPage = 1;
+
+$pager = new Paginator($curPage, count($products), 9);
+
+
+function getPageUrl($page)
+{
+    $args = array("page" => $page);
+    if (isset($_GET["category"]))
+        $args["category"] = $_GET["category"];
+    if (isset($_GET["search"]))
+        $args["search"] = $_GET["search"];
+
+    return $_SERVER['PHP_SELF']."?".http_build_query($args);
+}
 
 ?>
 
@@ -84,10 +92,7 @@ else
                     </div>
 
                     <?php
-                        $start = ($curPage - 1) * $maxOnPage;
-                        $end = min($curPage * $maxOnPage, count($products));
-
-                        for ($i = $start; $i < $end; $i++)
+                        for ($i = $pager->firstItem(); $i < $pager->lastItem(); $i++)
                         {
                             $p = $products[$i];
 
@@ -113,35 +118,21 @@ else
                         <ul class="pagination">
                             <?php
                                 // left button
-                                $leftActive = $curPage > 1 ? "waves-effect" : "disabled";
-                                $leftUrl = $curPage > 1 ? "href='".getPageUrl($curPage - 1)."'" : "";
-                                echo "<li class='{$leftActive}'><a {$leftUrl}><i class='material-icons'>chevron_left</i></a></li>";
+                                if ($pager->showLeft())
+                                    echo "<li class='waves-effect'><a href='".getPageUrl($pager->page - 1)."'><i class='material-icons'>chevron_left</i></a></li>";
 
                                 // pages
-                                for ($i = 0; $i < $pages; $i++)
+                                for ($page = 1; $page <= $pager->pageCount(); $page++)
                                 {
-                                    $page = $i + 1;
-                                    $active = $curPage === $page ? "active orange darken-2" : "waves-effect";
+                                    $active = $pager->page === $page ? "active orange darken-2" : "waves-effect";
                                     $url = getPageUrl($page);
 
                                     echo "<li class='{$active}'><a href='{$url}'>{$page}</a></li>";
                                 }
 
                                 // right button
-                                $rightActive = $curPage < $pages ? "waves-effect" : "disabled";
-                                $rightUrl = $curPage < $pages ? "href='".getPageUrl($curPage + 1)."'" : "#";
-                                echo "<li class='{$rightActive}'><a {$rightUrl}><i class='material-icons'>chevron_right</i></a></li>";
-
-                                function getPageUrl($page)
-                                {
-                                    $args = array("page" => $page);
-                                    if (isset($_GET["category"]))
-                                        $args["category"] = $_GET["category"];
-                                    if (isset($_GET["search"]))
-                                        $args["search"] = $_GET["search"];
-
-                                    return $_SERVER['PHP_SELF']."?".http_build_query($args);
-                                }
+                                if ($pager->showRight())
+                                    echo "<li class='waves-effect'><a href='".getPageUrl($pager->page + 1)."'><i class='material-icons'>chevron_right</i></a></li>";
                             ?>
                         </ul>
                     </div>

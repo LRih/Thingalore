@@ -123,9 +123,9 @@ class SQL
     /**
      * Very rudimentary search procedure.
      */
-    public static function getProductsBySearch($search)
+    public static function getProductsLikeName($name)
     {
-        $search = "%".$search."%";
+        $name = "%".$name."%";
 
         $con = sql::connection();
 
@@ -142,7 +142,7 @@ class SQL
         // prepared statements prevent SQL injection (I'm sure)
         if ($statement = $con->prepare($query))
         {
-            if ($statement->bind_param("s", $search) && $statement->execute())
+            if ($statement->bind_param("s", $name) && $statement->execute())
             {
                 $rows = SQL::fetch($statement);
 
