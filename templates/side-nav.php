@@ -33,7 +33,7 @@ function createCategories($selectedCategory)
     for ($i = 0; $i < count($categories); $i++)
     {
         $name = $categories[$i];
-        $lname = strtolower($name);
+        $lname = str_replace(" ", "+", strtolower($name));
 
         $active = $selectedCategory === $lname ? "orange-text text-darken-2" : ""; // show selected category in red
         $last = $i == count($categories) - 1 ? "last" : ""; // if last item, use special class to show a bottom border
