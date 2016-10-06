@@ -7,6 +7,7 @@ function showCaptcha()
     return isset($_SESSION["login_failures"]) && $_SESSION["login_failures"] >= 3;
 }
 
+
 // redirect to profile if already logged in
 if (isset($_SESSION["user"]))
     redirect("user-profile.php");
@@ -84,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST" && isset($_POST["email"]) && isset($_P
                                 echo "</div>";
                             }
                         ?>
-                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                        <form method="post">
                             <div class="input-field col s12">
                                 <input id="email" name="email" type="text" required />
                                 <label for="email">Email</label>

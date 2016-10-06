@@ -150,7 +150,7 @@ function getConnection()
                                 echo "<tr>";
                                 echo "    <td>".$p->id."</td>";
                                 echo "    <td>".$p->name."</td>";
-                                echo "    <td>".$p->desc."</td>";
+                                echo "    <td>".str_replace("\n", "<br>", $p->desc)."</td>";
                                 echo "    <td>".$p->manufacturer."</td>";
                                 echo "    <td>".$p->series."</td>";
                                 echo "    <td>".$p->formattedRRP()."</td>";

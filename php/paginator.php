@@ -50,7 +50,7 @@ class Paginator
 
     function pageCount()
     {
-        return ceil($this->totalItems / $this->itemsPerPage);
+        return max(ceil($this->totalItems / $this->itemsPerPage), 1);
     }
 }
 

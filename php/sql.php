@@ -300,7 +300,7 @@ class SQL
     }
 
     /**
-        NULL indicates invalid credentials.
+     * NULL indicates invalid credentials.
      */
     public static function getCustomerByLogin($email, $password)
     {

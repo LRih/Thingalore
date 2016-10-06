@@ -2,6 +2,18 @@
 
 require_once("php/global.php");
 
+function getPageUrl($page)
+{
+    $args = array("page" => $page);
+    if (isset($_GET["category"]))
+        $args["category"] = $_GET["category"];
+    if (isset($_GET["search"]))
+        $args["search"] = $_GET["search"];
+
+    return $_SERVER['PHP_SELF']."?".http_build_query($args);
+}
+
+
 $products = [];
 
 // TODO limit max number of pages to show in pagination list
@@ -14,7 +26,7 @@ if (isset($_GET["search"]))
     if (empty($_GET["search"]))
         redirect("index.php");
 
-    $products = SQL::getProductsLikeName(htmlspecialchars($_GET["search"]));
+    $products = SQL::getProductsLikeName($_GET["search"]);
 }
 else if (isset($_GET["category"]))
 {
@@ -34,18 +46,6 @@ else
     $curPage = 1;
 
 $pager = new Paginator($curPage, count($products), 9);
-
-
-function getPageUrl($page)
-{
-    $args = array("page" => $page);
-    if (isset($_GET["category"]))
-        $args["category"] = $_GET["category"];
-    if (isset($_GET["search"]))
-        $args["search"] = $_GET["search"];
-
-    return $_SERVER['PHP_SELF']."?".http_build_query($args);
-}
 
 ?>
 

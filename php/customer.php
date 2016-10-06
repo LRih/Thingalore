@@ -6,21 +6,31 @@
 class Customer
 {
     public $id;
+
     public $fname;
     public $lname;
-    public $email;
     public $address;
+
+    public $email;
     public $phone;
 
-    function __construct($id, $fname, $lname, $email, $address, $phone)
+    public $isVerified;
+
+
+    function __construct($id, $fname, $lname, $address, $email, $phone, $isVerified)
     {
         $this->id = $id;
+
         $this->fname = htmlspecialchars($fname);
         $this->lname = htmlspecialchars($lname);
-        $this->email = htmlspecialchars($email);
         $this->address = htmlspecialchars($address);
+
+        $this->email = htmlspecialchars($email);
         $this->phone = $phone;
+
+        $this->isVerified = $isVerified;
     }
+
 
     /**
      * Construct object from SQL row.
@@ -31,9 +41,10 @@ class Customer
             $row["id"],
             $row["fname"],
             $row["lname"],
-            $row["email"],
             $row["address"],
-            $row["phone"]
+            $row["email"],
+            $row["phone"],
+            $row["is_verified"] == 1
         );
     }
 
