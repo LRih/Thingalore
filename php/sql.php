@@ -240,35 +240,24 @@ class SQL
         return password_hash($pass, PASSWORD_BCRYPT);
     }
 
-    public static function createCustomer($fname, $lname, $address, $phone, $email, $pwd)
+    public static function getCustomers()
     {
-        // validation
-        if (SQL::isEmailExist($email))
-            return 'E-mail already exists.';
-        else if (!Validator::checkPassword($pwd))
-            return 'Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.';
-
-        $ret = 'Operation failed.';
         $con = SQL::connection();
 
         if ($con->connect_error)
-            return $ret;
+            return [];
 
-        $pwd = SQL::encrypt($pwd);
+        $customers = [];
 
-        $query = "INSERT INTO Customers (fname, lname, email, address, phone, password_hash, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
-
-        $ver_code = md5(rand(40000, 50000));
-
-        if ($statement = $con->prepare($query))
+        if ($result = $con->query("SELECT * FROM Customers"))
         {
-            if ($statement->bind_param("sssssss", $fname, $lname, $email, $address, $phone, $pwd, $ver_code) && $statement->execute())
-                $ret = true;
+            while($row = $result->fetch_assoc())
+                array_push($customers, Customer::fromRow($row));
         }
 
         $con->close();
-        
-        return $ret;
+
+        return $customers;
     }
 
     public static function getCustomer($id)
@@ -331,6 +320,37 @@ class SQL
         $con->close();
 
         return $customer;
+    }
+
+    public static function insertCustomer($fname, $lname, $address, $phone, $email, $pwd)
+    {
+        // validation
+        if (SQL::isEmailExist($email))
+            return 'E-mail already exists.';
+        else if (!Validator::checkPassword($pwd))
+            return 'Password must be between 8-20 characters. It must contain at least one of each: Lowercase, Uppercase letters, Numbers, Symbols.';
+
+        $ret = 'Operation failed.';
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return $ret;
+
+        $pwd = SQL::encrypt($pwd);
+
+        $query = "INSERT INTO Customers (fname, lname, email, address, phone, password_hash, verification_code) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        $ver_code = md5(rand(40000, 50000));
+
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->bind_param("sssssss", $fname, $lname, $email, $address, $phone, $pwd, $ver_code) && $statement->execute())
+                $ret = true;
+        }
+
+        $con->close();
+        
+        return $ret;
     }
 
     public static function isEmailExist($email)
@@ -420,7 +440,36 @@ class SQL
 
 
     //========================================================================= ORDERS
-    public static function getOrders($customerId)
+    public static function getOrders()
+    {
+        $con = SQL::connection();
+
+        if ($con->connect_error)
+            return [];
+
+        $orders = [];
+
+        $query = "SELECT id, shipping_label, DATE_FORMAT(order_date, '%d/%m/%Y'), status ".
+                 "FROM Orders ".
+                 "ORDER BY id DESC";
+
+        if ($statement = $con->prepare($query))
+        {
+            if ($statement->execute())
+            {
+                $statement->bind_result($id, $shippingLabel, $date, $status);
+
+                while ($statement->fetch())
+                    array_push($orders, new Order($id, $shippingLabel, $date, $status, SQL::getOrderLines($id)));
+            }
+        }
+
+        $con->close();
+
+        return $orders;
+    }
+
+    public static function getOrdersByCustomer($customerId)
     {
         $con = SQL::connection();
 
@@ -620,7 +669,6 @@ class SQL
        
         return $array;
     }
-
 
     private static function connection()
     {

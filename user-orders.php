@@ -42,7 +42,7 @@ if (!isset($_SESSION["user"]))
 
                             <tbody>
                                 <?php
-                                    $orders = SQL::getOrders($_SESSION["user"]->id);
+                                    $orders = SQL::getOrdersByCustomer($_SESSION["user"]->id);
 
                                     foreach ($orders as $order)
                                     {

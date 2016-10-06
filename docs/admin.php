@@ -2,36 +2,8 @@
 
 require_once("../php/global.php");
 
-$customers = getCustomers();
+$customers = SQL::getCustomers();
 $products = SQL::getProducts();
-
-function getCustomers()
-{
-    $con = getConnection();
-
-    if ($con->connect_error)
-        return [];
-
-    $customers = [];
-
-    if ($result = $con->query("SELECT * FROM Customers"))
-    {
-        while($row = $result->fetch_assoc())
-            array_push($customers, Customer::fromRow($row));
-    }
-
-    $con->close();
-
-    return $customers;
-}
-
-function getConnection()
-{
-    if ($GLOBALS["test_mode"])
-        return new mysqli('localhost', 'root', '', 'sec_ecommerce'); // test db
-    else
-        return new mysqli('localhost', 'sec_ecommerce', 'sec_ecommerce', 'sec_ecommerce'); // production db
-}
 
 ?>
 
@@ -110,18 +82,15 @@ function getConnection()
 
                     <tbody>
                         <?php
-                            foreach ($customers as $c)
+                            foreach (SQL::getOrders() as $o)
                             {
-                                foreach (SQL::getOrders($c->id) as $o)
-                                {
-                                    echo "<tr>";
-                                    echo "    <td>".$c->id."</td>";
-                                    echo "    <td>".$o->id."</td>";
-                                    echo "    <td>".$o->formattedPrice()."</td>";
-                                    echo "    <td>".$o->date."</td>";
-                                    echo "    <td>".$o->status."</td>";
-                                    echo "</tr>";
-                                }
+                                echo "<tr>";
+                                echo "    <td>".$c->id."</td>";
+                                echo "    <td>".$o->id."</td>";
+                                echo "    <td>".$o->formattedPrice()."</td>";
+                                echo "    <td>".$o->date."</td>";
+                                echo "    <td>".$o->status."</td>";
+                                echo "</tr>";
                             }
                         ?>
                     </tbody>

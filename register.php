@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //If captcha true
         if($responseData->success)
         {
-            $error = SQL::createCustomer($fname, $lname, $fulladdress, $phone, $email, $pwd);
+            $error = SQL::insertCustomer($fname, $lname, $fulladdress, $phone, $email, $pwd);
 
             if ($error === true)
             {
