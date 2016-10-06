@@ -16,6 +16,13 @@ if (!isset($_SESSION["user"]))
     <head>
         <?php require_once("templates/head.php") ?>
         <title>Profile | <?php echo $TITLE ?></title>
+
+        <script>
+            function showMessage()
+            {
+                $("#message-container").html("<span class='error-box'>Please try again later.</span>");
+            }
+        </script>
     </head>
 
     <body>
@@ -55,11 +62,14 @@ if (!isset($_SESSION["user"]))
                     </div>
                     
                     <div class="section">
-                        <a class="waves-effect waves-light btn-flat blue white-text">Edit</a>
+                        <a class="waves-effect waves-light btn-flat blue white-text" onclick='showMessage()'>Edit</a>
                         <?php
                             if (!$_SESSION["user"]->isVerified)
-                                echo "<a class='waves-effect waves-light btn-flat blue white-text'>Resend verification e-mail</a>";
+                                echo "<a class='waves-effect waves-light btn-flat blue white-text' onclick='showMessage()'>Resend verification e-mail</a>";
                         ?>
+                    </div>
+
+                    <div id='message-container'>
                     </div>
                 </div>
             </div>
